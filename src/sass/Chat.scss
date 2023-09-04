@@ -4,17 +4,29 @@
     width: 70%;
 }
 .Chat-toolbar {
-    background-color: red;
-    height: 10%;
-    min-height: 80px;
+    display: flex;
+    flex-direction: row;
+    background-color: lightgray;
+    height: 4%;
+    min-height: 70px;
+    align-items: center;
+    padding: .1em 1em;
 }
+
+.Chat-toolbar-chatinfo {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
 .Chat-view {
-    background-color: green;
-    height: 80%;
+    flex-grow: 1;
+    background-image: url("../../public/assets/background.jpg");
+    background-size: cover;
     overflow-y: scroll;
 }
 .Chat-message {
-    background-color: blue;
-    height: 10%;
+    background-color: white;
+    height: 8%;
     min-height: 80px;
 }
