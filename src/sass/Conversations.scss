@@ -1,5 +1,6 @@
 .Conversations {
     width: 30%;
+    min-width: 300px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -19,20 +20,33 @@
 }
 .Conversations-icon {
     color: gray;
-    font-size: 2rem !important;
+    font-size: 1.5rem !important;
     padding: .1em .2em;
 }
 
 .Conversations-search {
     display: flex;
+    background-color: #e2e2e2;
+    border-radius: 10px;
     flex-direction: row;
     padding: .8em 1.4em;
+    margin: 10px 10px;
 }
 .Conversations-search-input {
-    margin: .5em 1em;
     flex-grow: 1;
+    border: none;
+    background-color: #e2e2e2;
+}
+.Conversations-search-input:focus {
+    outline-width: 0;
 }
 
 .Conversations-list {
-
+    flex-grow: 1;
+    flex-direction: column;
+    border-top: solid 1em #f7f7f7;
+    overflow-y: scroll;
+}
+.Conversations-list-add {
+    margin: 1rem 1rem 2rem 1rem;
 }

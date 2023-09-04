@@ -1,0 +1,18 @@
+.ChatRoom {
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
+
+.ChatRoom:hover {
+  background-color: gray; }
+
+.ChatRoom-Avatar {
+  width: 10%; }
+
+.ChatRoom-overview {
+  width: 80%;
+  display: flex;
+  flex-direction: column; }
+
+/*# sourceMappingURL=ChatRoom.css.map */
