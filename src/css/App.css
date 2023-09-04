@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.App-container {
+  width: 97.5vw;
+  height: 97.5vh;
+  background-color: #edeaea;
+  box-shadow: 0 0 20px #9f9c9c;
+  display: flex;
+  flex-direction: row;
+}

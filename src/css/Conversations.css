@@ -1,0 +1,29 @@
+.Conversations {
+  width: 30%;
+  background-color: white;
+  display: flex;
+  flex-direction: column; }
+
+.Conversations-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  background-color: #e2e2e2;
+  padding: .8em 1.4em; }
+
+.Conversations-icon {
+  color: gray;
+  font-size: 2rem !important;
+  padding: .1em .2em; }
+
+.Conversations-search {
+  display: flex;
+  flex-direction: row;
+  padding: .8em 1.4em; }
+
+.Conversations-search-input {
+  margin: .5em 1em;
+  flex-grow: 1; }
+
+/*# sourceMappingURL=Conversations.css.map */
