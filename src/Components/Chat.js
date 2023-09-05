@@ -26,7 +26,22 @@ const Chat = (props) => {
                 </div>
             </div>
             <div className="Chat-view">
-                <Message></Message>
+                <Message sent={false}></Message>
+                <Message sent={true}></Message>
+                <Message sent={false}></Message>
+                <Message sent={true}></Message>
+                <Message sent={false}></Message>
+                <Message sent={true}></Message>
+                <Message sent={false}></Message>
+                <Message sent={true}></Message>
+                <Message sent={false}></Message>
+                <Message sent={true}></Message>
+                <Message sent={false}></Message>
+                <Message sent={true}></Message>
+                <Message sent={false}></Message>
+                <Message sent={true}></Message>
+                <Message sent={false}></Message>
+                <Message sent={true}></Message>
             </div>
             <div className="Chat-message"></div>
         </div>

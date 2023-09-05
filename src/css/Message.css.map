@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,QAAS;EACL,gBAAgB,EAAE,KAAK;EACvB,aAAa,EAAE,IAAI",
+"mappings": "AAAA,QAAS;EACL,MAAM,EAAE,OAAO;EACf,OAAO,EAAE,IAAI;EACb,gBAAgB,EAAE,KAAK;EACvB,aAAa,EAAE,IAAI;EACnB,KAAK,EAAE,GAAG;;AAGd,aAAc;EACV,YAAY,EAAE,GAAG;EACjB,WAAW,EAAE,IAAI",
 "sources": ["../sass/Message.scss"],
 "names": [],
 "file": "Message.css"

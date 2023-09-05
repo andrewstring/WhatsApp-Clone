@@ -1,5 +1,12 @@
 .Message {
+  margin: 2em 0em;
+  padding: .5em;
   background-color: white;
-  border-radius: 10px; }
+  border-radius: 10px;
+  width: 30%; }
+
+.Message-sent {
+  margin-right: 0px;
+  margin-left: auto; }
 
 /*# sourceMappingURL=Message.css.map */
