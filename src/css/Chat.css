@@ -32,15 +32,22 @@
 
 .Chat-message {
   display: flex;
+  align-items: center;
   flex-direction: row;
   background-color: white;
   height: 8%;
-  min-height: 80px; }
+  min-height: 80px;
+  padding: 0em 1em; }
 
 .Chat-message-input {
-  flex-grow: 1; }
+  flex-grow: 1;
+  padding: 0px 2em; }
 
-.chat-message-input input {
+.Chat-message-input input {
   width: 100%; }
+
+.Chat-icon {
+  font-size: 1.5rem !important;
+  padding: .1em .2em; }
 
 /*# sourceMappingURL=Chat.css.map */

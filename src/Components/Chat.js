@@ -21,9 +21,9 @@ const Chat = (props) => {
                     </div>
                 </div>
                 <div className="Chat-toolbar-buttons">
-                    <SearchIcon></SearchIcon>
-                    <AttachFileIcon></AttachFileIcon>
-                    <MoreVertIcon></MoreVertIcon>
+                    <SearchIcon className="Chat-icon"></SearchIcon>
+                    <AttachFileIcon className="Chat-icon"></AttachFileIcon>
+                    <MoreVertIcon className="Chat-icon"></MoreVertIcon>
 
                 </div>
             </div>
@@ -47,13 +47,13 @@ const Chat = (props) => {
             </div>
             <div className="Chat-message">
                 <div className="Chat-message-emoji">
-                    <EmojiEmotionsIcon></EmojiEmotionsIcon>
+                    <EmojiEmotionsIcon className="Chat-icon"></EmojiEmotionsIcon>
                 </div>
                 <div className="Chat-message-input">
                     <input placeholder="Enter a message"></input>
                 </div>
                 <div className="Chat-message-mic">
-                    <MicIcon></MicIcon>
+                    <MicIcon className="Chat-icon"></MicIcon>
                 </div>
                 
             </div>
