@@ -4,6 +4,8 @@ import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
+import MicIcon from '@mui/icons-material/Mic'
 
 import Message from './Message'
 
@@ -12,7 +14,7 @@ const Chat = (props) => {
         <div className="Chat">
             <div className="Chat-toolbar">
                 <div className="Chat-toolbar-chatinfo">
-                    <Avatar></Avatar>
+                    <Avatar className="Chat-toolbar-chatinfo-Avatar"></Avatar>
                     <div className="Chat-toolbar-chatinfo-nametime">
                         <h2>Chat One</h2>
                         <h3>Last seen Fri, 03 2023 18:03:06 EST</h3>
@@ -43,7 +45,18 @@ const Chat = (props) => {
                 <Message sent={false}></Message>
                 <Message sent={true}></Message>
             </div>
-            <div className="Chat-message"></div>
+            <div className="Chat-message">
+                <div className="Chat-message-emoji">
+                    <EmojiEmotionsIcon></EmojiEmotionsIcon>
+                </div>
+                <div className="Chat-message-input">
+                    <input placeholder="Enter a message"></input>
+                </div>
+                <div className="Chat-message-mic">
+                    <MicIcon></MicIcon>
+                </div>
+                
+            </div>
         </div>
     )
 }

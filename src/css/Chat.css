@@ -7,15 +7,20 @@
   display: flex;
   flex-direction: row;
   background-color: #041c52;
+  color: white;
   height: 4%;
   min-height: 70px;
   align-items: center;
   padding: .1em 1em; }
 
 .Chat-toolbar-chatinfo {
+  flex-grow: 1;
   display: flex;
   flex-direction: row;
-  flex-grow: 1; }
+  align-items: center; }
+
+.Chat-toolbar-chatinfo-Avatar {
+  margin: 1em; }
 
 .Chat-view {
   flex-grow: 1;
@@ -26,8 +31,16 @@
   padding: 0px 3em; }
 
 .Chat-message {
+  display: flex;
+  flex-direction: row;
   background-color: white;
   height: 8%;
   min-height: 80px; }
+
+.Chat-message-input {
+  flex-grow: 1; }
+
+.chat-message-input input {
+  width: 100%; }
 
 /*# sourceMappingURL=Chat.css.map */
