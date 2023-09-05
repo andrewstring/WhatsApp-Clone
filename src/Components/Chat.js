@@ -5,6 +5,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
+import Message from './Message'
+
 const Chat = (props) => {
     return (
         <div className="Chat">
@@ -23,7 +25,9 @@ const Chat = (props) => {
 
                 </div>
             </div>
-            <div className="Chat-view"></div>
+            <div className="Chat-view">
+                <Message></Message>
+            </div>
             <div className="Chat-message"></div>
         </div>
     )

@@ -1,7 +1,7 @@
 .Conversations {
     width: 30%;
     min-width: 300px;
-    background-color: white;
+    background-color: #0f48a1;
     display: flex;
     flex-direction: column;
 }
@@ -11,7 +11,7 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    background-color: #e2e2e2;
+    background-color: #1b218e;
     padding: .8em 1.4em;
 }
 .Conversations-toolbar-avatar {
@@ -26,7 +26,7 @@
 
 .Conversations-search {
     display: flex;
-    background-color: #e2e2e2;
+    background-color: #b8b9cf;
     border-radius: 10px;
     flex-direction: row;
     padding: .8em 1.4em;
@@ -35,7 +35,7 @@
 .Conversations-search-input {
     flex-grow: 1;
     border: none;
-    background-color: #e2e2e2;
+    background-color: #b8b9cf;
 }
 .Conversations-search-input:focus {
     outline-width: 0;
@@ -44,7 +44,6 @@
 .Conversations-list {
     flex-grow: 1;
     flex-direction: column;
-    border-top: solid 1em #f7f7f7;
     overflow-y: scroll;
 }
 .Conversations-list-add {
