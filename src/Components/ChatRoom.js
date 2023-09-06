@@ -10,8 +10,8 @@ const ChatRoom = (props) => {
                 <Avatar></Avatar>
             </div>
             <div className="ChatRoom-overview">
-                <h2>This is the chat name</h2>
-                <p>This is the last message</p>
+                <h2>{props.name}</h2>
+                <p>{props.lastMessage}</p>
             </div>
         </div>
     )

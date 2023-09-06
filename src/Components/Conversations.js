@@ -15,15 +15,26 @@ axios.defaults.baseURL = "http://localhost:3005"
 const Conversations = (props) => {
 
     const [ chatRooms, setChatRooms] = useState([])
+    const [ chatRoomIDs, setChatRoomIDs ] = useState(new Map())
 
     useEffect(() => {
         const chatRoomUseEffect = async () => {
-            const chatRooms = await axios.get("/chatroom/getChatRooms")
-            setChatRooms([...chatRooms.data])
+            const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
+
+            for (const room of chatRoomsResponse.data) {
+                setChatRoomIDs(map => new Map(map.set(room._id, room.name)))
+            }            
+            setChatRooms([...chatRoomsResponse.data])
+
+            console.log(chatRooms)
+
             const chatRoomsCollection = props.mongo.db("test").collection("chatrooms")
             for await (const change of chatRoomsCollection.watch()) {
-                setChatRooms(chatRooms => [...chatRooms, change])
-                console.log(change)
+                if (!(change.fullDocument._id in chatRoomIDs)) {
+                    console.log("Not in")
+                    setChatRooms(chatRooms => [...chatRooms, change])
+                    setChatRoomIDs(map => new Map(map.set(change.fullDocument._id, change.fullDocument.name)))
+                }
             }
         }
         chatRoomUseEffect()
@@ -46,7 +57,9 @@ const Conversations = (props) => {
             </div>
             <div className="Conversations-list">
                 <h2 className="Conversations-list-add">Add New Chat</h2>
-                {chatRooms.map((room) => <ChatRoom></ChatRoom>)}
+                {chatRooms.map((room) => {
+                return <ChatRoom key={room._id} name={room.name} lastMessage={room.lastMessage} onClick={props.getChatRoomMessages(room._id)}></ChatRoom>
+                })}
             </div>
 
         </nav>

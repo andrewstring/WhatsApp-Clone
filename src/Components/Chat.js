@@ -28,7 +28,10 @@ const Chat = (props) => {
                 </div>
             </div>
             <div className="Chat-view">
-                <Message sent={false}></Message>
+                {props.messages.map(message => {
+                    return <Message></Message>
+                })}
+                {/* <Message sent={false}></Message>
                 <Message sent={true}></Message>
                 <Message sent={false}></Message>
                 <Message sent={true}></Message>
@@ -43,7 +46,7 @@ const Chat = (props) => {
                 <Message sent={false}></Message>
                 <Message sent={true}></Message>
                 <Message sent={false}></Message>
-                <Message sent={true}></Message>
+                <Message sent={true}></Message> */}
             </div>
             <div className="Chat-message">
                 <div className="Chat-message-emoji">
