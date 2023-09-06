@@ -12,12 +12,9 @@ import axios from 'axios'
 axios.defaults.baseURL = "http://localhost:3005"
 
 
-
-
 const Conversations = (props) => {
 
     const [ chatRooms, setChatRooms] = useState([])
-    const [ mongoConnection, setMongoConnection ] = useState()
 
     useEffect(() => {
         const chatRoomUseEffect = async () => {
@@ -26,18 +23,18 @@ const Conversations = (props) => {
         }
         chatRoomUseEffect()
 
-        const mongoListen = (async () => {
-            const chatRoomCollection = props.mongo.db("whatsapp-clone").collection("chatrooms")
-            console.log(chatRoomCollection)
-            console.log(await chatRoomCollection.find())
-
-            // for await (const change of chatRoomCollection.watch()) {
-            //     // setChatRooms([...chatRooms, change])
-            //     console.log(change)
-            // }
-        })
-        mongoListen()
     }, [])
+
+    useEffect(() => {
+        const getChanges = (async () => {
+            const chatRoomsCollection = props.mongo.db("test").collection("chatrooms")
+            for await (const change of chatRoomsCollection.watch()) {
+                setChatRooms([...chatRooms, change])
+                console.log(change)
+            }
+        })
+        getChanges()
+    })
 
     return (
         <nav class="Conversations">

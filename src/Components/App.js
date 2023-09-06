@@ -9,15 +9,16 @@ const realmApp = new Realm.App({ id: "whatsapp-clone-nrzrz"})
 
 function App() {
 
+  const [ mongoUser, setMongoUser ] = useState()
   const [ mongoRealtime, setMongoRealtime ] = useState()
 
   useEffect(() => {
     const login = async () => {
       const realmUser = await realmApp.logIn(Realm.Credentials.anonymous())
+      setMongoUser(realmUser)
       const mongodb = realmApp.currentUser.mongoClient("mongodb-atlas")
       setMongoRealtime(mongodb)
     }
-
     login()
   }, [])
 
