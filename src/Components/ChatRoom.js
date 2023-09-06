@@ -5,7 +5,7 @@ import { Avatar } from '@mui/material'
 
 const ChatRoom = (props) => {
     return (
-        <div className="ChatRoom">
+        <div className="ChatRoom" onClick={props.getMessages}>
             <div className="ChatRoom-Avatar">
                 <Avatar></Avatar>
             </div>
