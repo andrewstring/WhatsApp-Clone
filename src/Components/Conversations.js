@@ -20,21 +20,14 @@ const Conversations = (props) => {
         const chatRoomUseEffect = async () => {
             const chatRooms = await axios.get("/chatroom/getChatRooms")
             setChatRooms([...chatRooms.data])
-        }
-        chatRoomUseEffect()
-
-    }, [])
-
-    useEffect(() => {
-        const getChanges = (async () => {
             const chatRoomsCollection = props.mongo.db("test").collection("chatrooms")
             for await (const change of chatRoomsCollection.watch()) {
-                setChatRooms([...chatRooms, change])
+                setChatRooms(chatRooms => [...chatRooms, change])
                 console.log(change)
             }
-        })
-        getChanges()
-    })
+        }
+        chatRoomUseEffect()
+    }, [])
 
     return (
         <nav class="Conversations">
