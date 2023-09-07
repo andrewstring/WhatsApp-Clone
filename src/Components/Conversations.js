@@ -7,11 +7,6 @@ import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import MessageIcon from '@mui/icons-material/Message'
 
-// Axios
-import axios from 'axios'
-axios.defaults.baseURL = "http://localhost:3005"
-
-
 const Conversations = (props) => {
 
     return (
@@ -33,7 +28,7 @@ const Conversations = (props) => {
                 <h2 className="Conversations-list-add">Add New Chat</h2>
                 {props.chatRooms.map((room) => {
                     return <ChatRoom key={room._id} name={room.name} lastMessage={room.lastMessage}
-                    getMessages={props.getMessages(room._id)}
+                    setChatRoom={props.setChatRoom(room._id)} id={room._id}
                     ></ChatRoom>
                 })}
             </div>

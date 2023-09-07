@@ -46,6 +46,9 @@
 .Chat-message-input input {
   width: 100%; }
 
+.Chat-message-input-submit {
+  display: none; }
+
 .Chat-icon {
   font-size: 1.5rem !important;
   padding: .1em .2em; }
