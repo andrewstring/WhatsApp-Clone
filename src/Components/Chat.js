@@ -50,7 +50,7 @@ const Chat = (props) => {
 
     return (
         <div className="Chat">
-            <div className="Chat-toolbar">
+            <div className="Chat-too      setCurrentChatRoomId(chatId)lbar">
                 <div className="Chat-toolbar-chatinfo">
                     <Avatar className="Chat-toolbar-chatinfo-hAvatar"></Avatar>
                     <div className="Chat-toolbar-chatinfo-nametime">

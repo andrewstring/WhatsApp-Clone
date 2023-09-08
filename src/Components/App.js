@@ -29,7 +29,7 @@ function App() {
   // Retrieves messages...will be passed into Conversations component
   const setChatRoomProp = (chatId) => {
     return async () => {
-      setCurrentChatRoomId(chatId)
+      
       try {
         const messagesResponse = await axios.get(`/message/getFromChatRoom/${chatId}`)
         setMessageHash(new Map())
@@ -37,6 +37,7 @@ function App() {
           setMessageHash(new Map(messageHash.set(m._id.toString(), m.content)))
         }
         setMessages(() => [...messagesResponse.data])
+        setCurrentChatRoomId(chatId)
       } catch (e) {
         console.log("ERROR with Axios")
         console.log(e.response.data)
@@ -82,6 +83,25 @@ function App() {
           if (change && !(chatRoomHash.has(change.fullDocument._id.toString()))) {
             setChatRoomHash(new Map(chatRoomHash.set(change.fullDocument._id.toString(), change.fullDocument.name)))
             setChatRooms(chatRooms => [...chatRooms, change.fullDocument.data])
+          } else if (change && chatRoomHash.has(change.fullDocument._id.toString())) {
+            console.log(change)
+
+            setChatRooms((chatRooms) => {
+              return [
+                change.fullDocument,
+                ...(chatRooms.filter((room) => {
+                  console.log(room)
+                  return room && room._id != change.fullDocument._id.toString()
+                }))
+              ]
+            })
+
+
+
+
+            //TODO.....
+            console.log("NEED TO UPDATE LATEST MESSAGE IN CHATROOM")
+            //TODO.....
           }
         }
       }
@@ -92,21 +112,18 @@ function App() {
 
   useEffect(() => {
     const monitorMessages = async () => {
-      if (mongodb) {
+      if (mongodb && currentChatRoomId) {
         const messagesCollection = mongodb.db("test").collection("messages")
 
         // use changestreams for detecting new/changes messages
+        console.log("JKLJKLJKL")
+        console.log(messageHash)
         for await (const change of messagesCollection.watch()) {
-          // console.log("THIS IS THE CHANGE")
-          // console.log(change)
-          // console.log(change.fullDocument._id.toString())
-          // console.log(currentChatRoomId)
-          // console.log(messageHash)
-          console.log("JKLJKLJKL")
-          console.log(currentChatRoomId)
-          console.log(change)
-          console.log(messageHash)
-          if (change && !(messageHash.has(change.fullDocument._id.toString())) && (change.fullDocument._id.toString() == currentChatRoomId)) {
+          console.log("CHANGE ID")
+          console.log(change.fullDocument._id.toString())
+          console.log("MessageID")
+          console.log(messageHash.has(change.fullDocument._id.toString()))
+          if (change && !(messageHash.has(change.fullDocument._id.toString())) && (change.fullDocument.chatRoom.toString() == currentChatRoomId)) {
             console.log("ADDED MESSAGE")
             setMessageHash(new Map(messageHash.set(change.fullDocument._id.toString(), change.fullDocument.content)))
             setMessages(messages => [...messages, {
@@ -122,8 +139,12 @@ function App() {
       }
     }
     monitorMessages()
-  }, [mongodb])
+  }, [mongodb, currentChatRoomId])
 
+
+  
+  console.log("ROMMO")
+  console.log(chatRooms)
 
   return (
       <div className="App-container">
