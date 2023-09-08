@@ -55,6 +55,8 @@ function App() {
         for (const room of chatRoomsResponse.data) {
             setChatRoomHash(new Map(chatRoomHash.set(room._id.toString(), room.name)))
         }            
+        console.log(chatRoomsResponse.data)
+        chatRoomsResponse.data.sort((room1,room2) => new Date(room1.lastMessageDate) > new Date(room2.lastMessageDate))
         setChatRooms([...chatRoomsResponse.data])
         setCurrentChatRoomId(chatRoomsResponse.data[0]._id)
       } catch (e) {
