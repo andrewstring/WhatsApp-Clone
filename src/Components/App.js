@@ -4,40 +4,41 @@ import { useState, useEffect } from "react"
 // Components
 import Conversations from './Conversations';
 import Chat from "./Chat";
-
 // Realm import
 import * as Realm from "realm-web";
-
 // Axios setup
 import axios from 'axios';
-axios.defaults.baseURL = "http://localhost:3005"
 
 // Realm setup
 const realmApp = new Realm.App({ id: "whatsapp-clone-nrzrz"})
+// Axios setup
+axios.defaults.baseURL = "http://localhost:3005"
 
 function App() {
 
   // State initialization
   const [ chatRooms, setChatRooms] = useState([])
-  const [ chatRoomHash, setChatRoomHash ] = useState(new Map())
+  // const [ chatRoomHash, setChatRoomHash ] = useState(new Map())
   const [ currentChatRoomId, setCurrentChatRoomId ] = useState("")
   const [ messages, setMessages ] = useState([])
-  const [ messageHash, setMessageHash ] = useState(new Map())
+  // const [ messageHash, setMessageHash ] = useState(new Map())
 
   const [ mongodb, setMongodb ] = useState()
-
+  const [ chatRoomMonitoring, setChatRoomMonitoring ] = useState(false)
+  const [ messageMonitoring, setMessageMonitoring ] = useState(false)
+  `
   // Retrieves messages...will be passed into Conversations component
   const setChatRoomProp = (chatId) => {
     return async () => {
-      
       try {
-        const messagesResponse = await axios.get(`/message/getFromChatRoom/${chatId}`)
-        setMessageHash(new Map())
-        for (const m of messagesResponse.data) {
-          setMessageHash(new Map(messageHash.set(m._id.toString(), m.content)))
-        }
+        const messagesResponse = await axios.get(/message/getFromChatRoom/$//{chatId})
+        // setMessageHash(new Map())
+        // for (const m of messagesResponse.data) {
+        //   setMessageHash((messageHash) => new Map(messageHash.set(m._id.toString(), m.content)))
+        // }
         setMessages(() => [...messagesResponse.data])
         setCurrentChatRoomId(chatId)
+        monitorChatRooms()
       } catch (e) {
         console.log("ERROR with Axios")
         console.log(e.response.data)
@@ -47,18 +48,19 @@ function App() {
     }
   }
 
+
   useEffect(() => {
     const connectDB = async () => {
       // do an initial fetch of the chatrooms
       try {
         const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
-        for (const room of chatRoomsResponse.data) {
-            setChatRoomHash(new Map(chatRoomHash.set(room._id.toString(), room.name)))
-        }            
-        console.log(chatRoomsResponse.data)
-        chatRoomsResponse.data.sort((room1,room2) => new Date(room1.lastMessageDate) > new Date(room2.lastMessageDate))
+        // for (const room of chatRoomsResponse.data) {
+        //     setChatRoomHash((chatRoomHash) => new Map(chatRoomHash.set(room._id.toString(), room)))
+        // }            
+        // chatRoomsResponse.data.sort((room1,room2) => new Date(room1.lastMessageDate) > new Date(room2.lastMessageDate))
         setChatRooms([...chatRoomsResponse.data])
         setCurrentChatRoomId(chatRoomsResponse.data[0]._id)
+        setChatRoomProp(currentChatRoomId)
       } catch (e) {
         console.log("ERROR with Axios")
         console.log(e.response.data)
@@ -67,14 +69,94 @@ function App() {
       }
 
       // login to mongodb realm and get chatrooms collection
-      const realmUser = await realmApp.logIn(Realm.Credentials.anonymous())
-      const mongodbConnection = realmApp.currentUser.mongoClient("mongodb-atlas")
-      setMongodb(mongodbConnection)
+      try {
+        const realmUser = await realmApp.logIn(Realm.Credentials.anonymous())
+        const mongodbConnection = realmApp.currentUser.mongoClient("mongodb-atlas")
+        setMongodb(mongodbConnection)
+      } catch (e) {
+        console.log("ERROR connecting to database")
+      }
     }
-      
+    connectDB()
+  }, [])
+  `
+  // useEffect(() => {
+  //   const chatRoomFetch = async () => {
+  //       const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
+  //       setChatRooms([...chatRoomsResponse.data])
+  //       setCurrentChatRoomId(chatRoomsResponse.data[0]._id)
+  //       setChatRoomProp(currentChatRoomId)
+  //   }
+  //   initialChatRoomFetch()
+  // }, [currentChatRoomId])
+
+  useEffect(() => {
+    const connectDB = async () => {
+      try {
+        const realmUser = await realmApp.logIn(Realm.Credentials.anonymouse())
+        const mongodbConnection = realmApp.currentUser.mongoClient("mongodb-atlas")
+        setMongodb(mongodbConnection)
+      } catch (e) {
+        console.log("ERROR CONNECTING TO DATABASE")
+      }
+    }
     connectDB()
   }, [])
 
+  useEffect(() => {
+    const chatRoomFetch = async () => {
+        const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
+        setChatRooms([...chatRoomsResponse.data])
+        setCurrentChatRoomId(chatRoomsResponse.data[0]._id)
+    }
+    if (mongodb) {
+      chatRoomFetch()
+    }
+  }, [mongodb])
+
+  useEffect(() => {
+
+    const messagesFetch = async () => {
+      try {
+        const messagesResponse = await axios.get(`/message/getFromChatRoom/${currentChatRoomId}`)
+        setMessages(() => [...messagesResponse.data])
+      } catch (e) {
+        console.log("ERROR with Axios")
+        console.log(e.response.data)
+        console.log(e.response.status)
+        console.log(e.response.headers)
+      }
+    }
+  }, [currentChatRoomId])
+
+  const updateChatRoomId = (id) => {
+    return () => setCurrentChatRoomId(id)
+  }
+
+  useEffect(() => {
+    const monitorChatRooms = async () => {
+      if (mongodb && !chatRoomMonitoring) {
+        setChatRoomMonitoring(true)
+        const chatRoomsCollection = mongodb.db("test").collection("chatrooms")
+        // for await (const change of chatRoomsCollection.watch()) {
+
+        // }
+      }
+    const monitorMessages = async () => {
+      if (mongodb && !messageMonitoring) {
+        setMessageMonitoring(true)
+        const messagesCollection = mongodb.db("test").collection("messages")
+        // for await (const change of messagesCollection.watch()) {
+
+        // }
+      }
+
+    }
+    }
+  }, currentChatRoomId)
+
+
+  `
   useEffect(() => {
     const monitorChatRooms = async () => {
       if (mongodb) {
@@ -98,9 +180,6 @@ function App() {
               ]
             })
 
-
-
-
             //TODO.....
             console.log("NEED TO UPDATE LATEST MESSAGE IN CHATROOM")
             //TODO.....
@@ -118,16 +197,9 @@ function App() {
         const messagesCollection = mongodb.db("test").collection("messages")
 
         // use changestreams for detecting new/changes messages
-        console.log("JKLJKLJKL")
-        console.log(messageHash)
         for await (const change of messagesCollection.watch()) {
-          console.log("CHANGE ID")
-          console.log(change.fullDocument._id.toString())
-          console.log("MessageID")
-          console.log(messageHash.has(change.fullDocument._id.toString()))
-          if (change && !(messageHash.has(change.fullDocument._id.toString())) && (change.fullDocument.chatRoom.toString() == currentChatRoomId)) {
-            console.log("ADDED MESSAGE")
-            setMessageHash(new Map(messageHash.set(change.fullDocument._id.toString(), change.fullDocument.content)))
+          if (change.fullDocument.content && !(messageHash.has(change.fullDocument._id.toString())) && (change.fullDocument.chatRoom.toString() == currentChatRoomId)) {
+            await setMessageHash((messagesHash) => new Map(messageHash.set(change.fullDocument._id.toString(), change.fullDocument.content)))
             setMessages(messages => [...messages, {
               chatRoom: change.fullDocument.chatRoom.toString(),
               content: change.fullDocument.content,
@@ -143,14 +215,13 @@ function App() {
     monitorMessages()
   }, [mongodb, currentChatRoomId])
 
+  `
 
   
-  console.log("ROMMO")
-  console.log(chatRooms)
 
   return (
       <div className="App-container">
-        {<Conversations chatRooms={chatRooms} setChatRoom={setChatRoomProp}></Conversations>}
+        {<Conversations chatRooms={chatRooms} updateChatRoomId={updateChatRoomId}></Conversations>}
         {chatRooms && <Chat messages={messages} currentChatRoomId={currentChatRoomId}></Chat>}
       </div>
   );
