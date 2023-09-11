@@ -15,4 +15,7 @@
   display: flex;
   flex-direction: column; }
 
+.ChatRoom-active {
+  background-color: green; }
+
 /*# sourceMappingURL=ChatRoom.css.map */

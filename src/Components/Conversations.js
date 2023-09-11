@@ -17,9 +17,11 @@ const Conversations = (props) => {
 
     // }
 
+    const [ addingChat, setAddingChat ] = useState(false)
+
 
     return (
-        <nav class="Conversations">
+        <nav className="Conversations">
             <div className="Conversations-toolbar">
                 <div className="Conversations-toolbar-avatar">
                     <a><Avatar></Avatar></a>
@@ -38,11 +40,12 @@ const Conversations = (props) => {
                     Add New Chat</h2>
                 {props.chatRooms.map((room) => {
                     return <ChatRoom key={room._id} name={room.name} lastMessage={room.lastMessage}
-                    setChatRoom={props.setChatRoom(room._id)} id={room._id}
+                    updateChatRoomId={props.updateChatRoomId(room._id)}
+                    active={room._id.toString() === props.currentChatRoomId.toString()} id={room._id}
                     ></ChatRoom>
                 })}
             </div>
-            {/* <div className="Conversations-list-add-modal hidden" ref={modal}></div> */}
+            <div className={"Conversations-list-add-modal" + (!addingChat ? " hidden" : "")}></div>
 
         </nav>
     )

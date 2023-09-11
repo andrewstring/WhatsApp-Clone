@@ -16,84 +16,20 @@ axios.defaults.baseURL = "http://localhost:3005"
 
 function App() {
 
-  // State initialization
+  // chatRooms and messages state variables
   const [ chatRooms, setChatRooms] = useState([])
-  // const [ chatRoomHash, setChatRoomHash ] = useState(new Map())
   const [ currentChatRoomId, setCurrentChatRoomId ] = useState("")
   const [ messages, setMessages ] = useState([])
-  // const [ messageHash, setMessageHash ] = useState(new Map())
 
+  // Mongo state variables
   const [ mongodb, setMongodb ] = useState()
   const [ chatRoomMonitoring, setChatRoomMonitoring ] = useState(false)
   const [ messageMonitoring, setMessageMonitoring ] = useState(false)
-  `
-  // Retrieves messages...will be passed into Conversations component
-  const setChatRoomProp = (chatId) => {
-    return async () => {
-      try {
-        const messagesResponse = await axios.get(/message/getFromChatRoom/$//{chatId})
-        // setMessageHash(new Map())
-        // for (const m of messagesResponse.data) {
-        //   setMessageHash((messageHash) => new Map(messageHash.set(m._id.toString(), m.content)))
-        // }
-        setMessages(() => [...messagesResponse.data])
-        setCurrentChatRoomId(chatId)
-        monitorChatRooms()
-      } catch (e) {
-        console.log("ERROR with Axios")
-        console.log(e.response.data)
-        console.log(e.response.status)
-        console.log(e.response.headers)
-      }
-    }
-  }
-
-
-  useEffect(() => {
-    const connectDB = async () => {
-      // do an initial fetch of the chatrooms
-      try {
-        const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
-        // for (const room of chatRoomsResponse.data) {
-        //     setChatRoomHash((chatRoomHash) => new Map(chatRoomHash.set(room._id.toString(), room)))
-        // }            
-        // chatRoomsResponse.data.sort((room1,room2) => new Date(room1.lastMessageDate) > new Date(room2.lastMessageDate))
-        setChatRooms([...chatRoomsResponse.data])
-        setCurrentChatRoomId(chatRoomsResponse.data[0]._id)
-        setChatRoomProp(currentChatRoomId)
-      } catch (e) {
-        console.log("ERROR with Axios")
-        console.log(e.response.data)
-        console.log(e.response.status)
-        console.log(e.response.headers)
-      }
-
-      // login to mongodb realm and get chatrooms collection
-      try {
-        const realmUser = await realmApp.logIn(Realm.Credentials.anonymous())
-        const mongodbConnection = realmApp.currentUser.mongoClient("mongodb-atlas")
-        setMongodb(mongodbConnection)
-      } catch (e) {
-        console.log("ERROR connecting to database")
-      }
-    }
-    connectDB()
-  }, [])
-  `
-  // useEffect(() => {
-  //   const chatRoomFetch = async () => {
-  //       const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
-  //       setChatRooms([...chatRoomsResponse.data])
-  //       setCurrentChatRoomId(chatRoomsResponse.data[0]._id)
-  //       setChatRoomProp(currentChatRoomId)
-  //   }
-  //   initialChatRoomFetch()
-  // }, [currentChatRoomId])
 
   useEffect(() => {
     const connectDB = async () => {
       try {
-        const realmUser = await realmApp.logIn(Realm.Credentials.anonymouse())
+        await realmApp.logIn(Realm.Credentials.anonymous())
         const mongodbConnection = realmApp.currentUser.mongoClient("mongodb-atlas")
         setMongodb(mongodbConnection)
       } catch (e) {
@@ -107,7 +43,9 @@ function App() {
     const chatRoomFetch = async () => {
         const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
         setChatRooms([...chatRoomsResponse.data])
-        setCurrentChatRoomId(chatRoomsResponse.data[0]._id)
+        console.log("JKL")
+        console.log(chatRoomsResponse.data[0]._id.toString())
+        setCurrentChatRoomId(chatRoomsResponse.data[0]._id.toString())
     }
     if (mongodb) {
       chatRoomFetch()
@@ -127,10 +65,16 @@ function App() {
         console.log(e.response.headers)
       }
     }
+    if (currentChatRoomId) {
+      messagesFetch()
+    }
   }, [currentChatRoomId])
 
   const updateChatRoomId = (id) => {
-    return () => setCurrentChatRoomId(id)
+    return () => {
+      console.log("UPDATED CHAT ROOM")
+      setCurrentChatRoomId(id)
+    }
   }
 
   useEffect(() => {
@@ -138,90 +82,54 @@ function App() {
       if (mongodb && !chatRoomMonitoring) {
         setChatRoomMonitoring(true)
         const chatRoomsCollection = mongodb.db("test").collection("chatrooms")
-        // for await (const change of chatRoomsCollection.watch()) {
-
-        // }
+        for await (const change of chatRoomsCollection.watch()) {
+          if(change.ns.coll === "chatrooms") {
+            if(change.operationType === "insert") {
+              setChatRooms((chatRooms) => [change.fullDocument, ...chatRooms])
+            } else if (change.operationType === "update") {
+              setChatRooms((chatRooms) => {
+                const newChatRooms = chatRooms.filter((chatRoom) => {
+                  return change.fullDocument._id.toString() !== chatRoom._id.toString()
+                })
+                return [change.fullDocument, ...newChatRooms]
+              })
+            }
+          }
+        }
       }
+    }
     const monitorMessages = async () => {
       if (mongodb && !messageMonitoring) {
         setMessageMonitoring(true)
         const messagesCollection = mongodb.db("test").collection("messages")
-        // for await (const change of messagesCollection.watch()) {
-
-        // }
-      }
-
-    }
-    }
-  }, currentChatRoomId)
-
-
-  `
-  useEffect(() => {
-    const monitorChatRooms = async () => {
-      if (mongodb) {
-        const chatRoomsCollection = mongodb.db("test").collection("chatrooms")
-
-        // use changestreams for detecting new/changed chatrooms
-        for await (const change of chatRoomsCollection.watch()) {
-          if (change && !(chatRoomHash.has(change.fullDocument._id.toString()))) {
-            setChatRoomHash(new Map(chatRoomHash.set(change.fullDocument._id.toString(), change.fullDocument.name)))
-            setChatRooms(chatRooms => [...chatRooms, change.fullDocument.data])
-          } else if (change && chatRoomHash.has(change.fullDocument._id.toString())) {
-            console.log(change)
-
-            setChatRooms((chatRooms) => {
-              return [
-                change.fullDocument,
-                ...(chatRooms.filter((room) => {
-                  console.log(room)
-                  return room && room._id != change.fullDocument._id.toString()
-                }))
-              ]
-            })
-
-            //TODO.....
-            console.log("NEED TO UPDATE LATEST MESSAGE IN CHATROOM")
-            //TODO.....
+        for await (const change of messagesCollection.watch()) {
+          console.log("messages change")
+          console.log(change)
+          if (change.ns.coll === "messages") {
+            if (change.operationType === "insert") {
+              if(change.fullDocument.chatRoom === currentChatRoomId) {
+                change.fullDocument.timeSent = change.fullDocument.timeSent.toString()
+                setMessages((messages) => [...messages, change.fullDocument])
+              }
+              
+            }
           }
+
         }
       }
     }
-    monitorChatRooms()
-    
+    if (currentChatRoomId) {
+      monitorChatRooms()
+      monitorMessages()
+    }
   }, [mongodb])
 
-  useEffect(() => {
-    const monitorMessages = async () => {
-      if (mongodb && currentChatRoomId) {
-        const messagesCollection = mongodb.db("test").collection("messages")
-
-        // use changestreams for detecting new/changes messages
-        for await (const change of messagesCollection.watch()) {
-          if (change.fullDocument.content && !(messageHash.has(change.fullDocument._id.toString())) && (change.fullDocument.chatRoom.toString() == currentChatRoomId)) {
-            await setMessageHash((messagesHash) => new Map(messageHash.set(change.fullDocument._id.toString(), change.fullDocument.content)))
-            setMessages(messages => [...messages, {
-              chatRoom: change.fullDocument.chatRoom.toString(),
-              content: change.fullDocument.content,
-              received: change.fullDocument.received,
-              sender: change.fullDocument.sender,
-              timeSent: change.fullDocument.timeSent.toString(),
-              _id: change.fullDocument._id.toString()
-            }])
-          }
-        }
-      }
-    }
-    monitorMessages()
-  }, [mongodb, currentChatRoomId])
-
-  `
 
   
 
   return (
       <div className="App-container">
-        {<Conversations chatRooms={chatRooms} updateChatRoomId={updateChatRoomId}></Conversations>}
+        {<Conversations chatRooms={chatRooms} updateChatRoomId={updateChatRoomId} currentChatRoomId={currentChatRoomId}></Conversations>}
         {chatRooms && <Chat messages={messages} currentChatRoomId={currentChatRoomId}></Chat>}
       </div>
   );
