@@ -40,12 +40,9 @@ const Chat = (props) => {
 
     const handleChange = (event) => {
         setInput(event.target.value)
-        console.log(input)
     }
 
     const send = () => {
-        // setInput("")
-        console.log("sent")
     }
 
     return (

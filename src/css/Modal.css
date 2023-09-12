@@ -1,0 +1,11 @@
+.Modal {
+  position: fixed;
+  background-color: white;
+  border: solid black 20px;
+  border-radius: 10px;
+  padding: 2em; }
+
+.Modal input[type=submit] {
+  display: none; }
+
+/*# sourceMappingURL=Modal.css.map */

@@ -6,7 +6,7 @@ import Conversations from './Conversations';
 import Chat from "./Chat";
 // Realm import
 import * as Realm from "realm-web";
-// Axios setup
+// Axios import
 import axios from 'axios';
 
 // Realm setup
@@ -42,10 +42,13 @@ function App() {
   useEffect(() => {
     const chatRoomFetch = async () => {
         const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
-        setChatRooms([...chatRoomsResponse.data])
-        console.log("JKL")
-        console.log(chatRoomsResponse.data[0]._id.toString())
-        setCurrentChatRoomId(chatRoomsResponse.data[0]._id.toString())
+        if (chatRoomsResponse.data.length) {
+          const sortedChatRooms = [...chatRoomsResponse.data]
+          console.log(sortedChatRooms)
+          sortedChatRooms.sort((a,b) => (new Date(b.lastMessageDate) - new Date(a.lastMessageDate)))
+          setChatRooms([...sortedChatRooms])
+          setCurrentChatRoomId(sortedChatRooms[0]._id.toString())
+        }
     }
     if (mongodb) {
       chatRoomFetch()
@@ -72,7 +75,6 @@ function App() {
 
   const updateChatRoomId = (id) => {
     return () => {
-      console.log("UPDATED CHAT ROOM")
       setCurrentChatRoomId(id)
     }
   }
@@ -103,11 +105,13 @@ function App() {
         setMessageMonitoring(true)
         const messagesCollection = mongodb.db("test").collection("messages")
         for await (const change of messagesCollection.watch()) {
-          console.log("messages change")
-          console.log(change)
           if (change.ns.coll === "messages") {
             if (change.operationType === "insert") {
-              if(change.fullDocument.chatRoom === currentChatRoomId) {
+              console.log("INSERT")
+              console.log(change.fullDocument.chatRoom.toString())
+              console.log(currentChatRoomId.toString())
+              if(change.fullDocument.chatRoom.toString() === currentChatRoomId.toString()) {
+                console.log("MATCHED CHAT")
                 change.fullDocument.timeSent = change.fullDocument.timeSent.toString()
                 setMessages((messages) => [...messages, change.fullDocument])
               }

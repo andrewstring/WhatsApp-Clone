@@ -2,6 +2,9 @@ import { useEffect, useState, useRef } from 'react'
 import "../css/Conversations.css"
 import ChatRoom from './ChatRoom'
 
+// Components
+import Modal from './Modal'
+
 // Material UI
 import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -9,15 +12,10 @@ import MessageIcon from '@mui/icons-material/Message'
 
 const Conversations = (props) => {
 
-
-    // const modal = useRef(modal)
-
-    // const handleChatAdd = () => {
-    //     modal.className = "Conversations-list-add-modal"
-
-    // }
-
     const [ addingChat, setAddingChat ] = useState(false)
+    const handleAddChat = () => {
+        setAddingChat((addingChat) => !addingChat)
+    }
 
 
     return (
@@ -36,17 +34,21 @@ const Conversations = (props) => {
                 <input className="Conversations-search-input" placeholder="Search for message"></input>
             </div>
             <div className="Conversations-list">
-                <h2 className="Conversations-list-add" >
+                <h2 className="Conversations-list-add" onClick={handleAddChat}>
                     Add New Chat</h2>
-                {props.chatRooms.map((room) => {
-                    return <ChatRoom key={room._id} name={room.name} lastMessage={room.lastMessage}
+                {props.chatRooms && props.chatRooms.map((room) => {
+                    return <ChatRoom
+                    key={room._id}
+                    name={room.name}
+                    lastMessage={room.lastMessage}
                     updateChatRoomId={props.updateChatRoomId(room._id)}
-                    active={room._id.toString() === props.currentChatRoomId.toString()} id={room._id}
+                    active={room._id.toString() === props.currentChatRoomId.toString()}
+                    onClick={props.updateChatRoomId}
+                    id={room._id}
                     ></ChatRoom>
                 })}
             </div>
-            <div className={"Conversations-list-add-modal" + (!addingChat ? " hidden" : "")}></div>
-
+            {addingChat && <Modal type="addChat" handleAddChat={handleAddChat}></Modal>}
         </nav>
     )
 }
