@@ -2,6 +2,7 @@ import '../css/App.css';
 import { useState, useEffect } from "react"
 
 // Components
+import Login from './Login';
 import Conversations from './Conversations';
 import Chat from "./Chat";
 // Realm import
@@ -17,6 +18,7 @@ axios.defaults.baseURL = "http://localhost:3005"
 function App() {
 
   // chatRooms and messages state variables
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false)
   const [ chatRooms, setChatRooms] = useState([])
   const [ currentChatRoomId, setCurrentChatRoomId ] = useState("")
   const [ messages, setMessages ] = useState([])
@@ -44,7 +46,6 @@ function App() {
         const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
         if (chatRoomsResponse.data.length) {
           const sortedChatRooms = [...chatRoomsResponse.data]
-          console.log(sortedChatRooms)
           sortedChatRooms.sort((a,b) => (new Date(b.lastMessageDate) - new Date(a.lastMessageDate)))
           setChatRooms([...sortedChatRooms])
           setCurrentChatRoomId(sortedChatRooms[0]._id.toString())
@@ -79,6 +80,13 @@ function App() {
     }
   }
 
+  const addMessage = (message) => {
+    if(message.chatRoom.toString() === currentChatRoomId.toString()) {
+      message.timeSent = message.timeSent.toString()
+      setMessages((messages) => [...messages, message])
+    }
+  }
+
   useEffect(() => {
     const monitorChatRooms = async () => {
       if (mongodb && !chatRoomMonitoring) {
@@ -100,41 +108,44 @@ function App() {
         }
       }
     }
+    if (currentChatRoomId) {
+      monitorChatRooms()
+    }
+  }, [mongodb])
+
+  useEffect(() => {
+    let watch = true
     const monitorMessages = async () => {
-      if (mongodb && !messageMonitoring) {
-        setMessageMonitoring(true)
+      if (mongodb) {
         const messagesCollection = mongodb.db("test").collection("messages")
         for await (const change of messagesCollection.watch()) {
-          if (change.ns.coll === "messages") {
-            if (change.operationType === "insert") {
-              console.log("INSERT")
-              console.log(change.fullDocument.chatRoom.toString())
-              console.log(currentChatRoomId.toString())
-              if(change.fullDocument.chatRoom.toString() === currentChatRoomId.toString()) {
-                console.log("MATCHED CHAT")
-                change.fullDocument.timeSent = change.fullDocument.timeSent.toString()
-                setMessages((messages) => [...messages, change.fullDocument])
+          if (watch) {
+            if (change.ns.coll === "messages") {
+              if (change.operationType === "insert") {
+                addMessage(change.fullDocument)
+              } else {
+                break
               }
-              
             }
           }
-
         }
       }
     }
-    if (currentChatRoomId) {
-      monitorChatRooms()
-      monitorMessages()
+    monitorMessages()
+    return () => {
+      watch = false
     }
-  }, [mongodb])
+
+  }, [currentChatRoomId])
 
 
   
 
   return (
-      <div className="App-container">
-        {<Conversations chatRooms={chatRooms} updateChatRoomId={updateChatRoomId} currentChatRoomId={currentChatRoomId}></Conversations>}
-        {chatRooms && <Chat messages={messages} currentChatRoomId={currentChatRoomId}></Chat>}
+      <div className={isLoggedIn ? "App-container" : "App-container-Login"}>
+        {!isLoggedIn && <Login mongodb={mongodb}></Login>}
+        {isLoggedIn && <Conversations chatRooms={chatRooms} updateChatRoomId={updateChatRoomId} currentChatRoomId={currentChatRoomId}></Conversations>}
+        {isLoggedIn && chatRooms && <Chat messages={messages} currentChatRoomId={currentChatRoomId}></Chat>}
       </div>
   );
 }

@@ -15,8 +15,6 @@ const Chat = (props) => {
 
     const [ input, setInput ] = useState("")
 
-    console.log(props.currentChatRoomId)
-
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
