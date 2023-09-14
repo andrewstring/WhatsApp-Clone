@@ -15,6 +15,7 @@ const Modal = ({type, handleAddChat}) => {
     // State initialization
     const [ inputOne, setInputOne ] = useState("")
     const [ error, setError ] = useState(false)
+    const [ inputArr, setInputArr ] = useState([""])
 
     // Context initialization
     const credentials = useContext(CredentialsContext)
@@ -52,6 +53,14 @@ const Modal = ({type, handleAddChat}) => {
                     value={inputOne}
                     onChange={(e) => handleChange(type,e)}
                     ></input>
+                    { inputArr.map(input => {
+                        return (
+                            <input
+                            placeholder="Add Member"></input>
+                            
+                        )
+                    })
+                    }
                     <input
                     type="submit"
                     ></input>

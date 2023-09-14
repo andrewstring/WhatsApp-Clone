@@ -31,7 +31,6 @@ function App() {
   // Mongo state variables
   const [ mongodb, setMongodb ] = useState()
   const chatRoomMonitoring = useRef(false)
-  const [ messageMonitoring, setMessageMonitoring ] = useState(false)
 
   const appSetCredentials = (cred) => {
     setCredentials(cred)
@@ -53,8 +52,6 @@ function App() {
   useEffect(() => {
     const chatRoomFetch = async () => {
       try {
-        console.log("CREDD")
-        console.log(credentials)
         if (credentials != "invalid") {
           const chatRoomsResponse = await axios.get(`/chatroom/getChatRooms/${credentials._id}`)
           console.log("RESPONSE")
@@ -116,6 +113,8 @@ function App() {
         const chatRoomsCollection = mongodb.db("test").collection("chatrooms")
         for await (const change of chatRoomsCollection.watch()) {
           if(change.ns.coll === "chatrooms") {
+            console.log("CHANGEEE")
+            console.log(change)
             if(change.operationType === "insert") {
               setChatRooms((chatRooms) => [change.fullDocument, ...chatRooms])
             } else if (change.operationType === "update") {

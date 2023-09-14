@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import "../css/Chat.css"
 import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -10,8 +10,11 @@ import MicIcon from '@mui/icons-material/Mic'
 import axios from 'axios'
 
 import Message from './Message'
+import { CredentialsContext } from '../Contexts/CredentialsContext'
 
 const Chat = (props) => {
+
+    const credentials = useContext(CredentialsContext)
 
     const [ input, setInput ] = useState("")
 
@@ -22,7 +25,7 @@ const Chat = (props) => {
                 chatRoomId: props.currentChatRoomId,
                 messageContent: {
                     content: input,
-                    sender: "John",
+                    sender: credentials._id,
                     received: true,
                 }
             })
