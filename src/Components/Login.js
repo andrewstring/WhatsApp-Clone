@@ -11,6 +11,7 @@ axios.defaults.baseURL = "http://localhost:3005"
 const Login = ({ mongodb, appSetCredentials }) => {
     const [ area, setArea ] = useState("login")
     const [ accountInfo, setAccountInfo ] = useState({
+        firstName: "",
         username: "",
         password: "",
         email: ""
@@ -49,16 +50,18 @@ const Login = ({ mongodb, appSetCredentials }) => {
                 switch(response.data.message) {
                     case "Correct credentials": {
                         console.log("CORRECT cred")
-                        appSetCredentials(response.data.id)
+                        appSetCredentials(response.data.credentials)
                         return
                     }
                     case "Username does not exist": {
                         console.log("username not exist")
+                        appSetCredentials("invalid")
                         //render username and email exist
                         return
                     }
                     case "Incorrect credentials": {
                         console.log("incorrect cred")
+                        appSetCredentials("invalid")
                         //render email exists
                         return
                     }
@@ -84,6 +87,7 @@ const Login = ({ mongodb, appSetCredentials }) => {
 
                     <label>Username</label>
                     <input key="username"
+                    type="text"
                     placeholder="Username"
                     value={accountInfo.username}
                     onChange={(e) => handleChange("username",e)}></input>
@@ -110,29 +114,33 @@ const Login = ({ mongodb, appSetCredentials }) => {
             try {
                 console.log("CREATING ACCOUNT")
                 const response = await axios.post("/account/new", {
+                    firstName: accountInfo.firstName,
                     username: accountInfo.username,
                     email: accountInfo.email,
-                    password: accountInfo.password,
+                    password: accountInfo.password
                 })
                 console.log(response)
                 switch(response.data.message) {
                     case "Account created": {
                         console.log("account created")
-                        appSetCredentials(response.data.id)
+                        appSetCredentials(response.data.credentials)
                         return
                     }
                     case "Username and Email exist": {
                         console.log("username and email exist")
+                        appSetCredentials("invalid")
                         //render username and email exist
                         return
                     }
                     case "Email exists": {
                         console.log("email exists")
+                        appSetCredentials("invalid")
                         //render email exists
                         return
                     }
                     case "Username exists": {
                         console.log("username exists")
+                        appSetCredentials("invalid")
                         //email exists
                         return
                     }
@@ -151,14 +159,23 @@ const Login = ({ mongodb, appSetCredentials }) => {
                 <form className="Login">
                     <h1>Create Account</h1>
 
+                    <label>First Name</label>
+                    <input key="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    value={accountInfo.firstName}
+                    onChange={(e) => handleChange("firstName",e)}></input>
+
                     <label>Email</label>
                     <input key="email"
+                    type="text"
                     placeholder="Email"
                     value={accountInfo.email}
                     onChange={(e) => handleChange("email",e)}></input>
 
                     <label>Username</label>
                     <input key="username"
+                    type="text"
                     placeholder="Username"
                     value={accountInfo.username}
                     onChange={(e) => handleChange("username",e)}></input>

@@ -1,3 +1,3 @@
 import { createContext } from "react"
 
-export const CredentialsContext = createContext(null)
+export const CredentialsContext = createContext("invalid")

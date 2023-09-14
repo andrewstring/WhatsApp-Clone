@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+
+import { CredentialsContext } from '../Contexts/CredentialsContext'
+
 import "../css/Modal.css"
 
 // Axios import
@@ -9,8 +12,13 @@ axios.defaults.baseURL = "http://localhost:3005"
 
 
 const Modal = ({type, handleAddChat}) => {
+    // State initialization
     const [ inputOne, setInputOne ] = useState("")
     const [ error, setError ] = useState(false)
+
+    // Context initialization
+    const credentials = useContext(CredentialsContext)
+    console.log(credentials)
 
     const handleChange = (inputType, e) => {
         if (inputType === "addChat") {
@@ -22,7 +30,8 @@ const Modal = ({type, handleAddChat}) => {
         if (inputType === "addChat") {
             try {
                 await axios.post("/chatroom/new", {
-                    name: inputOne
+                    name: inputOne,
+                    id: credentials._id
                 })
                 setError(false)
                 setInputOne("")

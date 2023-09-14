@@ -1,5 +1,5 @@
 import '../css/App.css';
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 // Components
 import Login from './Login';
@@ -22,7 +22,7 @@ axios.defaults.baseURL = "http://localhost:3005"
 function App() {
 
   // chatRooms and messages state variables
-  const [ credentials, setCredentials ] = useState("")
+  const [ credentials, setCredentials ] = useState("invalid")
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
   const [ chatRooms, setChatRooms] = useState([])
   const [ currentChatRoomId, setCurrentChatRoomId ] = useState("")
@@ -30,7 +30,7 @@ function App() {
 
   // Mongo state variables
   const [ mongodb, setMongodb ] = useState()
-  const [ chatRoomMonitoring, setChatRoomMonitoring ] = useState(false)
+  const chatRoomMonitoring = useRef(false)
   const [ messageMonitoring, setMessageMonitoring ] = useState(false)
 
   const appSetCredentials = (cred) => {
@@ -52,20 +52,32 @@ function App() {
 
   useEffect(() => {
     const chatRoomFetch = async () => {
-        const chatRoomsResponse = await axios.get("/chatroom/getChatRooms", {
-          id: credentials
-        })
-        if (chatRoomsResponse.data.length) {
-          const sortedChatRooms = [...chatRoomsResponse.data]
-          sortedChatRooms.sort((a,b) => (new Date(b.lastMessageDate) - new Date(a.lastMessageDate)))
-          setChatRooms([...sortedChatRooms])
-          setCurrentChatRoomId(sortedChatRooms[0]._id.toString())
+      try {
+        console.log("CREDD")
+        console.log(credentials)
+        if (credentials != "invalid") {
+          const chatRoomsResponse = await axios.get(`/chatroom/getChatRooms/${credentials._id}`)
+          console.log("RESPONSE")
+          console.log(chatRoomsResponse)
+          if (chatRoomsResponse.data.length) {
+            const sortedChatRooms = [...chatRoomsResponse.data]
+            sortedChatRooms.sort((a,b) => (new Date(b.lastMessageDate) - new Date(a.lastMessageDate)))
+            if (sortedChatRooms) {
+              setChatRooms([...sortedChatRooms])
+              setCurrentChatRoomId(sortedChatRooms[0]._id.toString())
+            }
+          }
         }
+      } catch (e) {
+        console.log("Error with Axios")
+        console.log(e.response.data)
+        console.log(e.response.status)
+      }
     }
-    if (mongodb) {
+    if (mongodb && credentials != "invalid") {
       chatRoomFetch()
     }
-  }, [mongodb])
+  }, [credentials])
 
   useEffect(() => {
 
@@ -77,7 +89,6 @@ function App() {
         console.log("ERROR with Axios")
         console.log(e.response.data)
         console.log(e.response.status)
-        console.log(e.response.headers)
       }
     }
     if (currentChatRoomId) {
@@ -100,8 +111,8 @@ function App() {
 
   useEffect(() => {
     const monitorChatRooms = async () => {
-      if (mongodb && !chatRoomMonitoring) {
-        setChatRoomMonitoring(true)
+      if (mongodb && !chatRoomMonitoring.content) {
+        chatRoomMonitoring.content = true
         const chatRoomsCollection = mongodb.db("test").collection("chatrooms")
         for await (const change of chatRoomsCollection.watch()) {
           if(change.ns.coll === "chatrooms") {
@@ -119,10 +130,10 @@ function App() {
         }
       }
     }
-    if (currentChatRoomId) {
+    if (credentials != "invalid") {
       monitorChatRooms()
     }
-  }, [mongodb])
+  }, [credentials])
 
   useEffect(() => {
     let watch = true
@@ -149,7 +160,7 @@ function App() {
 
   }, [currentChatRoomId])
 
-  if (credentials) {
+  if (credentials != "invalid") {
     return (
       <CredentialsContext.Provider value={credentials}>
         <div className="App-container">
