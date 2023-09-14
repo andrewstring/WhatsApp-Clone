@@ -5,6 +5,10 @@ import { useState, useEffect } from "react"
 import Login from './Login';
 import Conversations from './Conversations';
 import Chat from "./Chat";
+
+// Context
+import { CredentialsContext } from '../Contexts/CredentialsContext';
+
 // Realm import
 import * as Realm from "realm-web";
 // Axios import
@@ -18,6 +22,7 @@ axios.defaults.baseURL = "http://localhost:3005"
 function App() {
 
   // chatRooms and messages state variables
+  const [ credentials, setCredentials ] = useState("")
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
   const [ chatRooms, setChatRooms] = useState([])
   const [ currentChatRoomId, setCurrentChatRoomId ] = useState("")
@@ -27,6 +32,10 @@ function App() {
   const [ mongodb, setMongodb ] = useState()
   const [ chatRoomMonitoring, setChatRoomMonitoring ] = useState(false)
   const [ messageMonitoring, setMessageMonitoring ] = useState(false)
+
+  const appSetCredentials = (cred) => {
+    setCredentials(cred)
+  }
 
   useEffect(() => {
     const connectDB = async () => {
@@ -43,7 +52,9 @@ function App() {
 
   useEffect(() => {
     const chatRoomFetch = async () => {
-        const chatRoomsResponse = await axios.get("/chatroom/getChatRooms")
+        const chatRoomsResponse = await axios.get("/chatroom/getChatRooms", {
+          id: credentials
+        })
         if (chatRoomsResponse.data.length) {
           const sortedChatRooms = [...chatRoomsResponse.data]
           sortedChatRooms.sort((a,b) => (new Date(b.lastMessageDate) - new Date(a.lastMessageDate)))
@@ -138,15 +149,20 @@ function App() {
 
   }, [currentChatRoomId])
 
-
-  
-
+  if (credentials) {
+    return (
+      <CredentialsContext.Provider value={credentials}>
+        <div className="App-container">
+          <Conversations chatRooms={chatRooms} updateChatRoomId={updateChatRoomId} currentChatRoomId={currentChatRoomId}></Conversations>
+          {chatRooms && <Chat messages={messages} currentChatRoomId={currentChatRoomId}></Chat>}
+        </div>
+      </CredentialsContext.Provider>
+    )
+  }
   return (
-      <div className={isLoggedIn ? "App-container" : "App-container-Login"}>
-        {!isLoggedIn && <Login mongodb={mongodb}></Login>}
-        {isLoggedIn && <Conversations chatRooms={chatRooms} updateChatRoomId={updateChatRoomId} currentChatRoomId={currentChatRoomId}></Conversations>}
-        {isLoggedIn && chatRooms && <Chat messages={messages} currentChatRoomId={currentChatRoomId}></Chat>}
-      </div>
+    <div className="App-container-Login">
+      {!isLoggedIn && <Login mongodb={mongodb} appSetCredentials={appSetCredentials}></Login>}
+    </div>
   );
 }
 
