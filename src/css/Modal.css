@@ -4,9 +4,12 @@
   background-color: white;
   border: solid black 20px;
   border-radius: 10px;
-  padding: 2em; }
+  padding: 2em;
+  width: 30%;
+  min-width: 500px;
+  backdrop-filter: blur(10px); }
 
-.Modal input[type=submit] {
-  display: none; }
+.Modal-addChat {
+  display: flex; }
 
 /*# sourceMappingURL=Modal.css.map */

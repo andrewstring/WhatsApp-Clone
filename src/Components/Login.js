@@ -1,14 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import "../css/Login.css"
 
 // Axios import
 import axios from 'axios'
 
+// Mongodb Context
+import { MongodbContext } from '../Contexts/MongodbContext'
+
 // Axios setup
 axios.defaults.baseURL = "http://localhost:3005"
 
 
-const Login = ({ mongodb, appSetCredentials }) => {
+
+
+const Login = ({ appSetCredentials }) => {
+    // Mongodb Context
+    const mongodb = useContext(MongodbContext)
+
     const [ area, setArea ] = useState("login")
     const [ accountInfo, setAccountInfo ] = useState({
         firstName: "",
@@ -30,6 +38,8 @@ const Login = ({ mongodb, appSetCredentials }) => {
     useEffect(() => {
         const getAccountCollection = async () => {
             if(mongodb) {
+                console.log("MONGO")
+                console.log(mongodb)
                 const accountsCollection = mongodb.db("test").collection("accounts")
                 console.log(accountsCollection)
             }

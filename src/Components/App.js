@@ -8,6 +8,7 @@ import Chat from "./Chat";
 
 // Context
 import { CredentialsContext } from '../Contexts/CredentialsContext';
+import { MongodbContext } from '../Contexts/MongodbContext';
 
 // Realm import
 import * as Realm from "realm-web";
@@ -25,11 +26,12 @@ function App() {
   const [ credentials, setCredentials ] = useState("invalid")
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
   const [ chatRooms, setChatRooms] = useState([])
-  const [ currentChatRoomId, setCurrentChatRoomId ] = useState("")
+  const [ currentChatRoom, setCurrentChatRoom ] = useState("")
   const [ messages, setMessages ] = useState([])
 
   // Mongo state variables
   const [ mongodb, setMongodb ] = useState()
+
   const chatRoomMonitoring = useRef(false)
 
   const appSetCredentials = (cred) => {
@@ -61,7 +63,7 @@ function App() {
             sortedChatRooms.sort((a,b) => (new Date(b.lastMessageDate) - new Date(a.lastMessageDate)))
             if (sortedChatRooms) {
               setChatRooms([...sortedChatRooms])
-              setCurrentChatRoomId(sortedChatRooms[0]._id.toString())
+              setCurrentChatRoom(sortedChatRooms[0])
             }
           }
         }
@@ -80,7 +82,7 @@ function App() {
 
     const messagesFetch = async () => {
       try {
-        const messagesResponse = await axios.get(`/message/getFromChatRoom/${currentChatRoomId}`)
+        const messagesResponse = await axios.get(`/message/getFromChatRoom/${currentChatRoom._id}`)
         setMessages(() => [...messagesResponse.data])
       } catch (e) {
         console.log("ERROR with Axios")
@@ -88,19 +90,19 @@ function App() {
         console.log(e.response.status)
       }
     }
-    if (currentChatRoomId) {
+    if (currentChatRoom._id) {
       messagesFetch()
     }
-  }, [currentChatRoomId])
+  }, [currentChatRoom._id])
 
-  const updateChatRoomId = (id) => {
+  const updateChatRoom = (id) => {
     return () => {
-      setCurrentChatRoomId(id)
+      setCurrentChatRoom(id)
     }
   }
 
   const addMessage = (message) => {
-    if(message.chatRoom.toString() === currentChatRoomId.toString()) {
+    if(message.chatRoom.toString() === currentChatRoom._id.toString()) {
       message.timeSent = message.timeSent.toString()
       setMessages((messages) => [...messages, message])
     }
@@ -157,23 +159,34 @@ function App() {
       watch = false
     }
 
-  }, [currentChatRoomId])
+  }, [currentChatRoom._id])
 
-  if (credentials != "invalid") {
+  if (credentials != "invalid" && mongodb) {
     return (
+      <MongodbContext.Provider value={mongodb}>
       <CredentialsContext.Provider value={credentials}>
         <div className="App-container">
-          <Conversations chatRooms={chatRooms} updateChatRoomId={updateChatRoomId} currentChatRoomId={currentChatRoomId}></Conversations>
-          {chatRooms && <Chat messages={messages} currentChatRoomId={currentChatRoomId}></Chat>}
+          <Conversations chatRooms={chatRooms} updateChatRoom={updateChatRoom} currentChatRoom={currentChatRoom}></Conversations>
+          {chatRooms && <Chat messages={messages} currentChatRoom={currentChatRoom}></Chat>}
         </div>
       </CredentialsContext.Provider>
+      </MongodbContext.Provider>
+      
     )
+  } else if (mongodb) {
+    return (
+        <MongodbContext.Provider value={mongodb}>
+        <CredentialsContext.Provider value={credentials}>
+          <div className="App-container-Login">
+            {!isLoggedIn && <Login mongodb={mongodb} appSetCredentials={appSetCredentials}></Login>}
+          </div>
+        </CredentialsContext.Provider>
+        </MongodbContext.Provider>
+    );
   }
   return (
-    <div className="App-container-Login">
-      {!isLoggedIn && <Login mongodb={mongodb} appSetCredentials={appSetCredentials}></Login>}
-    </div>
-  );
+    <h1 style={{color: "white"}}>CONNECTING</h1>
+  )
 }
 
 export default App;

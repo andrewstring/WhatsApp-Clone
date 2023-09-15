@@ -17,6 +17,9 @@ const Conversations = (props) => {
         setAddingChat((addingChat) => !addingChat)
     }
 
+    console.log("THISIS CHAT")
+    console.log(props.currentChatRoom)
+
 
     return (
         <nav className="Conversations">
@@ -41,9 +44,9 @@ const Conversations = (props) => {
                     key={room._id}
                     name={room.name}
                     lastMessage={room.lastMessage}
-                    updateChatRoomId={props.updateChatRoomId(room._id)}
-                    active={room._id.toString() === props.currentChatRoomId.toString()}
-                    onClick={props.updateChatRoomId}
+                    updateChatRoom={props.updateChatRoom(room)}
+                    active={room._id.toString() === props.currentChatRoom._id.toString()}
+                    onClick={props.updateChatRoom}
                     id={room._id}
                     ></ChatRoom>
                 })}

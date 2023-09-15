@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef, useEffect } from 'react'
 import "../css/Chat.css"
 import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -14,15 +14,37 @@ import { CredentialsContext } from '../Contexts/CredentialsContext'
 
 const Chat = (props) => {
 
+    const chatViewRef = useRef(null)
+    const atBottom = useRef(true)
+
     const credentials = useContext(CredentialsContext)
 
     const [ input, setInput ] = useState("")
+
+    useEffect(() => {
+        if (atBottom.current) {
+            console.log(chatViewRef)
+            chatViewRef.current.scrollTop = chatViewRef.current.scrollHeight
+        }
+    })
+
+    const handleScroll = () => {
+        console.log(chatViewRef.current.scrollTop)
+        console.log(chatViewRef.current.clientHeight)
+        console.log(chatViewRef.current.scrollHeight)
+        if(chatViewRef.current.scrollTop + chatViewRef.current.clientHeight >= chatViewRef.current.scrollHeight) {
+            console.log("jkljkljk")
+            atBottom.current = true
+        } else {
+            atBottom.current = false
+        }
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
             axios.post("/message/new", {
-                chatRoomId: props.currentChatRoomId,
+                chatRoomId: props.currentChatRoom._id,
                 messageContent: {
                     content: input,
                     sender: credentials._id,
@@ -52,8 +74,8 @@ const Chat = (props) => {
                 <div className="Chat-toolbar-chatinfo">
                     <Avatar className="Chat-toolbar-chatinfo-hAvatar"></Avatar>
                     <div className="Chat-toolbar-chatinfo-nametime">
-                        <h2>Chat One</h2>
-                        <h3>Last seen Fri, 03 2023 18:03:06 EST</h3>
+                        <h2>{props.currentChatRoom.name}</h2>
+                        <h3>{`Last Seen: ${props.currentChatRoom.lastMessageDate}`}</h3>
                     </div>
                 </div>
                 <div className="Chat-toolbar-buttons">
@@ -63,7 +85,10 @@ const Chat = (props) => {
 
                 </div>
             </div>
-            <div className="Chat-view">
+            <div
+            className="Chat-view"
+            ref={chatViewRef}
+            onScroll={handleScroll}>
                 {props.messages.map(message => {
                     return <Message message={message}></Message>
                 })}
