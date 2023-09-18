@@ -82,6 +82,8 @@ const Modal = ({type, handleAddChat}) => {
         }
     }
 
+    const handleExit = () => handleAddChat()
+
     if (type === "addChat") {
         return (
             <div className="Modal Modal-addChat">
@@ -124,6 +126,7 @@ const Modal = ({type, handleAddChat}) => {
                         </div>
                     </form>
                 </div>
+                <a onClick={handleExit}>X</a>
             </div>
         )
     }

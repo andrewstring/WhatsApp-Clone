@@ -2,7 +2,8 @@
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-around; }
+  justify-content: space-around;
+  border-top: solid darkblue 1px; }
 
 .ChatRoom:hover {
   background-color: gray; }
@@ -18,10 +19,18 @@
   overflow: hidden; }
 
 .ChatRoom-overview h2, .ChatRoom-overview p {
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
 
 .ChatRoom-active, .ChatRoom-active:hover {
   background-color: green; }
+
+@media only screen and (max-width: 1000px) {
+  .ChatRoom-Avatar {
+    display: none; }
+
+  .ChatRoom {
+    justify-content: flex-start; } }
 
 /*# sourceMappingURL=ChatRoom.css.map */

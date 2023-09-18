@@ -4,6 +4,7 @@ import ChatRoom from './ChatRoom'
 
 // Components
 import Modal from './Modal'
+import Options from './Options'
 
 // Material UI
 import { Avatar } from '@mui/material'
@@ -12,25 +13,44 @@ import MessageIcon from '@mui/icons-material/Message'
 
 const Conversations = (props) => {
 
+    const inputBar = useRef(null)
+    const handleFocusInputBar = (e) => {
+        e.preventDefault()
+        if (!(document.activeElement === inputBar.current)) {
+            inputBar.current.focus()
+        }
+    }
+
     const [ addingChat, setAddingChat ] = useState(false)
     const handleAddChat = () => {
         setAddingChat((addingChat) => !addingChat)
+    }
+
+    const [ avatarOptions, setAvatarOptions ] = useState(false)
+    const handleAvatarOptions = () => {
+        setAvatarOptions((avatarOptions) => !avatarOptions)
     }
 
     return (
         <nav className="Conversations">
             <div className="Conversations-toolbar">
                 <div className="Conversations-toolbar-avatar">
-                    <a><Avatar></Avatar></a>
+                    <a onClick={handleAvatarOptions}><Avatar></Avatar></a>
+                    {avatarOptions && <Options handleExit={handleAvatarOptions}></Options>}
                 </div>
                 <div className="Conversations-toolbar-buttons">
-                    <a><SearchIcon className="Conversations-icon"></SearchIcon></a>
-                    <a><MessageIcon className="Conversations-icon"></MessageIcon></a>
+                    <a onClick={(e) => handleFocusInputBar(e)}><SearchIcon  
+                    className="Conversations-icon"></SearchIcon></a>
+                    {/* <a><MessageIcon className="Conversations-icon"></MessageIcon></a> */}
                 </div>
             </div>
-            <div className="Conversations-search">
+            <div
+            className="Conversations-search"
+            onClick={(e) => handleFocusInputBar(e)}>
                 <a><SearchIcon className="Conversations-icon"></SearchIcon></a>
-                <input className="Conversations-search-input" placeholder="Search for message"></input>
+                <input className="Conversations-search-input" 
+                ref={inputBar}
+                placeholder="Search for message"></input>
             </div>
             <div className="Conversations-list">
                 <h2 className="Conversations-list-add" onClick={handleAddChat}>

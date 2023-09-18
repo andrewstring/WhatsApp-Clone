@@ -9,8 +9,12 @@ import MicIcon from '@mui/icons-material/Mic'
 
 import axios from 'axios'
 
+// util func
+import { getDate } from '../util/date'
+
 import Message from './Message'
 import { CredentialsContext } from '../Contexts/CredentialsContext'
+import Options from './Options'
 
 const Chat = (props) => {
 
@@ -68,18 +72,10 @@ const Chat = (props) => {
     const send = () => {
     }
 
-
-
-    // TODO IMPROVE THIS AND MOVE IT OUT TO UTIL
-    const getDate = (dateProp) => {
-        const today = new Date()
-        const date = new Date(dateProp)
-        if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getFullYear() == date.getFullYear()) {
-            return date.getTime()
-        }
+    const [ chatAvatarOptions, setChatAvatarOptions] = useState(false)
+    const handleChatAvatarOptions = () => {
+        setChatAvatarOptions((chatAvatarOptions => !chatAvatarOptions))
     }
-    const date = new Date(props.currentChatRoom.lastMessageDate)
-    if (date.isToday)
     
 
     return (
@@ -87,10 +83,13 @@ const Chat = (props) => {
         <div className="Chat">
             <div className="Chat-toolbar">
                 <div className="Chat-toolbar-chatinfo">
-                    <Avatar className="Chat-toolbar-chatinfo-Avatar"></Avatar>
+                    <Avatar className="Chat-toolbar-chatinfo-Avatar"
+                    onClick={handleChatAvatarOptions}
+                    ></Avatar>
+                    {chatAvatarOptions && <Options handleExit={handleChatAvatarOptions}></Options>}
                     <div className="Chat-toolbar-chatinfo-nametime">
                         <h2>{props.currentChatRoom.name}</h2>
-                        <h3>{`Last Seen: ${props.currentChatRoom.lastMessageDate}`}</h3>
+                        <h3>{`Last Seen: ${getDate(props.currentChatRoom.lastMessageDate)}`}</h3>
                     </div>
                 </div>
                 <div className="Chat-toolbar-buttons">

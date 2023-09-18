@@ -3,9 +3,11 @@
     flex-direction: column;
     width: 70%;
 }
+
 .Chat-toolbar {
     display: flex;
     flex-direction: row;
+    position: relative;
     background-color: #041c52;
     color: white;
     height: 4%;
@@ -15,6 +17,7 @@
 }
 
 .Chat-toolbar-chatinfo {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -22,6 +25,7 @@
 }
 .Chat-toolbar-chatinfo-Avatar {
     margin: 1em;
+    width: 10%;
 }
 .Chat-toolbar-chatinfo-nametime {
     flex-grow: 1;
@@ -29,11 +33,12 @@
     margin: 1em;
 }
 .Chat-toolbar-chatinfo-nametime h2, .Chat-toolbar-chatinfo-nametime h3 {
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .Chat-toolbar-buttons {
-    width: 30%;
+    width: 15%;
     min-width: 105px;
 }
 

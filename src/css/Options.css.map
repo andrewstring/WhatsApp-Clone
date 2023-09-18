@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,QAAS;EACL,QAAQ,EAAE,QAAQ;EAClB,gBAAgB,EAAE,GAAG;EACrB,OAAO,EAAE,GAAG;EACZ,GAAG,EAAE,CAAC;EACN,IAAI,EAAE,CAAC",
+"sources": ["../sass/Options.scss"],
+"names": [],
+"file": "Options.css"
+}

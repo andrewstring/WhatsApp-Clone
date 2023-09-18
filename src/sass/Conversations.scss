@@ -1,6 +1,7 @@
+@import "breakpoints";
+
 .Conversations {
     width: 30%;
-    min-width: 300px;
     background-color: #0f48a1;
     display: flex;
     flex-direction: column;
@@ -9,15 +10,13 @@
 .Conversations-toolbar {
     display: flex;
     justify-content: space-between;
+    position: relative;
     align-items: center;
     flex-direction: row;
     background-color: #1b218e;
     padding: .8em 1.4em;
 }
-.Conversations-toolbar-avatar {
-}
-.Conversations-toolbar-buttons {
-}
+
 .Conversations-icon {
     color: gray;
     font-size: 1.5rem !important;
@@ -31,6 +30,9 @@
     flex-direction: row;
     padding: .8em 1.4em;
     margin: 10px 10px;
+}
+.Conversations-search:focus-within, .Conversations-search:active {
+    outline: solid white .3em;
 }
 .Conversations-search-input {
     flex-grow: 1;

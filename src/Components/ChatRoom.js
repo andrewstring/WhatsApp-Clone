@@ -4,6 +4,8 @@ import { Avatar } from '@mui/material'
 
 
 const ChatRoom = (props) => {
+    console.log("PROPPY")
+    console.log(props)
 
     return (
         <div className={"ChatRoom" + (props.active ? " ChatRoom-active" : "")} onClick={props.updateChatRoom} id={props.id}>
@@ -11,8 +13,9 @@ const ChatRoom = (props) => {
                 <Avatar></Avatar>
             </div>
             <div className="ChatRoom-overview">
-                <h2>{props.name}</h2>
-                <p>{props.lastMessage}</p>
+                <h2>{props.name || "*No Name!"}</h2>
+                <p>Last Message:</p>
+                <p>{props.lastMessage || "Start Chatting!"}</p>
             </div>
         </div>
     )
