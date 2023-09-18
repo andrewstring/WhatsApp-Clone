@@ -36,7 +36,9 @@ const Conversations = (props) => {
             <div className="Conversations-toolbar">
                 <div className="Conversations-toolbar-avatar">
                     <a onClick={handleAvatarOptions}><Avatar></Avatar></a>
-                    {avatarOptions && <Options handleExit={handleAvatarOptions}></Options>}
+                    {avatarOptions && <Options
+                    side="left"
+                    handleExit={handleAvatarOptions}></Options>}
                 </div>
                 <div className="Conversations-toolbar-buttons">
                     <a onClick={(e) => handleFocusInputBar(e)}><SearchIcon  

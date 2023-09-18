@@ -25,6 +25,37 @@ const Chat = (props) => {
 
     const [ input, setInput ] = useState("")
 
+    const [ chatSearch, setChatSearch ] = useState(false)
+    const [ chatSearchInput, setChatSearchInput ] = useState("")
+    const [ chatSearchQuery, setChatSearchQuery ] = useState([])
+    const handleChatSearchInput = (e) => {
+        e.preventDefault()
+        setChatSearchInput(e.target.value)
+        handleChatSearchQuery(e.target.value)
+    }
+    const handleChatSearch = () => {
+        if (chatSearch) {
+            setChatSearchQuery([])
+            setChatSearchInput("")
+        }
+        setChatSearch((chatSearch) => !chatSearch)
+    }
+    const handleChatSearchQuery = (query) => {
+        console.log("MESSAGES")
+        console.log(props.messages)
+        const messageQuery = props.messages.filter((message) => {
+                return (
+                    message.senderName.toLowerCase().includes(query.toLowerCase()) ||
+                    message.content.toLowerCase().includes(query.toLowerCase()) ||
+                    getDate(message.content.timeSent).toLowerCase().includes(query.toLowerCase())
+                )
+            }
+        )
+        console.log(messageQuery)
+        
+        setChatSearchQuery(messageQuery)
+    }
+
     useEffect(() => {
         if (atBottom.current) {
             console.log(chatViewRef)
@@ -83,27 +114,44 @@ const Chat = (props) => {
         <div className="Chat">
             <div className="Chat-toolbar">
                 <div className="Chat-toolbar-chatinfo">
-                    <Avatar className="Chat-toolbar-chatinfo-Avatar"
-                    onClick={handleChatAvatarOptions}
-                    ></Avatar>
-                    {chatAvatarOptions && <Options handleExit={handleChatAvatarOptions}></Options>}
+                    <div className="Chat-toolbar-chatinfo-Avatar">
+                        <Avatar
+                        onClick={handleChatAvatarOptions}
+                        ></Avatar>
+                    </div>
+                    
+                    {chatAvatarOptions && <Options 
+                    side="left"
+                    handleExit={handleChatAvatarOptions}></Options>}
                     <div className="Chat-toolbar-chatinfo-nametime">
                         <h2>{props.currentChatRoom.name}</h2>
                         <h3>{`Last Seen: ${getDate(props.currentChatRoom.lastMessageDate)}`}</h3>
                     </div>
                 </div>
                 <div className="Chat-toolbar-buttons">
-                    <SearchIcon className="Chat-icon"></SearchIcon>
+                    <SearchIcon
+                    onClick={handleChatSearch}
+                    className="Chat-icon"></SearchIcon>
                     <AttachFileIcon className="Chat-icon"></AttachFileIcon>
                     <MoreVertIcon className="Chat-icon"></MoreVertIcon>
 
                 </div>
             </div>
+            {chatSearch && <div className="Chat-toolbar-search">
+                <input
+                placeholder="Search messages in chat"
+                value={chatSearchInput}
+                onChange={(e) => handleChatSearchInput(e)}
+                ></input>
+            </div>}
             <div
             className="Chat-view"
             ref={chatViewRef}
             onScroll={handleScroll}>
-                {props.messages.map(message => {
+                {chatSearchQuery.length ? chatSearchQuery.map(message => {
+                    return <Message message={message}></Message>
+                }) 
+                : props.messages.map(message => {
                     return <Message message={message}></Message>
                 })}
             </div>

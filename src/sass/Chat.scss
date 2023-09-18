@@ -25,7 +25,6 @@
 }
 .Chat-toolbar-chatinfo-Avatar {
     margin: 1em;
-    width: 10%;
 }
 .Chat-toolbar-chatinfo-nametime {
     flex-grow: 1;
@@ -38,7 +37,9 @@
     text-overflow: ellipsis;
 }
 .Chat-toolbar-buttons {
-    width: 15%;
+    width: 10%;
+    display: flex;
+    justify-content: space-around;
     min-width: 105px;
 }
 

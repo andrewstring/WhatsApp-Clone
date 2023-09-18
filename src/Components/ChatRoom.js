@@ -14,7 +14,7 @@ const ChatRoom = (props) => {
             </div>
             <div className="ChatRoom-overview">
                 <h2>{props.name || "*No Name!"}</h2>
-                <p>Last Message:</p>
+                {props.lastMessage && <p>Last Message:</p>}
                 <p>{props.lastMessage || "Start Chatting!"}</p>
             </div>
         </div>
