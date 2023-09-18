@@ -10,7 +10,7 @@ import MicIcon from '@mui/icons-material/Mic'
 import axios from 'axios'
 
 // util func
-import { getDate } from '../util/date'
+import { getDate, getTime } from '../util/date'
 
 import Message from './Message'
 import { CredentialsContext } from '../Contexts/CredentialsContext'
@@ -27,7 +27,7 @@ const Chat = (props) => {
 
     const [ chatSearch, setChatSearch ] = useState(false)
     const [ chatSearchInput, setChatSearchInput ] = useState("")
-    const [ chatSearchQuery, setChatSearchQuery ] = useState([])
+    const [ chatSearchQuery, setChatSearchQuery ] = useState("")
     const handleChatSearchInput = (e) => {
         e.preventDefault()
         setChatSearchInput(e.target.value)
@@ -35,7 +35,7 @@ const Chat = (props) => {
     }
     const handleChatSearch = () => {
         if (chatSearch) {
-            setChatSearchQuery([])
+            setChatSearchQuery("")
             setChatSearchInput("")
         }
         setChatSearch((chatSearch) => !chatSearch)
@@ -47,7 +47,7 @@ const Chat = (props) => {
                 return (
                     message.senderName.toLowerCase().includes(query.toLowerCase()) ||
                     message.content.toLowerCase().includes(query.toLowerCase()) ||
-                    getDate(message.content.timeSent).toLowerCase().includes(query.toLowerCase())
+                    getTime(message.timeSent).toLowerCase().includes(query.toLowerCase())
                 )
             }
         )
@@ -58,15 +58,11 @@ const Chat = (props) => {
 
     useEffect(() => {
         if (atBottom.current) {
-            console.log(chatViewRef)
             chatViewRef.current.scrollTop = chatViewRef.current.scrollHeight
         }
     })
 
     const handleScroll = () => {
-        console.log(chatViewRef.current.scrollTop)
-        console.log(chatViewRef.current.clientHeight)
-        console.log(chatViewRef.current.scrollHeight)
         if(chatViewRef.current.scrollTop + chatViewRef.current.clientHeight >= chatViewRef.current.scrollHeight) {
             console.log("jkljkljk")
             atBottom.current = true
@@ -148,7 +144,7 @@ const Chat = (props) => {
             className="Chat-view"
             ref={chatViewRef}
             onScroll={handleScroll}>
-                {chatSearchQuery.length ? chatSearchQuery.map(message => {
+                {(typeof chatSearchQuery !== "string") ? chatSearchQuery.map(message => {
                     return <Message message={message}></Message>
                 }) 
                 : props.messages.map(message => {

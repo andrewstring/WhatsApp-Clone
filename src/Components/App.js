@@ -118,6 +118,9 @@ function App() {
             console.log("CHANGEEE")
             console.log(change)
             if(change.operationType === "insert") {
+              if (!currentChatRoom) {
+                setCurrentChatRoom(change.fullDocument)
+              }
               setChatRooms((chatRooms) => [change.fullDocument, ...chatRooms])
             } else if (change.operationType === "update") {
               setChatRooms((chatRooms) => {
