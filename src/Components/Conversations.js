@@ -17,10 +17,6 @@ const Conversations = (props) => {
         setAddingChat((addingChat) => !addingChat)
     }
 
-    console.log("THISIS CHAT")
-    console.log(props.currentChatRoom)
-
-
     return (
         <nav className="Conversations">
             <div className="Conversations-toolbar">

@@ -68,11 +68,26 @@ const Chat = (props) => {
     const send = () => {
     }
 
+
+
+    // TODO IMPROVE THIS AND MOVE IT OUT TO UTIL
+    const getDate = (dateProp) => {
+        const today = new Date()
+        const date = new Date(dateProp)
+        if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getFullYear() == date.getFullYear()) {
+            return date.getTime()
+        }
+    }
+    const date = new Date(props.currentChatRoom.lastMessageDate)
+    if (date.isToday)
+    
+
     return (
+
         <div className="Chat">
             <div className="Chat-toolbar">
                 <div className="Chat-toolbar-chatinfo">
-                    <Avatar className="Chat-toolbar-chatinfo-hAvatar"></Avatar>
+                    <Avatar className="Chat-toolbar-chatinfo-Avatar"></Avatar>
                     <div className="Chat-toolbar-chatinfo-nametime">
                         <h2>{props.currentChatRoom.name}</h2>
                         <h3>{`Last Seen: ${props.currentChatRoom.lastMessageDate}`}</h3>

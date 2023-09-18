@@ -9,12 +9,18 @@
 }
 .ChatRoom-Avatar {
     width: 10%;
+    min-width: 60px;
 }
 
 .ChatRoom-overview {
     width: 80%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+}
+.ChatRoom-overview h2, .ChatRoom-overview p {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .ChatRoom-active, .ChatRoom-active:hover {
     background-color: green;

@@ -33,8 +33,11 @@ const Modal = ({type, handleAddChat}) => {
         setMemberInput(e.target.value)
         let accounts = []
         if (e.target.value) {
+            // add escaped values to handle errors in regex parsing
+            const escapedInput = e.target.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const pattern = new RegExp(`\\b${escapedInput}\\w*\\b`, 'i');
             accounts = await accountsCollection.find({
-                "username": { $regex: e.target.value, $options: 'i'}
+                "username": pattern
             })
             accounts = accounts.filter(account => account._id.toString() != credentials._id)
         }
@@ -44,10 +47,14 @@ const Modal = ({type, handleAddChat}) => {
         setMemberQuery(accounts)
     }
 
-    const handleAddMember = (member) => {
-        //CAUSING INFINITE LOOP...LOOK INTO
-        // setMembers((members) => [member.usename, ...members])
-        console.log(member)
+    const handleAddMember = (e,member) => {
+        e.preventDefault()
+        setMembers((members) => {
+            if (!members.includes(member)) {
+                return [member, ...members]
+            }
+            return [...members]
+        })
     }
 
     const handleChange = (inputType, e) => {
@@ -62,13 +69,15 @@ const Modal = ({type, handleAddChat}) => {
             try {
                 await axios.post("/chatroom/new", {
                     name: inputOne,
-                    id: credentials._id
+                    id: credentials._id,
+                    members: members.map(member => member._id)
                 })
                 setError(false)
                 setInputOne("")
                 handleAddChat()
             } catch (e) {
-                setError(true)
+                console.log(e.response.data)
+                setError("Chat room already existsll")
             }
         }
     }
@@ -80,7 +89,7 @@ const Modal = ({type, handleAddChat}) => {
                     <h3>MEMBERS ADDED TO CHAT:</h3>
                     {members.length ?
                     members.map((member) => {
-                        <p>member.username</p>
+                        return <p>{member.username}</p>
                     })
                     : <p>None yet</p>}
                     <br></br>
@@ -95,11 +104,7 @@ const Modal = ({type, handleAddChat}) => {
                         id="addChat"
                         type="submit"
                         ></input>
-                        <input
-                        id="moveAddMembers"
-                        type="submit"
-                        ></input>
-                        {error && <p>chatRoomAlreadyExists</p>}
+                        {error && <p>{error}</p>}
                     </form>
 
                 </div>
@@ -114,7 +119,7 @@ const Modal = ({type, handleAddChat}) => {
                         ></input>
                         <div className="Modal-member-query">
                             {memberQuery.length ? memberQuery.map(member => 
-                                <button onClick={handleAddMember(member)}>{member.username}</button>)
+                                <button onClick={(e) => handleAddMember(e,member)}>{member.username}</button>)
                             : <p></p>}
                         </div>
                     </form>

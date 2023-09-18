@@ -15,13 +15,26 @@
 }
 
 .Chat-toolbar-chatinfo {
-    flex-grow: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
+    overflow: hidden;
 }
 .Chat-toolbar-chatinfo-Avatar {
     margin: 1em;
+}
+.Chat-toolbar-chatinfo-nametime {
+    flex-grow: 1;
+    min-width: 0;
+    margin: 1em;
+}
+.Chat-toolbar-chatinfo-nametime h2, .Chat-toolbar-chatinfo-nametime h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.Chat-toolbar-buttons {
+    width: 30%;
+    min-width: 105px;
 }
 
 .Chat-view {
