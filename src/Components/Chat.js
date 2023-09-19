@@ -31,6 +31,7 @@ const Chat = (props) => {
     const [ chatSearchInput, setChatSearchInput ] = useState("")
     const [ chatSearchQuery, setChatSearchQuery ] = useState("")
     const [ chatAvatarOptions, setChatAvatarOptions] = useState(false)
+    const [ chatToolbarOptions, setChatToolbarOptions ] = useState(false)
 
     // ref initialization
     const chatViewRef = useRef(null)
@@ -101,6 +102,9 @@ const Chat = (props) => {
     const handleChatAvatarOptions = () => {
         setChatAvatarOptions((chatAvatarOptions => !chatAvatarOptions))
     }
+    const handleChatToolbarOptions = () => {
+        setChatToolbarOptions((chatToolbarOptions => !chatToolbarOptions))
+    }
     const send = () => {
     }
 
@@ -136,7 +140,13 @@ const Chat = (props) => {
                     onClick={handleChatSearch}
                     className="Chat-icon"></SearchIcon>
                     <AttachFileIcon className="Chat-icon"></AttachFileIcon>
-                    <MoreVertIcon className="Chat-icon"></MoreVertIcon>
+                    <MoreVertIcon 
+                    onClick={handleChatToolbarOptions}
+                    className="Chat-icon"></MoreVertIcon>
+
+                    {chatToolbarOptions && <Options
+                    side="right"
+                    handleExit={handleChatToolbarOptions}></Options>}
 
                 </div>
             </div>
