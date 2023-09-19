@@ -1,34 +1,37 @@
+// react import
 import { useState, useContext } from 'react'
 
-import { CredentialsContext } from '../Contexts/CredentialsContext'
-
+// css import
 import "../css/Modal.css"
 
-// Axios import
-import axios from "axios"
+// context import
+import { CredentialsContext } from '../Contexts/CredentialsContext'
 import { MongodbContext } from '../Contexts/MongodbContext'
 
-// Axios setup
+// library import
+import axios from "axios"
+
+// library setup
 axios.defaults.baseURL = "http://localhost:3005"
 
 
 const Modal = ({type, handleAddChat}) => {
-    // State initialization
+
+    // state initialization
     const [ inputOne, setInputOne ] = useState("")
     const [ error, setError ] = useState(false)
-
-    // Add Members state initialization
     const [ memberQuery, setMemberQuery ] = useState([])
     const [ memberInput, setMemberInput ] = useState("")
     const [ members, setMembers ] = useState([])
 
-    // Context initialization
+    // context initialization
     const credentials = useContext(CredentialsContext)
     const mongodb = useContext(MongodbContext)
-    console.log(credentials)
 
+    // collection initialization
     const accountsCollection = mongodb.db("test").collection("accounts")
 
+    // prop/helper functions
     const handleMemberQuery = async (e) => {
         setMemberInput(e.target.value)
         let accounts = []
@@ -41,12 +44,8 @@ const Modal = ({type, handleAddChat}) => {
             })
             accounts = accounts.filter(account => account._id.toString() != credentials._id)
         }
-        console.log("ACCOUNTS")
-        console.log(accounts)
-        console.log(e.target.value)
         setMemberQuery(accounts)
     }
-
     const handleAddMember = (e,member) => {
         e.preventDefault()
         setMembers((members) => {
@@ -56,7 +55,6 @@ const Modal = ({type, handleAddChat}) => {
             return [...members]
         })
     }
-
     const handleChange = (inputType, e) => {
         if (inputType === "addChat") {
             setInputOne(e.target.value)
@@ -81,9 +79,9 @@ const Modal = ({type, handleAddChat}) => {
             }
         }
     }
-
     const handleExit = () => handleAddChat()
 
+    // rendering
     if (type === "addChat") {
         return (
             <div className="Modal Modal-addChat">
@@ -130,7 +128,6 @@ const Modal = ({type, handleAddChat}) => {
             </div>
         )
     }
-
 }
 
 

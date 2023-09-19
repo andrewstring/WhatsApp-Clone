@@ -1,12 +1,15 @@
+// react import
 import { useState } from 'react'
+
+// css import
 import "../css/ChatRoom.css"
+
+// component import
 import { Avatar } from '@mui/material'
 
 
 const ChatRoom = (props) => {
-    console.log("PROPPY")
-    console.log(props)
-
+    // rendering
     return (
         <div className={"ChatRoom" + (props.active ? " ChatRoom-active" : "")} onClick={props.updateChatRoom} id={props.id}>
             <div className="ChatRoom-Avatar">

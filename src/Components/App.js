@@ -1,43 +1,56 @@
-import '../css/App.css';
+// react import
 import { useState, useEffect, useRef } from "react"
 
-// Components
+// css import
+import '../css/App.css';
+
+// components import
 import Login from './Login';
 import Conversations from './Conversations';
 import Chat from "./Chat";
 
-// Context
+// context import
 import { CredentialsContext } from '../Contexts/CredentialsContext';
 import { MongodbContext } from '../Contexts/MongodbContext';
 
-// Realm import
+// library import
 import * as Realm from "realm-web";
-// Axios import
 import axios from 'axios';
 
-// Realm setup
+// library setup
 const realmApp = new Realm.App({ id: "whatsapp-clone-nrzrz"})
-// Axios setup
 axios.defaults.baseURL = "http://localhost:3005"
 
 function App() {
 
-  // chatRooms and messages state variables
+  // state variable initialization
   const [ credentials, setCredentials ] = useState("invalid")
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
   const [ chatRooms, setChatRooms] = useState([])
   const [ currentChatRoom, setCurrentChatRoom ] = useState("")
   const [ messages, setMessages ] = useState([])
-
-  // Mongo state variables
   const [ mongodb, setMongodb ] = useState()
 
+  // ref initialization
   const chatRoomMonitoring = useRef(false)
 
+  // prop/helper functions
   const appSetCredentials = (cred) => {
     setCredentials(cred)
   }
+  const updateChatRoom = (id) => {
+    return () => {
+      setCurrentChatRoom(id)
+    }
+  }
+  const addMessage = (message) => {
+    if(message.chatRoom.toString() === currentChatRoom._id.toString()) {
+      message.timeSent = message.timeSent.toString()
+      setMessages((messages) => [...messages, message])
+    }
+  }
 
+  // useEffects
   useEffect(() => {
     const connectDB = async () => {
       try {
@@ -95,18 +108,7 @@ function App() {
     }
   }, [currentChatRoom._id])
 
-  const updateChatRoom = (id) => {
-    return () => {
-      setCurrentChatRoom(id)
-    }
-  }
 
-  const addMessage = (message) => {
-    if(message.chatRoom.toString() === currentChatRoom._id.toString()) {
-      message.timeSent = message.timeSent.toString()
-      setMessages((messages) => [...messages, message])
-    }
-  }
 
   useEffect(() => {
     const monitorChatRooms = async () => {
@@ -164,6 +166,7 @@ function App() {
 
   }, [currentChatRoom._id])
 
+  // rendering
   if (credentials != "invalid" && mongodb) {
     return (
       <MongodbContext.Provider value={mongodb}>

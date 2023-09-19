@@ -1,33 +1,45 @@
+// react import
 import { useState, useContext, useRef, useEffect } from 'react'
+
+// css import
 import "../css/Chat.css"
+
+// component imports
 import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
 import MicIcon from '@mui/icons-material/Mic'
+import Options from './Options'
+import Message from './Message'
 
+// library imports
 import axios from 'axios'
 
-// util func
+// util imports
 import { getDate, getTime } from '../util/date'
 
-import Message from './Message'
+// context import
 import { CredentialsContext } from '../Contexts/CredentialsContext'
-import Options from './Options'
 
 const Chat = (props) => {
 
-    const chatViewRef = useRef(null)
-    const atBottom = useRef(true)
-
-    const credentials = useContext(CredentialsContext)
-
+    // state initialization
     const [ input, setInput ] = useState("")
-
     const [ chatSearch, setChatSearch ] = useState(false)
     const [ chatSearchInput, setChatSearchInput ] = useState("")
     const [ chatSearchQuery, setChatSearchQuery ] = useState("")
+    const [ chatAvatarOptions, setChatAvatarOptions] = useState(false)
+
+    // ref initialization
+    const chatViewRef = useRef(null)
+    const atBottom = useRef(true)
+
+    // context initialization
+    const credentials = useContext(CredentialsContext)
+
+    // prop/helper functions
     const handleChatSearchInput = (e) => {
         e.preventDefault()
         setChatSearchInput(e.target.value)
@@ -55,13 +67,6 @@ const Chat = (props) => {
         
         setChatSearchQuery(messageQuery)
     }
-
-    useEffect(() => {
-        if (atBottom.current) {
-            chatViewRef.current.scrollTop = chatViewRef.current.scrollHeight
-        }
-    })
-
     const handleScroll = () => {
         if(chatViewRef.current.scrollTop + chatViewRef.current.clientHeight >= chatViewRef.current.scrollHeight) {
             console.log("jkljkljk")
@@ -88,25 +93,27 @@ const Chat = (props) => {
             console.log(e.response.status)
             console.log(e.response.headers)
         }
-        
         setInput("")
     }
-
     const handleChange = (event) => {
         setInput(event.target.value)
     }
-
-    const send = () => {
-    }
-
-    const [ chatAvatarOptions, setChatAvatarOptions] = useState(false)
     const handleChatAvatarOptions = () => {
         setChatAvatarOptions((chatAvatarOptions => !chatAvatarOptions))
     }
-    
+    const send = () => {
+    }
 
+    // useEffects
+    useEffect(() => {
+        if (atBottom.current) {
+            chatViewRef.current.scrollTop = chatViewRef.current.scrollHeight
+        }
+    })
+
+
+    // rendering
     return (
-
         <div className="Chat">
             <div className="Chat-toolbar">
                 <div className="Chat-toolbar-chatinfo">
@@ -170,6 +177,5 @@ const Chat = (props) => {
         </div>
     )
 }
-
 
 export default Chat

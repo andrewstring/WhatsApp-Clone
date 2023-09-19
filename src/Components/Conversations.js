@@ -1,36 +1,41 @@
+// react import
 import { useEffect, useState, useRef } from 'react'
+
+// css import
 import "../css/Conversations.css"
-import ChatRoom from './ChatRoom'
 
-// Components
-import Modal from './Modal'
-import Options from './Options'
-
-// Material UI
+// components import
 import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import MessageIcon from '@mui/icons-material/Message'
+import ChatRoom from './ChatRoom'
+import Modal from './Modal'
+import Options from './Options'
 
 const Conversations = (props) => {
 
+    // state initialization
+    const [ addingChat, setAddingChat ] = useState(false)
+    const [ avatarOptions, setAvatarOptions ] = useState(false)
+
+    // ref initialization
     const inputBar = useRef(null)
+
+    // prop/helper functions
     const handleFocusInputBar = (e) => {
         e.preventDefault()
         if (!(document.activeElement === inputBar.current)) {
             inputBar.current.focus()
         }
     }
-
-    const [ addingChat, setAddingChat ] = useState(false)
     const handleAddChat = () => {
         setAddingChat((addingChat) => !addingChat)
     }
-
-    const [ avatarOptions, setAvatarOptions ] = useState(false)
     const handleAvatarOptions = () => {
         setAvatarOptions((avatarOptions) => !avatarOptions)
     }
 
+    // rendering
     return (
         <nav className="Conversations">
             <div className="Conversations-toolbar">

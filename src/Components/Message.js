@@ -1,17 +1,20 @@
+// react import
 import { useState, useContext } from 'react'
 
-// util func
+// css import
+import "../css/Message.css"
+
+// util import
 import { getTime } from '../util/date'
 
-import "../css/Message.css"
+// context import
 import { CredentialsContext } from '../Contexts/CredentialsContext'
 
-
 const Message = (props) => {
+    // context initialization
     const credentials = useContext(CredentialsContext)
 
-    console.log(props.message)
-
+    // rendering
     return (
         <div className={"Message" + (props.message.sender.toString() === credentials._id ? " Message-sent" : "")}>
             <h2 className="Message-name">{props.message.senderName}</h2>
