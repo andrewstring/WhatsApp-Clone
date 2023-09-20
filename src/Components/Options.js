@@ -4,10 +4,21 @@ import { useState } from 'react'
 // css import
 import "../css/Options.css"
 
+// helper functions
+const getLoc = (side) => {
+    switch(side) {
+        case "top-left": {
+            return "Options-top-left"
+        }
+        case "top-right": {
+            return "Options-top-right"
+        }
+    }
+}
 
 const Options = ({side, handleExit, optionsRef}) => {
     // css positioning determination
-    const loc = side === "left" ? "Options-left" : "Options-right"
+    const loc = getLoc(side)
 
     // rendering
     return (

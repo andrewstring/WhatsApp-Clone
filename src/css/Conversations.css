@@ -48,4 +48,8 @@
 .Conversations-list-add:hover {
   background-color: red; }
 
+@media only screen and (max-width: 1000px) {
+  .Conversations {
+    display: none; } }
+
 /*# sourceMappingURL=Conversations.css.map */

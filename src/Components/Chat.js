@@ -5,6 +5,7 @@ import { useState, useContext, useRef, useEffect } from 'react'
 import "../css/Chat.css"
 
 // component imports
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer"
 import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
@@ -136,6 +137,10 @@ const Chat = (props) => {
     return (
         <div className="Chat">
             <div className="Chat-toolbar">
+                <div className="Chat-toolbar-sidebar-activate">
+                    <QuestionAnswerIcon></QuestionAnswerIcon>
+
+                </div>
                 <div className="Chat-toolbar-chatinfo">
                     <div 
                     onClick={handleChatAvatarOptions}
@@ -145,7 +150,7 @@ const Chat = (props) => {
                     
                     {chatAvatarOptions && <Options 
                     optionsRef={chatAvatarOptionsRef}
-                    side="left"
+                    side="top-left"
                     handleExit={handleChatAvatarOptions}></Options>}
                     <div className="Chat-toolbar-chatinfo-nametime">
                         <h2>{props.currentChatRoom.name}</h2>
@@ -163,7 +168,7 @@ const Chat = (props) => {
 
                     {chatToolbarOptions && <Options
                     optionsRef={chatToolbarOptionsRef}
-                    side="right"
+                    side="top-right"
                     handleExit={handleChatToolbarOptions}></Options>}
 
                 </div>

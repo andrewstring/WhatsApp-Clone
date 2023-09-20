@@ -15,6 +15,12 @@
   align-items: center;
   padding: .1em 1em; }
 
+.Chat-toolbar-sidebar-activate {
+  background-color: lightgrey;
+  padding: .5em;
+  border-radius: 50%;
+  display: none; }
+
 .Chat-toolbar-chatinfo {
   width: 100%;
   display: flex;
@@ -57,20 +63,28 @@
   background-color: white;
   height: 8%;
   min-height: 80px;
-  padding: 0em 1em; }
+  padding: 0em 1em;
+  background-color: #281c4a; }
 
 .Chat-message-input {
   flex-grow: 1;
   padding: 0px 2em; }
 
 .Chat-message-input input {
-  width: 100%; }
+  background-color: #281c4a;
+  color: white;
+  font-size: 1.3em;
+  border: solid white 2px;
+  border-radius: 5px;
+  width: 100%;
+  padding: 1em .5em; }
 
 .Chat-message-input-submit {
   display: none; }
 
 .Chat-icon {
-  font-size: 1.5rem !important;
+  font-size: 2rem !important;
+  color: white;
   padding: .1em .2em; }
 
 .Chat-toolbar-search {
@@ -83,5 +97,12 @@
   flex-grow: 1;
   border: none;
   background-color: #b8b9cf; }
+
+@media only screen and (max-width: 1000px) {
+  .Chat {
+    width: 100%; }
+
+  .Chat-toolbar-sidebar-activate {
+    display: block; } }
 
 /*# sourceMappingURL=Chat.css.map */

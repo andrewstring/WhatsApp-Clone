@@ -70,7 +70,7 @@ const Conversations = (props) => {
                     <a onClick={handleAvatarOptions}><Avatar></Avatar></a>
                     {avatarOptions && <Options
                     optionsRef={avatarOptionsRef}
-                    side="left"
+                    side="top-left"
                     handleExit={handleAvatarOptions}></Options>}
                 </div>
                 <div className="Conversations-toolbar-buttons">

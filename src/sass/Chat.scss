@@ -1,3 +1,5 @@
+@import "breakpoints";
+
 .Chat {
     display: flex;
     flex-direction: column;
@@ -16,6 +18,15 @@
     align-items: center;
     padding: .1em 1em;
 }
+
+.Chat-toolbar-sidebar-activate {
+    background-color: lightgrey;
+    padding: .5em;
+    border-radius: 50%;
+    display: none;
+}
+
+
 
 .Chat-toolbar-chatinfo {
     width: 100%;
@@ -61,20 +72,28 @@
     height: 8%;
     min-height: 80px;
     padding: 0em 1em;
+    background-color: #281c4a;
 }
 .Chat-message-input {
     flex-grow: 1;
     padding: 0px 2em;
 }
 .Chat-message-input input {
+    background-color: #281c4a;
+    color: white;
+    font-size: 1.3em;
+    border: solid white 2px;
+    border-radius: 5px;
     width: 100%;    
+    padding: 1em .5em;
 }
 .Chat-message-input-submit {
     display: none;
 }
 
 .Chat-icon {
-    font-size: 1.5rem !important;
+    font-size: 2rem !important;
+    color: white;
     padding: .1em .2em;
 }
 
@@ -88,4 +107,13 @@
     flex-grow: 1;
     border: none;
     background-color: #b8b9cf;
+}
+
+@media only screen and (max-width: $small) {
+    .Chat {
+        width: 100%;
+    }
+    .Chat-toolbar-sidebar-activate {
+        display: block;
+    }
 }
