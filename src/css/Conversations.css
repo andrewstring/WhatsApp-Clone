@@ -50,6 +50,9 @@
 
 @media only screen and (max-width: 1000px) {
   .Conversations {
-    display: none; } }
+    position: absolute;
+    opacity: 0;
+    width: 65%;
+    z-index: 1; } }
 
 /*# sourceMappingURL=Conversations.css.map */
