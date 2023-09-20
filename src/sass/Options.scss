@@ -1,0 +1,17 @@
+.Options {
+    position: absolute;
+    background-color: darkgrey;
+    border: solid darkblue 3px;
+    padding: 1em;
+    top: 0;
+    color: black;
+    font-size: 1rem;
+}
+
+.Options-top-left {
+    left: 0;
+}
+
+.Options-top-right {
+    right: 0;
+}

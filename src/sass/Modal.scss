@@ -1,0 +1,15 @@
+.Modal {
+    z-index: 1;
+    position: fixed;
+    background-color: white;
+    border: solid black 20px;
+    border-radius: 10px;
+    padding: 2em;
+    width: 30%;
+    min-width: 500px;
+    backdrop-filter: blur(10px);
+}
+
+.Modal-addChat {
+    display: flex;
+}

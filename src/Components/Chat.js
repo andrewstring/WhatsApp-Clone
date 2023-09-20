@@ -1,30 +1,88 @@
-import { useState } from 'react'
+// react import
+import { useState, useContext, useRef, useEffect } from 'react'
+
+// css import
 import "../css/Chat.css"
+
+// component imports
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer"
 import { Avatar } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
 import MicIcon from '@mui/icons-material/Mic'
-
-import axios from 'axios'
-
+import Options from './Options'
 import Message from './Message'
 
-const Chat = (props) => {
+// library imports
+import axios from 'axios'
 
+// util imports
+import { getDate, getTime } from '../util/date'
+
+// context import
+import { CredentialsContext } from '../Contexts/CredentialsContext'
+import { handleClickOutside } from '../util/nav'
+
+const Chat = ({ currentChatRoom, messages }) => {
+
+    // state initialization
     const [ input, setInput ] = useState("")
+    const [ chatSearch, setChatSearch ] = useState(false)
+    const [ chatSearchInput, setChatSearchInput ] = useState("")
+    const [ chatSearchQuery, setChatSearchQuery ] = useState("")
+    const [ chatAvatarOptions, setChatAvatarOptions] = useState(false)
+    const [ chatToolbarOptions, setChatToolbarOptions ] = useState(false)
 
-    console.log(props.currentChatRoomId)
+    // ref initialization
+    const chatViewRef = useRef(null)
+    const atBottom = useRef(true)
+    const chatAvatarOptionsRef = useRef(null)
+    const chatToolbarOptionsRef = useRef(null)
+
+    // context initialization
+    const credentials = useContext(CredentialsContext)
+
+    // prop/helper functions
+    const handleChatSearchInput = (e) => {
+        e.preventDefault()
+        setChatSearchInput(e.target.value)
+        handleChatSearchQuery(e.target.value)
+    }
+    const handleChatSearch = () => {
+        if (chatSearch) {
+            setChatSearchQuery("")
+            setChatSearchInput("")
+        }
+        setChatSearch((chatSearch) => !chatSearch)
+    }
+    const handleChatSearchQuery = (query) => {
+        const messageQuery = messages.filter((message) => {
+                return (
+                    message.content.toLowerCase().includes(query.toLowerCase())
+                )
+            }
+        )
+        setChatSearchQuery(messageQuery)
+    }
+    const handleScroll = () => {
+        if(chatViewRef.current.scrollTop + chatViewRef.current.clientHeight >= chatViewRef.current.scrollHeight) {
+            console.log("jkljkljk")
+            atBottom.current = true
+        } else {
+            atBottom.current = false
+        }
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
             axios.post("/message/new", {
-                chatRoomId: props.currentChatRoomId,
+                chatRoomId: currentChatRoom._id,
                 messageContent: {
                     content: input,
-                    sender: "John",
+                    sender: credentials._id,
                     received: true,
                 }
             })
@@ -32,41 +90,105 @@ const Chat = (props) => {
             console.log("ERROR with Axios")
             console.log(e.response.data)
             console.log(e.response.status)
-            console.log(e.response.headers)
         }
-        
         setInput("")
     }
-
     const handleChange = (event) => {
         setInput(event.target.value)
-        console.log(input)
     }
-
+    const handleChatAvatarOptions = () => {
+        setChatAvatarOptions((chatAvatarOptions => !chatAvatarOptions))
+    }
+    const handleChatToolbarOptions = () => {
+        setChatToolbarOptions((chatToolbarOptions => !chatToolbarOptions))
+    }
     const send = () => {
-        // setInput("")
-        console.log("sent")
+    }
+    const handleClickOutsideChatAvatarOptions = (e) => {
+        handleClickOutside(chatAvatarOptionsRef, e, () => {
+            handleChatAvatarOptions()
+        })
+    }
+    const handleClickOutsideChatToolbarOptions = (e) => {
+        handleClickOutside(chatToolbarOptionsRef, e, () => {
+            handleChatToolbarOptions()
+        })
     }
 
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutsideChatAvatarOptions)
+        document.addEventListener("mousedown", handleClickOutsideChatToolbarOptions)
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsideChatAvatarOptions)
+            document.removeEventListener("mousedown", handleClickOutsideChatToolbarOptions)
+        }
+    })
+
+    // useEffects
+    useEffect(() => {
+        if (atBottom.current) {
+            chatViewRef.current.scrollTop = chatViewRef.current.scrollHeight
+        }
+    })
+
+
+    // rendering
     return (
         <div className="Chat">
             <div className="Chat-toolbar">
+                <div className="Chat-toolbar-sidebar-activate">
+                    <QuestionAnswerIcon></QuestionAnswerIcon>
+
+                </div>
                 <div className="Chat-toolbar-chatinfo">
-                    <Avatar className="Chat-toolbar-chatinfo-hAvatar"></Avatar>
+                    <div 
+                    onClick={handleChatAvatarOptions}
+                    className="Chat-toolbar-chatinfo-Avatar clickable">
+                        <Avatar></Avatar>
+                    </div>
+                    
+                    {chatAvatarOptions && <Options 
+                    optionsRef={chatAvatarOptionsRef}
+                    side="top-left"
+                    handleExit={handleChatAvatarOptions}></Options>}
                     <div className="Chat-toolbar-chatinfo-nametime">
-                        <h2>Chat One</h2>
-                        <h3>Last seen Fri, 03 2023 18:03:06 EST</h3>
+                        <h2>{currentChatRoom.name}</h2>
+                        <h3>{`Last Seen: ${getDate(currentChatRoom.lastMessageDate)}`}</h3>
                     </div>
                 </div>
                 <div className="Chat-toolbar-buttons">
-                    <SearchIcon className="Chat-icon"></SearchIcon>
-                    <AttachFileIcon className="Chat-icon"></AttachFileIcon>
-                    <MoreVertIcon className="Chat-icon"></MoreVertIcon>
+                    <SearchIcon
+                    onClick={handleChatSearch}
+                    className="Chat-icon clickable"></SearchIcon>
+                    <AttachFileIcon className="Chat-icon clickable"></AttachFileIcon>
+                    <MoreVertIcon 
+                    onClick={handleChatToolbarOptions}
+                    className="Chat-icon clickable"></MoreVertIcon>
+
+                    {chatToolbarOptions && <Options
+                    optionsRef={chatToolbarOptionsRef}
+                    side="top-right"
+                    handleExit={handleChatToolbarOptions}></Options>}
 
                 </div>
             </div>
-            <div className="Chat-view">
-                {props.messages.map(message => {
+            {chatSearch && <div className="Chat-toolbar-search">
+                <input
+                placeholder="Search messages in chat"
+                value={chatSearchInput}
+                className="Chat-toolbar-search-input"
+                onChange={(e) => handleChatSearchInput(e)}
+                ></input>
+            </div>}
+            <div
+            className="Chat-view"
+            ref={chatViewRef}
+            onScroll={handleScroll}>
+                {(typeof chatSearchQuery !== "string") ? chatSearchQuery.map(message => {
+                    return <Message message={message}></Message>
+                }) 
+                : messages.map(message => {
                     return <Message message={message}></Message>
                 })}
             </div>
@@ -89,6 +211,5 @@ const Chat = (props) => {
         </div>
     )
 }
-
 
 export default Chat

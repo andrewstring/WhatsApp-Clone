@@ -7,6 +7,17 @@
 
 .Message-sent {
   margin-right: 0px;
-  margin-left: auto; }
+  margin-left: auto;
+  background-color: green; }
+
+.Message .Message-name {
+  margin: .2em 0; }
+
+.Message .Message-content {
+  overflow-wrap: break-word;
+  margin: .5em 0 .1em 0; }
+
+.Message .Message-time {
+  color: grey; }
 
 /*# sourceMappingURL=Message.css.map */
