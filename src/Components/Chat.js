@@ -22,6 +22,7 @@ import { getDate, getTime } from '../util/date'
 
 // context import
 import { CredentialsContext } from '../Contexts/CredentialsContext'
+import { handleClickOutside } from '../util/nav'
 
 const Chat = (props) => {
 
@@ -36,6 +37,8 @@ const Chat = (props) => {
     // ref initialization
     const chatViewRef = useRef(null)
     const atBottom = useRef(true)
+    const chatAvatarOptionsRef = useRef(null)
+    const chatToolbarOptionsRef = useRef(null)
 
     // context initialization
     const credentials = useContext(CredentialsContext)
@@ -100,6 +103,26 @@ const Chat = (props) => {
     }
     const send = () => {
     }
+    const handleClickOutsideChatAvatarOptions = (e) => {
+        handleClickOutside(chatAvatarOptionsRef, e, () => {
+            handleChatAvatarOptions()
+        })
+    }
+    const handleClickOutsideChatToolbarOptions = (e) => {
+        handleClickOutside(chatToolbarOptionsRef, e, () => {
+            handleChatToolbarOptions()
+        })
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutsideChatAvatarOptions)
+        document.addEventListener("mousedown", handleClickOutsideChatToolbarOptions)
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsideChatAvatarOptions)
+            document.removeEventListener("mousedown", handleClickOutsideChatToolbarOptions)
+        }
+    })
 
     // useEffects
     useEffect(() => {
@@ -114,13 +137,14 @@ const Chat = (props) => {
         <div className="Chat">
             <div className="Chat-toolbar">
                 <div className="Chat-toolbar-chatinfo">
-                    <div className="Chat-toolbar-chatinfo-Avatar clickable">
-                        <Avatar
-                        onClick={handleChatAvatarOptions}
-                        ></Avatar>
+                    <div 
+                    onClick={handleChatAvatarOptions}
+                    className="Chat-toolbar-chatinfo-Avatar clickable">
+                        <Avatar></Avatar>
                     </div>
                     
                     {chatAvatarOptions && <Options 
+                    optionsRef={chatAvatarOptionsRef}
                     side="left"
                     handleExit={handleChatAvatarOptions}></Options>}
                     <div className="Chat-toolbar-chatinfo-nametime">
@@ -138,6 +162,7 @@ const Chat = (props) => {
                     className="Chat-icon clickable"></MoreVertIcon>
 
                     {chatToolbarOptions && <Options
+                    optionsRef={chatToolbarOptionsRef}
                     side="right"
                     handleExit={handleChatToolbarOptions}></Options>}
 

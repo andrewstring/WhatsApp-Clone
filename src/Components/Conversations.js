@@ -12,6 +12,9 @@ import ChatRoom from './ChatRoom'
 import Modal from './Modal'
 import Options from './Options'
 
+// util import
+import { handleClickOutside } from '../util/nav'
+
 const Conversations = (props) => {
 
     // state initialization
@@ -20,6 +23,8 @@ const Conversations = (props) => {
 
     // ref initialization
     const inputBar = useRef(null)
+    const avatarOptionsRef = useRef(null)
+    const addChatModalRef = useRef(null)
 
     // prop/helper functions
     const handleFocusInputBar = (e) => {
@@ -34,6 +39,28 @@ const Conversations = (props) => {
     const handleAvatarOptions = () => {
         setAvatarOptions((avatarOptions) => !avatarOptions)
     }
+    const handleClickOutsideAvatarOptions = (e) => {
+        handleClickOutside(avatarOptionsRef, e, () => {
+            handleAvatarOptions()
+        })
+    }
+    const handleClickOutsideAddChatModal = (e) => {
+        handleClickOutside(addChatModalRef, e, () => {
+            handleAddChat()
+        })
+    }
+
+    // useEffects
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutsideAvatarOptions)
+        document.addEventListener("mousedown", handleClickOutsideAddChatModal)
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsideAvatarOptions)
+            document.removeEventListener("mousedown", handleClickOutsideAddChatModal)
+        }
+    })
+
 
     // rendering
     return (
@@ -42,6 +69,7 @@ const Conversations = (props) => {
                 <div className="Conversations-toolbar-avatar clickable">
                     <a onClick={handleAvatarOptions}><Avatar></Avatar></a>
                     {avatarOptions && <Options
+                    optionsRef={avatarOptionsRef}
                     side="left"
                     handleExit={handleAvatarOptions}></Options>}
                 </div>
@@ -74,7 +102,10 @@ const Conversations = (props) => {
                     ></ChatRoom>
                 })}
             </div>
-            {addingChat && <Modal type="addChat" handleAddChat={handleAddChat}></Modal>}
+            {addingChat && <Modal
+            modalRef={addChatModalRef}
+            type="addChat"
+            handleAddChat={handleAddChat}></Modal>}
         </nav>
     )
 }

@@ -15,7 +15,7 @@ import axios from "axios"
 axios.defaults.baseURL = "http://localhost:3005"
 
 
-const Modal = ({type, handleAddChat}) => {
+const Modal = ({type, handleAddChat, modalRef}) => {
 
     // state initialization
     const [ inputOne, setInputOne ] = useState("")
@@ -84,7 +84,9 @@ const Modal = ({type, handleAddChat}) => {
     // rendering
     if (type === "addChat") {
         return (
-            <div className="Modal Modal-addChat">
+            <div
+            ref={modalRef}
+            className="Modal Modal-addChat">
                 <div>
                     <h3>MEMBERS ADDED TO CHAT:</h3>
                     {members.length ?

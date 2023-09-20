@@ -5,13 +5,13 @@ import { useState } from 'react'
 import "../css/Options.css"
 
 
-const Options = ({side, handleExit}) => {
+const Options = ({side, handleExit, optionsRef}) => {
     // css positioning determination
     const loc = side === "left" ? "Options-left" : "Options-right"
 
     // rendering
     return (
-        <div className={`Options ${loc}`}>
+        <div className={`Options ${loc}`} ref={optionsRef}>
             <h1 onClick={handleExit}>l</h1>
             <h1>OPTIONS</h1>
             <h1>OPTIONS</h1>
