@@ -22,6 +22,8 @@ const realmApp = new Realm.App({ id: "whatsapp-clone-nrzrz"})
 // axios.defaults.baseURL = "http://localhost:3005"
 axios.defaults.baseURL = "https://whatsapp-clone-backend-608e90b922c2.herokuapp.com"
 
+console.log("BACKENDURL")
+console.log(process.env.backend_url)
 function App() {
 
   // state variable initialization
