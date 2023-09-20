@@ -19,7 +19,8 @@ import axios from 'axios';
 
 // library setup
 const realmApp = new Realm.App({ id: "whatsapp-clone-nrzrz"})
-axios.defaults.baseURL = "http://localhost:3005"
+// axios.defaults.baseURL = "http://localhost:3005"
+axios.defaults.baseURL = "https://whatsapp-clone-backend-608e90b922c2.herokuapp.com"
 
 function App() {
 

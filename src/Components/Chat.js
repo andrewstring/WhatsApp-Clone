@@ -54,18 +54,12 @@ const Chat = (props) => {
         setChatSearch((chatSearch) => !chatSearch)
     }
     const handleChatSearchQuery = (query) => {
-        console.log("MESSAGES")
-        console.log(props.messages)
         const messageQuery = props.messages.filter((message) => {
                 return (
-                    message.senderName.toLowerCase().includes(query.toLowerCase()) ||
-                    message.content.toLowerCase().includes(query.toLowerCase()) ||
-                    getTime(message.timeSent).toLowerCase().includes(query.toLowerCase())
+                    message.content.toLowerCase().includes(query.toLowerCase())
                 )
             }
         )
-        console.log(messageQuery)
-        
         setChatSearchQuery(messageQuery)
     }
     const handleScroll = () => {
@@ -92,7 +86,6 @@ const Chat = (props) => {
             console.log("ERROR with Axios")
             console.log(e.response.data)
             console.log(e.response.status)
-            console.log(e.response.headers)
         }
         setInput("")
     }
@@ -121,7 +114,7 @@ const Chat = (props) => {
         <div className="Chat">
             <div className="Chat-toolbar">
                 <div className="Chat-toolbar-chatinfo">
-                    <div className="Chat-toolbar-chatinfo-Avatar">
+                    <div className="Chat-toolbar-chatinfo-Avatar clickable">
                         <Avatar
                         onClick={handleChatAvatarOptions}
                         ></Avatar>
@@ -138,11 +131,11 @@ const Chat = (props) => {
                 <div className="Chat-toolbar-buttons">
                     <SearchIcon
                     onClick={handleChatSearch}
-                    className="Chat-icon"></SearchIcon>
-                    <AttachFileIcon className="Chat-icon"></AttachFileIcon>
+                    className="Chat-icon clickable"></SearchIcon>
+                    <AttachFileIcon className="Chat-icon clickable"></AttachFileIcon>
                     <MoreVertIcon 
                     onClick={handleChatToolbarOptions}
-                    className="Chat-icon"></MoreVertIcon>
+                    className="Chat-icon clickable"></MoreVertIcon>
 
                     {chatToolbarOptions && <Options
                     side="right"

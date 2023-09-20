@@ -73,7 +73,6 @@ const Login = ({ appSetCredentials }) => {
             console.log("ERROR with Axios")
             console.log(e.response.data)
             console.log(e.response.status)
-            console.log(e.response.headers)
         }
     }
     const returnToLogin = () => {
@@ -120,7 +119,6 @@ const Login = ({ appSetCredentials }) => {
             console.log("ERROR with Axios")
             console.log(e.response.data)
             console.log(e.response.status)
-            console.log(e.response.headers)
         }
     }
 

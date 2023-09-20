@@ -39,20 +39,20 @@ const Conversations = (props) => {
     return (
         <nav className="Conversations">
             <div className="Conversations-toolbar">
-                <div className="Conversations-toolbar-avatar">
+                <div className="Conversations-toolbar-avatar clickable">
                     <a onClick={handleAvatarOptions}><Avatar></Avatar></a>
                     {avatarOptions && <Options
                     side="left"
                     handleExit={handleAvatarOptions}></Options>}
                 </div>
                 <div className="Conversations-toolbar-buttons">
-                    <a onClick={(e) => handleFocusInputBar(e)}><SearchIcon  
+                    <a onClick={(e) => handleFocusInputBar(e)} className="clickable"><SearchIcon  
                     className="Conversations-icon"></SearchIcon></a>
                     {/* <a><MessageIcon className="Conversations-icon"></MessageIcon></a> */}
                 </div>
             </div>
             <div
-            className="Conversations-search"
+            className="Conversations-search clickable"
             onClick={(e) => handleFocusInputBar(e)}>
                 <a><SearchIcon className="Conversations-icon"></SearchIcon></a>
                 <input className="Conversations-search-input" 
