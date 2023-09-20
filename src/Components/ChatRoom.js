@@ -8,17 +8,17 @@ import "../css/ChatRoom.css"
 import { Avatar } from '@mui/material'
 
 
-const ChatRoom = (props) => {
+const ChatRoom = ({ active, updateChatRoom, id, name, lastMessage }) => {
     // rendering
     return (
-        <div className={"ChatRoom" + (props.active ? " ChatRoom-active" : "")} onClick={props.updateChatRoom} id={props.id}>
+        <div className={"ChatRoom" + (active ? " ChatRoom-active" : "")} onClick={updateChatRoom} id={id}>
             <div className="ChatRoom-Avatar">
                 <Avatar></Avatar>
             </div>
             <div className="ChatRoom-overview">
-                <h2>{props.name || "*No Name!"}</h2>
-                {props.lastMessage && <p>Last Message:</p>}
-                <p>{props.lastMessage || "Start Chatting!"}</p>
+                <h2>{name || "*No Name!"}</h2>
+                {lastMessage && <p>Last Message:</p>}
+                <p>{lastMessage || "Start Chatting!"}</p>
             </div>
         </div>
     )

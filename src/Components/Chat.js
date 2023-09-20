@@ -25,7 +25,7 @@ import { getDate, getTime } from '../util/date'
 import { CredentialsContext } from '../Contexts/CredentialsContext'
 import { handleClickOutside } from '../util/nav'
 
-const Chat = (props) => {
+const Chat = ({ currentChatRoom, messages }) => {
 
     // state initialization
     const [ input, setInput ] = useState("")
@@ -58,7 +58,7 @@ const Chat = (props) => {
         setChatSearch((chatSearch) => !chatSearch)
     }
     const handleChatSearchQuery = (query) => {
-        const messageQuery = props.messages.filter((message) => {
+        const messageQuery = messages.filter((message) => {
                 return (
                     message.content.toLowerCase().includes(query.toLowerCase())
                 )
@@ -79,7 +79,7 @@ const Chat = (props) => {
         event.preventDefault()
         try {
             axios.post("/message/new", {
-                chatRoomId: props.currentChatRoom._id,
+                chatRoomId: currentChatRoom._id,
                 messageContent: {
                     content: input,
                     sender: credentials._id,
@@ -153,8 +153,8 @@ const Chat = (props) => {
                     side="top-left"
                     handleExit={handleChatAvatarOptions}></Options>}
                     <div className="Chat-toolbar-chatinfo-nametime">
-                        <h2>{props.currentChatRoom.name}</h2>
-                        <h3>{`Last Seen: ${getDate(props.currentChatRoom.lastMessageDate)}`}</h3>
+                        <h2>{currentChatRoom.name}</h2>
+                        <h3>{`Last Seen: ${getDate(currentChatRoom.lastMessageDate)}`}</h3>
                     </div>
                 </div>
                 <div className="Chat-toolbar-buttons">
@@ -188,7 +188,7 @@ const Chat = (props) => {
                 {(typeof chatSearchQuery !== "string") ? chatSearchQuery.map(message => {
                     return <Message message={message}></Message>
                 }) 
-                : props.messages.map(message => {
+                : messages.map(message => {
                     return <Message message={message}></Message>
                 })}
             </div>

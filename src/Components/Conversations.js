@@ -15,7 +15,7 @@ import Options from './Options'
 // util import
 import { handleClickOutside } from '../util/nav'
 
-const Conversations = (props) => {
+const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom }) => {
 
     // state initialization
     const [ addingChat, setAddingChat ] = useState(false)
@@ -90,14 +90,14 @@ const Conversations = (props) => {
             <div className="Conversations-list">
                 <h2 className="Conversations-list-add" onClick={handleAddChat}>
                     Add New Chat</h2>
-                {props.chatRooms && props.chatRooms.map((room) => {
+                {chatRooms && chatRooms.map((room) => {
                     return <ChatRoom
                     key={room._id}
                     name={room.name}
                     lastMessage={room.lastMessage}
-                    updateChatRoom={props.updateChatRoom(room)}
-                    active={room._id.toString() === props.currentChatRoom._id.toString()}
-                    onClick={props.updateChatRoom}
+                    updateChatRoom={updateChatRoom(room)}
+                    active={room._id.toString() === currentChatRoom._id.toString()}
+                    onClick={updateChatRoom}
                     id={room._id}
                     ></ChatRoom>
                 })}

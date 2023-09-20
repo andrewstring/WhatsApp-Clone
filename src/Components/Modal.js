@@ -21,7 +21,6 @@ const Modal = ({type, handleAddChat, modalRef}) => {
     const [ inputOne, setInputOne ] = useState("")
     const [ error, setError ] = useState(false)
     const [ memberQuery, setMemberQuery ] = useState([])
-    const [ memberInput, setMemberInput ] = useState("")
     const [ members, setMembers ] = useState([])
 
     // context initialization
@@ -33,7 +32,6 @@ const Modal = ({type, handleAddChat, modalRef}) => {
 
     // prop/helper functions
     const handleMemberQuery = async (e) => {
-        setMemberInput(e.target.value)
         let accounts = []
         if (e.target.value) {
             // add escaped values to handle errors in regex parsing

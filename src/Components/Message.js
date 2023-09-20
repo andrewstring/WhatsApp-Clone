@@ -10,16 +10,16 @@ import { getTime } from '../util/date'
 // context import
 import { CredentialsContext } from '../Contexts/CredentialsContext'
 
-const Message = (props) => {
+const Message = ({ message }) => {
     // context initialization
     const credentials = useContext(CredentialsContext)
 
     // rendering
     return (
-        <div className={"Message" + (props.message.sender.toString() === credentials._id ? " Message-sent" : "")}>
-            <h2 className="Message-name">{props.message.senderName}</h2>
-            <p className="Message-content">{props.message.content}</p>
-            <p className="Message-time">{getTime(props.message.timeSent)}</p>
+        <div className={"Message" + (message.sender.toString() === credentials._id ? " Message-sent" : "")}>
+            <h2 className="Message-name">{message.senderName}</h2>
+            <p className="Message-content">{message.content}</p>
+            <p className="Message-time">{getTime(message.timeSent)}</p>
         </div>
     )
 }
