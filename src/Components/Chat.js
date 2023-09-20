@@ -172,6 +172,7 @@ const Chat = (props) => {
                 <input
                 placeholder="Search messages in chat"
                 value={chatSearchInput}
+                className="Chat-toolbar-search-input"
                 onChange={(e) => handleChatSearchInput(e)}
                 ></input>
             </div>}

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 70%;
+    background-color: #b8b9cf;
 }
 
 .Chat-toolbar {
@@ -75,4 +76,16 @@
 .Chat-icon {
     font-size: 1.5rem !important;
     padding: .1em .2em;
+}
+
+.Chat-toolbar-search {
+    display: flex;
+    background-color: #b8b9cf;
+    padding: .8em 1.4em;
+    margin: 5px 5px;
+}
+.Chat-toolbar-search-input {
+    flex-grow: 1;
+    border: none;
+    background-color: #b8b9cf;
 }

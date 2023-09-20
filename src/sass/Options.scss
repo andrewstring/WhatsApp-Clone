@@ -1,8 +1,11 @@
 .Options {
     position: absolute;
-    background-color: red;
+    background-color: darkgrey;
+    border: solid darkblue 3px;
     padding: 1em;
     top: 0;
+    color: black;
+    font-size: 1rem;
 }
 
 .Options-left {
