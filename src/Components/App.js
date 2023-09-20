@@ -24,6 +24,7 @@ axios.defaults.baseURL = "https://whatsapp-clone-backend-608e90b922c2.herokuapp.
 
 console.log("BACKENDURL")
 console.log(process.env.backend_url)
+console.log("TEST")
 function App() {
 
   // state variable initialization
