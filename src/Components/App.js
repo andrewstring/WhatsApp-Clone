@@ -31,11 +31,16 @@ function App() {
   const [ currentChatRoom, setCurrentChatRoom ] = useState("")
   const [ messages, setMessages ] = useState([])
   const [ mongodb, setMongodb ] = useState()
+  const [ conversationsExpanded, setConversationsExpanded ] = useState(false)
 
   // ref initialization
   const chatRoomMonitoring = useRef(false)
 
   // prop/helper functions
+  const handleConversationsExpand = () => {
+    console.log("EXPAND")
+    setConversationsExpanded((conversationsExpanded) => !conversationsExpanded)
+  }
   const appSetCredentials = (cred) => {
     setCredentials(cred)
   }
@@ -172,8 +177,15 @@ function App() {
       <MongodbContext.Provider value={mongodb}>
       <CredentialsContext.Provider value={credentials}>
         <div className="App-container">
-          <Conversations chatRooms={chatRooms} updateChatRoom={updateChatRoom} currentChatRoom={currentChatRoom}></Conversations>
-          {chatRooms && <Chat messages={messages} currentChatRoom={currentChatRoom}></Chat>}
+          <Conversations chatRooms={chatRooms}
+          updateChatRoom={updateChatRoom}
+          currentChatRoom={currentChatRoom}
+          expanded={conversationsExpanded}
+          handleConversationsExpand={handleConversationsExpand}></Conversations>
+          {chatRooms && <Chat
+          messages={messages}
+          currentChatRoom={currentChatRoom}
+          handleConversationsExpand={handleConversationsExpand}></Chat>}
         </div>
       </CredentialsContext.Provider>
       </MongodbContext.Provider>

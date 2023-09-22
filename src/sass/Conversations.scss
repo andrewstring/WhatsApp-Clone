@@ -58,8 +58,13 @@
 @media only screen and (max-width: $small) {
     .Conversations {
         position: absolute;
+        height: 100%;
         opacity: 0;
         width: 65%;
+        z-index: -1;
+    }
+    .Conversations.expanded {
         z-index: 1;
+        opacity: 1;
     }
 }

@@ -128,6 +128,11 @@ const Modal = ({type, handleAddChat, modalRef}) => {
             </div>
         )
     }
+    if (type === "attachment") {
+        return (
+            <h1>Attachment</h1>
+        )
+    }
 }
 
 

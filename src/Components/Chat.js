@@ -23,9 +23,9 @@ import { getDate, getTime } from '../util/date'
 
 // context import
 import { CredentialsContext } from '../Contexts/CredentialsContext'
-import { handleClickOutside } from '../util/nav'
+import { handleClickOutsideRef } from '../util/nav'
 
-const Chat = ({ currentChatRoom, messages }) => {
+const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
 
     // state initialization
     const [ input, setInput ] = useState("")
@@ -105,12 +105,12 @@ const Chat = ({ currentChatRoom, messages }) => {
     const send = () => {
     }
     const handleClickOutsideChatAvatarOptions = (e) => {
-        handleClickOutside(chatAvatarOptionsRef, e, () => {
+        handleClickOutsideRef(chatAvatarOptionsRef, e, () => {
             handleChatAvatarOptions()
         })
     }
     const handleClickOutsideChatToolbarOptions = (e) => {
-        handleClickOutside(chatToolbarOptionsRef, e, () => {
+        handleClickOutsideRef(chatToolbarOptionsRef, e, () => {
             handleChatToolbarOptions()
         })
     }
@@ -137,7 +137,9 @@ const Chat = ({ currentChatRoom, messages }) => {
     return (
         <div className="Chat">
             <div className="Chat-toolbar">
-                <div className="Chat-toolbar-sidebar-activate">
+                <div
+                className="Chat-toolbar-sidebar-activate"
+                onClick={handleConversationsExpand}>
                     <QuestionAnswerIcon></QuestionAnswerIcon>
 
                 </div>

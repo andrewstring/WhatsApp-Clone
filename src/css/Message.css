@@ -20,4 +20,8 @@
 .Message .Message-time {
   color: grey; }
 
+@media only screen and (max-width: 1000px) {
+  .Message {
+    width: 45%; } }
+
 /*# sourceMappingURL=Message.css.map */
