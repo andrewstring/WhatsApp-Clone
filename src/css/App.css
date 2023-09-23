@@ -54,6 +54,10 @@
   box-shadow: 0 0 20px #312ca1;
 }
 
+.loading {
+  display: inline;
+}
+
 .hidden {
   display: none;
 }

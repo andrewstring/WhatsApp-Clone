@@ -16,6 +16,7 @@ import { MongodbContext } from '../Contexts/MongodbContext';
 // library import
 import * as Realm from "realm-web";
 import axios from 'axios';
+import { Sync } from "@mui/icons-material";
 
 // library setup
 const realmApp = new Realm.App({ id: "whatsapp-clone-nrzrz"})
@@ -203,7 +204,12 @@ function App() {
     );
   }
   return (
-    <h1 style={{color: "white"}}>CONNECTING</h1>
+    <div className="loading">
+      <h1 style={{color: "white"}}>CONNECTING</h1>
+      <Sync></Sync>
+
+    </div>
+    
   )
 }
 
