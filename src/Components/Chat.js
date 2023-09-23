@@ -208,6 +208,7 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
             </div>
             <div className="Chat-message">
                 {emojiSelection && <Popup 
+                type="emoji"
                 PopupRef={emojiSelectionRef}
                 side="bottom-left"
                 handleExit={handleEmojiSelection}></Popup>}

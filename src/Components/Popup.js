@@ -1,6 +1,9 @@
 // react import
 import { useState } from 'react'
 
+// emoji import
+import EmojiPicker from 'emoji-picker-react'
+
 // css import
 import "../css/Popup.css"
 
@@ -25,11 +28,18 @@ const getLoc = (side) => {
     }
 }
 
-const Popup = ({side, handleExit, PopupRef}) => {
+const Popup = ({ type, side, handleExit, PopupRef }) => {
     // css positioning determination
     const loc = getLoc(side)
 
     // rendering
+    if (type === "emoji") {
+        return (
+            <div className={`Popup ${loc}`} ref={PopupRef}>
+                <EmojiPicker></EmojiPicker>
+            </div>
+        )
+    }
     return (
         <div className={`Popup ${loc}`} ref={PopupRef}>
             <h1 onClick={handleExit}>l</h1>
