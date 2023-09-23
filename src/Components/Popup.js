@@ -2,22 +2,22 @@
 import { useState } from 'react'
 
 // css import
-import "../css/Options.css"
+import "../css/Popup.css"
 
 // helper functions
 const getLoc = (side) => {
     switch(side) {
         case "top-left": {
-            return "Options-top-left"
+            return "Popup-top-left"
         }
         case "top-right": {
-            return "Options-top-right"
+            return "Popup-top-right"
         }
         case "bottom-left": {
-            return "Options-bottom-left"
+            return "Popup-bottom-left"
         }
         case "bottom-right": {
-            return "Options-bottom-right"
+            return "Popup-bottom-right"
         }
         default: {
             return ""
@@ -25,20 +25,20 @@ const getLoc = (side) => {
     }
 }
 
-const Options = ({side, handleExit, optionsRef}) => {
+const Popup = ({side, handleExit, PopupRef}) => {
     // css positioning determination
     const loc = getLoc(side)
 
     // rendering
     return (
-        <div className={`Options ${loc}`} ref={optionsRef}>
+        <div className={`Popup ${loc}`} ref={PopupRef}>
             <h1 onClick={handleExit}>l</h1>
-            <h1>OPTIONS</h1>
-            <h1>OPTIONS</h1>
-            <h1>OPTIONS</h1>
-            <h1>OPTIONS</h1>
+            <h1>Popup</h1>
+            <h1>Popup</h1>
+            <h1>Popup</h1>
+            <h1>Popup</h1>
         </div>
     )
 }
 
-export default Options
+export default Popup

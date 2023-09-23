@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import MessageIcon from '@mui/icons-material/Message'
 import ChatRoom from './ChatRoom'
 import Modal from './Modal'
-import Options from './Options'
+import Popup from './Popup'
 
 // util import
 import { handleClickOutsideRef } from '../util/nav'
@@ -19,11 +19,11 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
 
     // state initialization
     const [ addingChat, setAddingChat ] = useState(false)
-    const [ avatarOptions, setAvatarOptions ] = useState(false)
+    const [ avatarPopup, setAvatarPopup ] = useState(false)
 
     // ref initialization
     const inputBar = useRef(null)
-    const avatarOptionsRef = useRef(null)
+    const avatarPopupRef = useRef(null)
     const addChatModalRef = useRef(null)
     const conversationsRef = useRef(null)
 
@@ -37,12 +37,12 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
     const handleAddChat = () => {
         setAddingChat((addingChat) => !addingChat)
     }
-    const handleAvatarOptions = () => {
-        setAvatarOptions((avatarOptions) => !avatarOptions)
+    const handleAvatarPopup = () => {
+        setAvatarPopup((avatarPopup) => !avatarPopup)
     }
-    const handleClickOutsideAvatarOptions = (e) => {
-        handleClickOutsideRef(avatarOptionsRef, e, () => {
-            handleAvatarOptions()
+    const handleClickOutsideAvatarPopup = (e) => {
+        handleClickOutsideRef(avatarPopupRef, e, () => {
+            handleAvatarPopup()
         })
     }
     const handleClickOutsideAddChatModal = (e) => {
@@ -61,12 +61,12 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
 
     // useEffects
     useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutsideAvatarOptions)
+        document.addEventListener("mousedown", handleClickOutsideAvatarPopup)
         document.addEventListener("mousedown", handleClickOutsideAddChatModal)
         document.addEventListener("mousedown", handleClickOutsideExpandedConversations)
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutsideAvatarOptions)
+            document.removeEventListener("mousedown", handleClickOutsideAvatarPopup)
             document.removeEventListener("mousedown", handleClickOutsideAddChatModal)
             document.removeEventListener("mousedown", handleClickOutsideExpandedConversations)
         }
@@ -80,11 +80,11 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
         className={`Conversations${expanded ? " expanded" : ""}`}>
             <div className="Conversations-toolbar">
                 <div className="Conversations-toolbar-avatar clickable">
-                    <a onClick={handleAvatarOptions}><Avatar></Avatar></a>
-                    {avatarOptions && <Options
-                    optionsRef={avatarOptionsRef}
+                    <a onClick={handleAvatarPopup}><Avatar></Avatar></a>
+                    {avatarPopup && <Popup
+                    PopupRef={avatarPopupRef}
                     side="top-left"
-                    handleExit={handleAvatarOptions}></Options>}
+                    handleExit={handleAvatarPopup}></Popup>}
                 </div>
                 <div className="Conversations-toolbar-buttons">
                     <a onClick={(e) => handleFocusInputBar(e)} className="clickable"><SearchIcon  

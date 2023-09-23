@@ -1,4 +1,4 @@
-.Options {
+.Popup {
     position: absolute;
     background-color: darkgrey;
     border: solid darkblue 3px;
@@ -7,22 +7,22 @@
     font-size: 1rem;
 }
 
-.Options-top-left {
+.Popup-top-left {
     top: 100%;
     left: 0;
 }
 
-.Options-top-right {
+.Popup-top-right {
     top: 100%;
     right: 0;
 }
 
-.Options-bottom-left {
+.Popup-bottom-left {
     left: 0;
     bottom: 100%;;
 }
 
-.Options-bottom-right {
+.Popup-bottom-right {
     right: 0;
     bottom: 100%;
 }

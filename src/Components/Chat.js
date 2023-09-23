@@ -12,7 +12,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
 import MicIcon from '@mui/icons-material/Mic'
-import Options from './Options'
+import Popup from './Popup'
 import Message from './Message'
 
 // library imports
@@ -32,15 +32,15 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
     const [ chatSearch, setChatSearch ] = useState(false)
     const [ chatSearchInput, setChatSearchInput ] = useState("")
     const [ chatSearchQuery, setChatSearchQuery ] = useState("")
-    const [ chatAvatarOptions, setChatAvatarOptions] = useState(false)
-    const [ chatToolbarOptions, setChatToolbarOptions ] = useState(false)
+    const [ chatAvatarPopup, setChatAvatarPopup] = useState(false)
+    const [ chatToolbarPopup, setChatToolbarPopup ] = useState(false)
     const [ emojiSelection, setEmojiSelection ] = useState(false)
 
     // ref initialization
     const chatViewRef = useRef(null)
     const atBottom = useRef(true)
-    const chatAvatarOptionsRef = useRef(null)
-    const chatToolbarOptionsRef = useRef(null)
+    const chatAvatarPopupRef = useRef(null)
+    const chatToolbarPopupRef = useRef(null)
     const emojiSelectionRef = useRef(null)
 
     // context initialization
@@ -101,22 +101,22 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
     const handleChange = (event) => {
         setInput(event.target.value)
     }
-    const handleChatAvatarOptions = () => {
-        setChatAvatarOptions((chatAvatarOptions => !chatAvatarOptions))
+    const handleChatAvatarPopup = () => {
+        setChatAvatarPopup((chatAvatarPopup => !chatAvatarPopup))
     }
-    const handleChatToolbarOptions = () => {
-        setChatToolbarOptions((chatToolbarOptions => !chatToolbarOptions))
+    const handleChatToolbarPopup = () => {
+        setChatToolbarPopup((chatToolbarPopup => !chatToolbarPopup))
     }
     const send = () => {
     }
-    const handleClickOutsideChatAvatarOptions = (e) => {
-        handleClickOutsideRef(chatAvatarOptionsRef, e, () => {
-            handleChatAvatarOptions()
+    const handleClickOutsideChatAvatarPopup = (e) => {
+        handleClickOutsideRef(chatAvatarPopupRef, e, () => {
+            handleChatAvatarPopup()
         })
     }
-    const handleClickOutsideChatToolbarOptions = (e) => {
-        handleClickOutsideRef(chatToolbarOptionsRef, e, () => {
-            handleChatToolbarOptions()
+    const handleClickOutsideChatToolbarPopup = (e) => {
+        handleClickOutsideRef(chatToolbarPopupRef, e, () => {
+            handleChatToolbarPopup()
         })
     }
     const handleClickOutsideEmojiSelection = (e) => {
@@ -126,13 +126,13 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
     }
 
     useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutsideChatAvatarOptions)
-        document.addEventListener("mousedown", handleClickOutsideChatToolbarOptions)
+        document.addEventListener("mousedown", handleClickOutsideChatAvatarPopup)
+        document.addEventListener("mousedown", handleClickOutsideChatToolbarPopup)
         document.addEventListener("mousedown", handleClickOutsideEmojiSelection)
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutsideChatAvatarOptions)
-            document.removeEventListener("mousedown", handleClickOutsideChatToolbarOptions)
+            document.removeEventListener("mousedown", handleClickOutsideChatAvatarPopup)
+            document.removeEventListener("mousedown", handleClickOutsideChatToolbarPopup)
             document.removeEventListener("mousedown", handleClickOutsideEmojiSelection)
         }
     })
@@ -157,15 +157,15 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
                 </div>
                 <div className="Chat-toolbar-chatinfo">
                     <div 
-                    onClick={handleChatAvatarOptions}
+                    onClick={handleChatAvatarPopup}
                     className="Chat-toolbar-chatinfo-Avatar clickable">
                         <Avatar></Avatar>
                     </div>
                     
-                    {chatAvatarOptions && <Options 
-                    optionsRef={chatAvatarOptionsRef}
+                    {chatAvatarPopup && <Popup 
+                    PopupRef={chatAvatarPopupRef}
                     side="top-left"
-                    handleExit={handleChatAvatarOptions}></Options>}
+                    handleExit={handleChatAvatarPopup}></Popup>}
                     <div className="Chat-toolbar-chatinfo-nametime">
                         <h2>{currentChatRoom.name}</h2>
                         <h3>{`Last Seen: ${getDate(currentChatRoom.lastMessageDate)}`}</h3>
@@ -177,13 +177,13 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
                     className="Chat-icon clickable"></SearchIcon>
                     <AttachFileIcon className="Chat-icon clickable"></AttachFileIcon>
                     <MoreVertIcon 
-                    onClick={handleChatToolbarOptions}
+                    onClick={handleChatToolbarPopup}
                     className="Chat-icon clickable"></MoreVertIcon>
 
-                    {chatToolbarOptions && <Options
-                    optionsRef={chatToolbarOptionsRef}
+                    {chatToolbarPopup && <Popup
+                    PopupRef={chatToolbarPopupRef}
                     side="top-right"
-                    handleExit={handleChatToolbarOptions}></Options>}
+                    handleExit={handleChatToolbarPopup}></Popup>}
 
                 </div>
             </div>
@@ -207,10 +207,10 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
                 })}
             </div>
             <div className="Chat-message">
-                {emojiSelection && <Options 
-                optionsRef={emojiSelectionRef}
+                {emojiSelection && <Popup 
+                PopupRef={emojiSelectionRef}
                 side="bottom-left"
-                handleExit={handleEmojiSelection}></Options>}
+                handleExit={handleEmojiSelection}></Popup>}
                 <div
                 onClick={handleEmojiSelection}
                 className="Chat-message-emoji">
