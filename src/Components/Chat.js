@@ -19,11 +19,11 @@ import Message from './Message'
 import axios from 'axios'
 
 // util imports
-import { getDate, getTime } from '../util/date'
+import { getDate } from '../util/date'
+import { handleClickOutsideRef } from '../util/nav'
 
 // context import
 import { CredentialsContext } from '../Contexts/CredentialsContext'
-import { handleClickOutsideRef } from '../util/nav'
 
 const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
 
@@ -34,17 +34,22 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
     const [ chatSearchQuery, setChatSearchQuery ] = useState("")
     const [ chatAvatarOptions, setChatAvatarOptions] = useState(false)
     const [ chatToolbarOptions, setChatToolbarOptions ] = useState(false)
+    const [ emojiSelection, setEmojiSelection ] = useState(false)
 
     // ref initialization
     const chatViewRef = useRef(null)
     const atBottom = useRef(true)
     const chatAvatarOptionsRef = useRef(null)
     const chatToolbarOptionsRef = useRef(null)
+    const emojiSelectionRef = useRef(null)
 
     // context initialization
     const credentials = useContext(CredentialsContext)
 
     // prop/helper functions
+    const handleEmojiSelection = () => {
+        setEmojiSelection((emojiSelection) => !emojiSelection)
+    }
     const handleChatSearchInput = (e) => {
         e.preventDefault()
         setChatSearchInput(e.target.value)
@@ -112,6 +117,11 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
     const handleClickOutsideChatToolbarOptions = (e) => {
         handleClickOutsideRef(chatToolbarOptionsRef, e, () => {
             handleChatToolbarOptions()
+        })
+    }
+    const handleClickOutsideEmojiSelection = (e) => {
+        handleClickOutsideRef(emojiSelectionRef, e, () => {
+            handleEmojiSelection()
         })
     }
 
@@ -195,7 +205,13 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
                 })}
             </div>
             <div className="Chat-message">
-                <div className="Chat-message-emoji">
+                {emojiSelection && <Options 
+                optionsRef={emojiSelectionRef}
+                side="bottom-left"
+                handleExit={handleEmojiSelection}></Options>}
+                <div
+                onClick={handleEmojiSelection}
+                className="Chat-message-emoji">
                     <EmojiEmotionsIcon className="Chat-icon"></EmojiEmotionsIcon>
                 </div>
                 <div className="Chat-message-input">

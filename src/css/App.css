@@ -55,7 +55,28 @@
 }
 
 .loading {
-  display: inline;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+.loading h1, .loading .Sync {
+  color: white;
+}
+.loading h1 {
+  margin-bottom: .5em;
+}
+
+.loading .Sync.spin {
+  font-size: 3em;
+  animation-duration: 1.5s;
+  animation-name: spin;
+  animation-iteration-count: infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .hidden {

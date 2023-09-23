@@ -205,8 +205,8 @@ function App() {
   }
   return (
     <div className="loading">
-      <h1 style={{color: "white"}}>CONNECTING</h1>
-      <Sync></Sync>
+      <h1>CONNECTING</h1>
+      <Sync className="Sync spin"></Sync>
 
     </div>
     

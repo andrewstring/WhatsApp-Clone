@@ -3,14 +3,23 @@
   background-color: darkgrey;
   border: solid darkblue 3px;
   padding: 1em;
-  top: 0;
   color: black;
   font-size: 1rem; }
 
 .Options-top-left {
+  top: 100%;
   left: 0; }
 
 .Options-top-right {
+  top: 100%;
   right: 0; }
+
+.Options-bottom-left {
+  left: 0;
+  bottom: 100%; }
+
+.Options-bottom-right {
+  right: 0;
+  bottom: 100%; }
 
 /*# sourceMappingURL=Options.css.map */

@@ -57,6 +57,7 @@
   padding: 0px 3em; }
 
 .Chat-message {
+  position: relative;
   display: flex;
   align-items: center;
   flex-direction: row;

@@ -13,6 +13,15 @@ const getLoc = (side) => {
         case "top-right": {
             return "Options-top-right"
         }
+        case "bottom-left": {
+            return "Options-bottom-left"
+        }
+        case "bottom-right": {
+            return "Options-bottom-right"
+        }
+        default: {
+            return ""
+        }
     }
 }
 
