@@ -128,10 +128,12 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutsideChatAvatarOptions)
         document.addEventListener("mousedown", handleClickOutsideChatToolbarOptions)
+        document.addEventListener("mousedown", handleClickOutsideEmojiSelection)
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutsideChatAvatarOptions)
             document.removeEventListener("mousedown", handleClickOutsideChatToolbarOptions)
+            document.removeEventListener("mousedown", handleClickOutsideEmojiSelection)
         }
     })
 
