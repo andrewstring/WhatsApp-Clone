@@ -53,7 +53,7 @@ const Popup = ({ type, side, handleExit, PopupRef, items }) => {
     }
     return (
         <div className={`Popup ${loc}`} ref={PopupRef}>
-            <h1 onClick={handleExit}>X</h1>
+            <h1 className="Popup-exit" onClick={handleExit}>X</h1>
             {itemElems}
         </div>
     )

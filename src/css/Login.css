@@ -6,6 +6,26 @@
 
 .Login {
   padding: 2em;
-  background-color: white; }
+  background-color: #291b6a;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  color: white; }
+
+.Login h1 {
+  margin-bottom: 1em;
+  padding-bottom: .2em;
+  border-bottom: solid white 2px; }
+
+.Login label {
+  margin-bottom: .2em; }
+
+.Login input {
+  margin-bottom: 1em; }
+
+.Login-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
 
 /*# sourceMappingURL=Login.css.map */

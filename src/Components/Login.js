@@ -157,8 +157,10 @@ const Login = ({ appSetCredentials }) => {
                     value={accountInfo.password}
                     onChange={(e) => handleChange("password",e)}></input>
 
-                    <input type="submit" value="Login" onClick={handleLogin}></input>
-                    <input type="submit" value="Create Account" onClick={handleMoveToCreate}></input>
+                    <div className="Login-buttons">
+                        <input type="submit" value="Login" onClick={handleLogin}></input>
+                        <input type="submit" value="Create Account" onClick={handleMoveToCreate}></input>
+                    </div>
                 </form>
             </div>
         )
@@ -198,9 +200,12 @@ const Login = ({ appSetCredentials }) => {
                     value={accountInfo.password}
                     onChange={(e) => handleChange("password",e)}></input>
 
-                    <input type="submit" value="Create Account" onClick={(e) => handleCreateAccount(e)}></input>
-                    <input type="submit"
-                    value="Return to Login" onClick={returnToLogin}></input>
+                    <div className="Login-buttons">
+                        <input type="submit" value="Create Account" onClick={(e) => handleCreateAccount(e)}></input>
+                        <input type="submit"
+                        value="Return to Login" onClick={returnToLogin}></input>
+                    </div>
+                    
                 </form>
             </div>
         )

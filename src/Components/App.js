@@ -44,6 +44,7 @@ function App() {
   // ref initialization
   const chatRoomMonitoring = useRef(false)
   const addChatModalRef = useRef(null)
+  const modifyChatProfileRef = useRef(null)
 
   // prop/helper functions
   const handleModifyChatProfile = () => {
@@ -75,6 +76,11 @@ function App() {
           handleAddChat()
       })
   }
+  const handleClickOutsideModifyChatProfile = (e) => {
+    handleClickOutsideRef(modifyChatProfileRef, e, () => {
+      handleModifyChatProfile()
+    })
+  }
 
   // useEffects
   useEffect(() => {
@@ -89,9 +95,11 @@ function App() {
     }
     connectDB()
     document.addEventListener("mousedown", handleClickOutsideAddChatModal)
+    document.addEventListener("mousedown", handleClickOutsideModifyChatProfile)
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideAddChatModal)
+      document.removeEventListener("mousedown", handleClickOutsideModifyChatProfile)
     }
   }, [])
 
@@ -202,7 +210,9 @@ function App() {
       
       <MongodbContext.Provider value={mongodb}>
       <CredentialsContext.Provider value={credentials}>
-        {modifyChatProfile && <ModifyProfile></ModifyProfile>}
+        {modifyChatProfile && <ModifyProfile
+        modifyProfileRef={modifyChatProfileRef}
+        ></ModifyProfile>}
         {addingChat && <Modal
         modalRef={addChatModalRef}
         type="addChat"
