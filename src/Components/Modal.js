@@ -82,50 +82,54 @@ const Modal = ({type, handleAddChat, modalRef}) => {
     // rendering
     if (type === "addChat") {
         return (
-            <div
-            ref={modalRef}
-            className="Modal Modal-addChat">
-                <div>
-                    <h3>MEMBERS ADDED TO CHAT:</h3>
-                    {members.length ?
-                    members.map((member) => {
-                        return <p>{member.username}</p>
-                    })
-                    : <p>None yet</p>}
-                    <br></br>
-                    <form onSubmit={(e) => handleSubmit(type,e)}>
-                        <label>Enter Chat Name</label>
-                        <input
-                        placeholder="Chat Name"
-                        value={inputOne}
-                        onChange={(e) => handleChange(type,e)}
-                        ></input>
-                        <input
-                        id="addChat"
-                        type="submit"
-                        ></input>
-                        {error && <p>{error}</p>}
-                    </form>
+            <div className="Modal-outer">
+                <div
+                ref={modalRef}
+                className="Modal Modal-addChat">
+                    <div>
+                        <h3>MEMBERS ADDED TO CHAT:</h3>
+                        {members.length ?
+                        members.map((member) => {
+                            return <p>{member.username}</p>
+                        })
+                        : <p>None yet</p>}
+                        <br></br>
+                        <form onSubmit={(e) => handleSubmit(type,e)}>
+                            <label>Enter Chat Name</label>
+                            <input
+                            placeholder="Chat Name"
+                            value={inputOne}
+                            onChange={(e) => handleChange(type,e)}
+                            ></input>
+                            <input
+                            id="addChat"
+                            type="submit"
+                            ></input>
+                            {error && <p>{error}</p>}
+                        </form>
 
+                    </div>
+
+                    <div>
+                        <h3>ADD MEMBERS TO CHAT</h3>
+                        <form onSubmit={(e) => handleSubmit(type,e)}>
+                            <label>Enter Username</label>
+                            <input
+                            onChange={handleMemberQuery}
+                            placeholder="Username"
+                            ></input>
+                            <div className="Modal-member-query">
+                                {memberQuery.length ? memberQuery.map(member => 
+                                    <button onClick={(e) => handleAddMember(e,member)}>{member.username}</button>)
+                                : <p></p>}
+                            </div>
+                        </form>
+                    </div>
+                    <a onClick={handleExit}>X</a>
                 </div>
 
-                <div>
-                    <h3>ADD MEMBERS TO CHAT</h3>
-                    <form onSubmit={(e) => handleSubmit(type,e)}>
-                        <label>Enter Username</label>
-                        <input
-                        onChange={handleMemberQuery}
-                        placeholder="Username"
-                        ></input>
-                        <div className="Modal-member-query">
-                            {memberQuery.length ? memberQuery.map(member => 
-                                <button onClick={(e) => handleAddMember(e,member)}>{member.username}</button>)
-                            : <p></p>}
-                        </div>
-                    </form>
-                </div>
-                <a onClick={handleExit}>X</a>
             </div>
+            
         )
     }
     if (type === "attachment") {

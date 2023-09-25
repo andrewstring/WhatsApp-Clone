@@ -27,10 +27,21 @@ const getLoc = (side) => {
         }
     }
 }
+const getItems = (items) => {
+    console.log("ITEMS")
+    console.log(items)
+    if (items) {
+        return items.map((item) => {
+            return <h1 onClick={item[1]}>{item[0]}</h1>
+        })
+    }
+    return null
+}
 
-const Popup = ({ type, side, handleExit, PopupRef }) => {
+const Popup = ({ type, side, handleExit, PopupRef, items }) => {
     // css positioning determination
     const loc = getLoc(side)
+    const itemElems = getItems(items)
 
     // rendering
     if (type === "emoji") {
@@ -42,11 +53,8 @@ const Popup = ({ type, side, handleExit, PopupRef }) => {
     }
     return (
         <div className={`Popup ${loc}`} ref={PopupRef}>
-            <h1 onClick={handleExit}>l</h1>
-            <h1>Popup</h1>
-            <h1>Popup</h1>
-            <h1>Popup</h1>
-            <h1>Popup</h1>
+            <h1 onClick={handleExit}>X</h1>
+            {itemElems}
         </div>
     )
 }

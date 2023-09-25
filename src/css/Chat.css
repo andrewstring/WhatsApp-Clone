@@ -1,4 +1,5 @@
 .Chat {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 70%;
@@ -10,16 +11,17 @@
   position: relative;
   background-color: #041c52;
   color: white;
-  height: 4%;
-  min-height: 70px;
   align-items: center;
   padding: .1em 1em; }
 
 .Chat-toolbar-sidebar-activate {
-  background-color: lightgrey;
   padding: .5em;
-  border-radius: 50%;
   display: none; }
+
+.Chat-toolbar-sidebar-activate-icon {
+  background-color: lightgrey;
+  border-radius: 50%;
+  padding: .5em; }
 
 .Chat-toolbar-chatinfo {
   width: 100%;
@@ -105,5 +107,33 @@
 
   .Chat-toolbar-sidebar-activate {
     display: block; } }
+@media only screen and (max-width: 470px) {
+  .Chat-toolbar {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; }
+
+  .Chat-toolbar-sidebar-activate {
+    font-size: .5rem !important;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    justify-self: center; }
+
+  .Chat-toolbar-chatinfo {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    border-bottom: solid white 2px; }
+
+  .Chat-toolbar-buttons {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    justify-self: center; } }
 
 /*# sourceMappingURL=Chat.css.map */

@@ -55,12 +55,13 @@
     background-color: red;
 }
 
-@media only screen and (max-width: $small) {
+@media only screen and (max-width: $medium) {
     .Conversations {
         position: absolute;
         height: 100%;
         opacity: 0;
         width: 65%;
+        min-width: 280px;
         z-index: -1;
     }
     .Conversations.expanded {

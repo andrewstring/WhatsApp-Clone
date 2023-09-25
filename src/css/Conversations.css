@@ -54,6 +54,7 @@
     height: 100%;
     opacity: 0;
     width: 65%;
+    min-width: 280px;
     z-index: -1; }
 
   .Conversations.expanded {

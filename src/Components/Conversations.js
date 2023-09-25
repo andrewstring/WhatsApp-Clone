@@ -15,10 +15,9 @@ import Popup from './Popup'
 // util import
 import { handleClickOutsideRef } from '../util/nav'
 
-const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, handleConversationsExpand }) => {
+const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, handleConversationsExpand, handleAddChat }) => {
 
     // state initialization
-    const [ addingChat, setAddingChat ] = useState(false)
     const [ avatarPopup, setAvatarPopup ] = useState(false)
 
     // ref initialization
@@ -33,9 +32,6 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
         if (!(document.activeElement === inputBar.current)) {
             inputBar.current.focus()
         }
-    }
-    const handleAddChat = () => {
-        setAddingChat((addingChat) => !addingChat)
     }
     const handleAvatarPopup = () => {
         setAvatarPopup((avatarPopup) => !avatarPopup)
@@ -62,12 +58,10 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
     // useEffects
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutsideAvatarPopup)
-        document.addEventListener("mousedown", handleClickOutsideAddChatModal)
         document.addEventListener("mousedown", handleClickOutsideExpandedConversations)
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutsideAvatarPopup)
-            document.removeEventListener("mousedown", handleClickOutsideAddChatModal)
             document.removeEventListener("mousedown", handleClickOutsideExpandedConversations)
         }
     })
@@ -89,7 +83,6 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
                 <div className="Conversations-toolbar-buttons">
                     <a onClick={(e) => handleFocusInputBar(e)} className="clickable"><SearchIcon  
                     className="Conversations-icon"></SearchIcon></a>
-                    {/* <a><MessageIcon className="Conversations-icon"></MessageIcon></a> */}
                 </div>
             </div>
             <div
@@ -115,10 +108,7 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
                     ></ChatRoom>
                 })}
             </div>
-            {addingChat && <Modal
-            modalRef={addChatModalRef}
-            type="addChat"
-            handleAddChat={handleAddChat}></Modal>}
+            
         </nav>
     )
 }

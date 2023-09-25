@@ -8,6 +8,11 @@ import '../css/App.css';
 import Login from './Login';
 import Conversations from './Conversations';
 import Chat from "./Chat";
+import ModifyProfile from './ModifyProfile'
+import Modal from "./Modal";
+
+// helper function import
+import { handleClickOutsideRef } from "../util/nav";
 
 // context import
 import { CredentialsContext } from '../Contexts/CredentialsContext';
@@ -33,11 +38,17 @@ function App() {
   const [ messages, setMessages ] = useState([])
   const [ mongodb, setMongodb ] = useState()
   const [ conversationsExpanded, setConversationsExpanded ] = useState(false)
+  const [ modifyChatProfile, setModifyChatProfile ] = useState(false)
+  const [ addingChat, setAddingChat ] = useState(false)
 
   // ref initialization
   const chatRoomMonitoring = useRef(false)
+  const addChatModalRef = useRef(null)
 
   // prop/helper functions
+  const handleModifyChatProfile = () => {
+      setModifyChatProfile(((modifyChatProfile) => !modifyChatProfile))
+  }
   const handleConversationsExpand = () => {
     console.log("EXPAND")
     setConversationsExpanded((conversationsExpanded) => !conversationsExpanded)
@@ -50,11 +61,19 @@ function App() {
       setCurrentChatRoom(id)
     }
   }
+  const handleAddChat = () => {
+    setAddingChat((addingChat) => !addingChat)
+  }
   const addMessage = (message) => {
     if(message.chatRoom.toString() === currentChatRoom._id.toString()) {
       message.timeSent = message.timeSent.toString()
       setMessages((messages) => [...messages, message])
     }
+  }
+  const handleClickOutsideAddChatModal = (e) => {
+      handleClickOutsideRef(addChatModalRef, e, () => {
+          handleAddChat()
+      })
   }
 
   // useEffects
@@ -69,6 +88,11 @@ function App() {
       }
     }
     connectDB()
+    document.addEventListener("mousedown", handleClickOutsideAddChatModal)
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideAddChatModal)
+    }
   }, [])
 
   useEffect(() => {
@@ -175,10 +199,17 @@ function App() {
   // rendering
   if (credentials != "invalid" && mongodb) {
     return (
+      
       <MongodbContext.Provider value={mongodb}>
       <CredentialsContext.Provider value={credentials}>
+        {modifyChatProfile && <ModifyProfile></ModifyProfile>}
+        {addingChat && <Modal
+        modalRef={addChatModalRef}
+        type="addChat"
+        handleAddChat={handleAddChat}></Modal>}
         <div className="App-container">
           <Conversations chatRooms={chatRooms}
+          handleAddChat={handleAddChat}
           updateChatRoom={updateChatRoom}
           currentChatRoom={currentChatRoom}
           expanded={conversationsExpanded}
@@ -186,7 +217,8 @@ function App() {
           {chatRooms && <Chat
           messages={messages}
           currentChatRoom={currentChatRoom}
-          handleConversationsExpand={handleConversationsExpand}></Chat>}
+          handleConversationsExpand={handleConversationsExpand}
+          handleModifyChatProfile={handleModifyChatProfile}></Chat>}
         </div>
       </CredentialsContext.Provider>
       </MongodbContext.Provider>

@@ -25,7 +25,8 @@ import { handleClickOutsideRef } from '../util/nav'
 // context import
 import { CredentialsContext } from '../Contexts/CredentialsContext'
 
-const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
+
+const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModifyChatProfile }) => {
 
     // state initialization
     const [ input, setInput ] = useState("")
@@ -35,6 +36,7 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
     const [ chatAvatarPopup, setChatAvatarPopup] = useState(false)
     const [ chatToolbarPopup, setChatToolbarPopup ] = useState(false)
     const [ emojiSelection, setEmojiSelection ] = useState(false)
+    
 
     // ref initialization
     const chatViewRef = useRef(null)
@@ -47,6 +49,7 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
     const credentials = useContext(CredentialsContext)
 
     // prop/helper functions
+    
     const handleEmojiSelection = () => {
         setEmojiSelection((emojiSelection) => !emojiSelection)
     }
@@ -124,7 +127,6 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
             handleEmojiSelection()
         })
     }
-
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutsideChatAvatarPopup)
         document.addEventListener("mousedown", handleClickOutsideChatToolbarPopup)
@@ -136,6 +138,10 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
             document.removeEventListener("mousedown", handleClickOutsideEmojiSelection)
         }
     })
+    const handleModifyChatRoom = () => {
+        handleChatAvatarPopup()
+        handleModifyChatProfile()
+    }
 
     // useEffects
     useEffect(() => {
@@ -165,11 +171,14 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand }) => {
                     {chatAvatarPopup && <Popup 
                     PopupRef={chatAvatarPopupRef}
                     side="top-left"
-                    handleExit={handleChatAvatarPopup}></Popup>}
+                    handleExit={handleChatAvatarPopup}
+                    items={[["Modify Chat Room", handleModifyChatRoom]]}></Popup>}
                     <div className="Chat-toolbar-chatinfo-nametime">
                         <h2>{currentChatRoom.name}</h2>
                         <h3>{`Last Seen: ${getDate(currentChatRoom.lastMessageDate)}`}</h3>
                     </div>
+
+
                 </div>
                 <div className="Chat-toolbar-buttons">
                     <SearchIcon
