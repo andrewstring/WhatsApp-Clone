@@ -96,15 +96,19 @@ const Modal = ({type, handleAddChat, modalRef}) => {
                         </div>
                         <form className="Modal-chatName-form" onSubmit={(e) => handleSubmit(type,e)}>
                             <label>Enter Chat Name</label>
-                            <input
-                            placeholder="Chat Name"
-                            value={inputOne}
-                            onChange={(e) => handleChange(type,e)}
-                            ></input>
-                            <input
-                            id="addChat"
-                            type="submit"
-                            ></input>
+                            <div className="Modal-form-input">
+                                <input
+                                placeholder="Chat Name"
+                                type="text"
+                                value={inputOne}
+                                onChange={(e) => handleChange(type,e)}
+                                ></input>
+                                <input
+                                id="addChat"
+                                type="submit"
+                                value="Create Chat"
+                                ></input>
+                            </div>
                             {error && <p>{error}</p>}
                         </form>
 
@@ -113,17 +117,22 @@ const Modal = ({type, handleAddChat, modalRef}) => {
                         </div>
                         <form className="Modal-chatMembers-form" onSubmit={(e) => handleSubmit(type,e)}>
                             <label>Enter Username</label>
-                            <input
-                            onChange={handleMemberQuery}
-                            placeholder="Username"
-                            ></input>
+                            <div className="Modal-form-input">
+                                <input
+                                onChange={handleMemberQuery}
+                                placeholder="Username"
+                                type="text"
+                                ></input>
+                            </div>
+                            
                             <div className="Modal-member-query">
                                 {memberQuery.length ? memberQuery.map(member => 
-                                    <button onClick={(e) => handleAddMember(e,member)}>{member.username}</button>)
+                                    <div className="Modal-member-query-member">
+                                        <button onClick={(e) => handleAddMember(e,member)}>{member.username}</button>
+                                    </div>)
                                 : <p></p>}
                             </div>
                         </form>
-                    <a onClick={handleExit}>X</a>
                 </div>
 
             </div>

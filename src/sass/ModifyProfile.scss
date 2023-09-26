@@ -7,11 +7,27 @@
 }
 .ModifyProfile {
     position: absolute;
+    text-align: center;
     z-index: 1;
-    background-color: green;
+    border: solid rgb(2, 2, 28) 3px;
+    background-color: rgb(16, 16, 76);
+    color: white;
     border-radius: 10px;
     padding: 3rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.ModifyProfile h1 {
+    margin-bottom: 1em;
+}
+
+.ModifyProfile form label {
+    display: block;
+    margin-bottom: .3em;
+}
+
+.ModifyProfile form input {
+    margin-bottom: 2em;
 }

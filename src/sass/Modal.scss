@@ -26,17 +26,87 @@
 
 .Modal-addChat {
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
     grid-template-columns: 1fr 1fr;
+    row-gap: 3em;
+    column-gap: 2em;
+}
+.Modal-form-input {
+    width: 60%;
+    margin: 1em auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.Modal-addChat label {
+    display: block;
+    margin-bottom: .4em;
+}
+.Modal-addChat input[type="text"] {
+    border: none;
+    padding: .4em .2em;
+}
+.Modal-addChat input[type="submit"] {
+    margin-left: 1em;
+    border: none;
 }
 .Modal-addChat h3 {
     margin-bottom: 1em;
 }
 
+.Modal-chatName-header {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.Modal-chatName-header p {
+    text-align: center;
+    margin-bottom: .2em;
+    text-decoration: underline;
+}
+.Modal-chatName-form {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.Modal-chatMembers-header {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.Modal-chatMembers-form {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.Modal-member-query {
+    height: 100px;
+    border: solid rgb(24, 35, 67) 2px;
+    border-radius: 5px;
+    overflow-y: scroll;
+}
+.Modal-member-query-member {
+    display: inline-block;
+    width: 50%;
+}
+.Modal-member-query button {
+    padding: .5em 1em;
+    margin: .5em 1em;
+}
+
+
 @media only screen and (max-width: $medium) {
     .Modal-addChat {
+        display: flex;
         flex-direction: column;
         min-width: 300px;
+        row-gap: 2em;
+        column-gap: 0;
     }
 
 }

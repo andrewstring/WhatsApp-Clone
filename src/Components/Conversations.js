@@ -15,7 +15,7 @@ import Popup from './Popup'
 // util import
 import { handleClickOutsideRef } from '../util/nav'
 
-const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, handleConversationsExpand, handleAddChat }) => {
+const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, handleConversationsExpand, handleAddChat, handleModifyAccount }) => {
 
     // state initialization
     const [ avatarPopup, setAvatarPopup ] = useState(false)
@@ -78,7 +78,8 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
                     {avatarPopup && <Popup
                     PopupRef={avatarPopupRef}
                     side="top-left"
-                    handleExit={handleAvatarPopup}></Popup>}
+                    handleExit={handleAvatarPopup}
+                    items={[["Modify Account", handleModifyAccount]]}></Popup>}
                 </div>
                 <div className="Conversations-toolbar-buttons">
                     <a onClick={(e) => handleFocusInputBar(e)} className="clickable"><SearchIcon  

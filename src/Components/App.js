@@ -39,16 +39,21 @@ function App() {
   const [ mongodb, setMongodb ] = useState()
   const [ conversationsExpanded, setConversationsExpanded ] = useState(false)
   const [ modifyChatProfile, setModifyChatProfile ] = useState(false)
+  const [ modifyAccount, setModifyAccount ] = useState(false)
   const [ addingChat, setAddingChat ] = useState(false)
 
   // ref initialization
   const chatRoomMonitoring = useRef(false)
   const addChatModalRef = useRef(null)
   const modifyChatProfileRef = useRef(null)
+  const modifyAccountRef = useRef(null)
 
   // prop/helper functions
   const handleModifyChatProfile = () => {
       setModifyChatProfile(((modifyChatProfile) => !modifyChatProfile))
+  }
+  const handleModifyAccount = () => {
+    setModifyAccount(((modifyAccount) => !modifyAccount))
   }
   const handleConversationsExpand = () => {
     console.log("EXPAND")
@@ -81,6 +86,11 @@ function App() {
       handleModifyChatProfile()
     })
   }
+  const handleClickOutsideModifyAccount = (e) => {
+    handleClickOutsideRef(modifyAccountRef, e, () => {
+      handleModifyAccount()
+    })
+  }
 
   // useEffects
   useEffect(() => {
@@ -96,10 +106,12 @@ function App() {
     connectDB()
     document.addEventListener("mousedown", handleClickOutsideAddChatModal)
     document.addEventListener("mousedown", handleClickOutsideModifyChatProfile)
+    document.addEventListener("mousedown", handleClickOutsideModifyAccount)
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideAddChatModal)
       document.removeEventListener("mousedown", handleClickOutsideModifyChatProfile)
+      document.removeEventListener("mousedown", handleClickOutsideModifyAccount)
     }
   }, [])
 
@@ -211,8 +223,12 @@ function App() {
       <MongodbContext.Provider value={mongodb}>
       <CredentialsContext.Provider value={credentials}>
         {modifyChatProfile && <ModifyProfile
+        type="chat"
         modifyProfileRef={modifyChatProfileRef}
         ></ModifyProfile>}
+        {modifyAccount && <ModifyProfile 
+        type="account"
+        modifyProfileRef={modifyAccountRef}></ModifyProfile>}
         {addingChat && <Modal
         modalRef={addChatModalRef}
         type="addChat"
@@ -223,7 +239,8 @@ function App() {
           updateChatRoom={updateChatRoom}
           currentChatRoom={currentChatRoom}
           expanded={conversationsExpanded}
-          handleConversationsExpand={handleConversationsExpand}></Conversations>
+          handleConversationsExpand={handleConversationsExpand}
+          handleModifyAccount={handleModifyAccount}></Conversations>
           {chatRooms && <Chat
           messages={messages}
           currentChatRoom={currentChatRoom}
