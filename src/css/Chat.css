@@ -93,6 +93,9 @@
   color: white;
   padding: .1em .2em; }
 
+.Chat-icon:hover {
+  cursor: grab; }
+
 .Chat-toolbar-search {
   display: flex;
   background-color: #b8b9cf;

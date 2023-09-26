@@ -79,7 +79,12 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
                     PopupRef={avatarPopupRef}
                     side="top-left"
                     handleExit={handleAvatarPopup}
-                    items={[["Modify Account", handleModifyAccount]]}></Popup>}
+                    items={[["Modify Account",
+                        () => {
+                            handleConversationsExpand()
+                            handleAvatarPopup()
+                            handleModifyAccount()}
+                    ]]}></Popup>}
                 </div>
                 <div className="Conversations-toolbar-buttons">
                     <a onClick={(e) => handleFocusInputBar(e)} className="clickable"><SearchIcon  

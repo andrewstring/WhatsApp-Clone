@@ -24,6 +24,7 @@ import { handleClickOutsideRef } from '../util/nav'
 
 // context import
 import { CredentialsContext } from '../Contexts/CredentialsContext'
+import SpeechRec from './SpeechRec'
 
 
 const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModifyChatProfile }) => {
@@ -36,7 +37,7 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
     const [ chatAvatarPopup, setChatAvatarPopup] = useState(false)
     const [ chatToolbarPopup, setChatToolbarPopup ] = useState(false)
     const [ emojiSelection, setEmojiSelection ] = useState(false)
-    
+    const [ speechRec, setSpeechRec ] = useState(false)
 
     // ref initialization
     const chatViewRef = useRef(null)
@@ -49,6 +50,9 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
     const credentials = useContext(CredentialsContext)
 
     // prop/helper functions
+    const handleSpeechRec = () => {
+        setSpeechRec((speechRec) => !speechRec)
+    }
     
     const handleEmojiSelection = () => {
         setEmojiSelection((emojiSelection) => !emojiSelection)
@@ -233,8 +237,9 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
                     </form>
                     
                 </div>
+                {speechRec && <SpeechRec></SpeechRec>}
                 <div className="Chat-message-mic">
-                    <MicIcon className="Chat-icon"></MicIcon>
+                    <MicIcon className="Chat-icon" onClick={handleSpeechRec}></MicIcon>
                 </div>
                 
             </div>
