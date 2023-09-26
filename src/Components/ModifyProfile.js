@@ -2,6 +2,9 @@ import { useState } from 'react'
 
 import "../css/ModifyProfile.css"
 
+// component import
+import FileUpload from './FileUpload'
+
 const ModifyProfile = ({ type, modifyProfileRef }) => {
     if (type === "chat") {
         return (
@@ -16,8 +19,7 @@ const ModifyProfile = ({ type, modifyProfileRef }) => {
                         placeholder="Enter Chat Name"
                         type="text"></input>
                         <label>Chat Picture</label>
-                        <input
-                        type="file"></input>
+                        <FileUpload value="Picture"></FileUpload>
                         <label>Members</label>
                     </form>
                 </div>
@@ -37,8 +39,7 @@ const ModifyProfile = ({ type, modifyProfileRef }) => {
                         placeholder="Enter Chat Name"
                         type="text"></input>
                         <label>Chat Picture</label>
-                        <input
-                        type="file"></input>
+                        <FileUpload value="Picture"></FileUpload>
                         <label>Members</label>
                     </form>
                 </div>

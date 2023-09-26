@@ -73,7 +73,7 @@ const Modal = ({type, handleAddChat, modalRef}) => {
                 handleAddChat()
             } catch (e) {
                 console.log(e.response.data)
-                setError("Chat room already existsll")
+                setError("Chat Room already exists")
             }
         }
     }

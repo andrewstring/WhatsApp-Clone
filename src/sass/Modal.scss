@@ -26,9 +26,9 @@
 
 .Modal-addChat {
     display: grid;
-    grid-template-rows: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-    row-gap: 3em;
+    row-gap: 1em;
     column-gap: 2em;
 }
 .Modal-form-input {
@@ -41,6 +41,9 @@
 .Modal-addChat label {
     display: block;
     margin-bottom: .4em;
+}
+.Modal-addChat input {
+    border-radius: 5px;
 }
 .Modal-addChat input[type="text"] {
     border: none;
@@ -55,6 +58,7 @@
 }
 
 .Modal-chatName-header {
+    overflow-y: scroll;
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;

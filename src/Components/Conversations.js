@@ -95,7 +95,10 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
                 placeholder="Search for message"></input>
             </div>
             <div className="Conversations-list">
-                <h2 className="Conversations-list-add" onClick={handleAddChat}>
+                <h2 className="Conversations-list-add" onClick={() => {
+                    handleAddChat()
+                    handleConversationsExpand()
+                    }}>
                     Add New Chat</h2>
                 {chatRooms && chatRooms.map((room) => {
                     return <ChatRoom
