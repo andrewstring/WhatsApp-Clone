@@ -158,7 +158,7 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
                 <div
                 className="Chat-toolbar-sidebar-activate"
                 onClick={handleConversationsExpand}>
-                    <QuestionAnswerIcon></QuestionAnswerIcon>
+                    <QuestionAnswerIcon className="Chat-toolbar-sidebar-activate-icon"></QuestionAnswerIcon>
 
                 </div>
                 <div className="Chat-toolbar-chatinfo">

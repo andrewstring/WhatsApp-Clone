@@ -86,15 +86,15 @@ const Modal = ({type, handleAddChat, modalRef}) => {
                 <div
                 ref={modalRef}
                 className="Modal Modal-addChat">
-                    <div>
-                        <h3>MEMBERS ADDED TO CHAT:</h3>
-                        {members.length ?
-                        members.map((member) => {
-                            return <p>{member.username}</p>
-                        })
-                        : <p>None yet</p>}
-                        <br></br>
-                        <form onSubmit={(e) => handleSubmit(type,e)}>
+                        <div className="Modal-chatName-header">
+                            <h3>MEMBERS ADDED TO CHAT:</h3>
+                            {members.length ?
+                            members.map((member) => {
+                                return <p>{member.username}</p>
+                            })
+                            : <p>None yet</p>}
+                        </div>
+                        <form className="Modal-chatName-form" onSubmit={(e) => handleSubmit(type,e)}>
                             <label>Enter Chat Name</label>
                             <input
                             placeholder="Chat Name"
@@ -108,11 +108,10 @@ const Modal = ({type, handleAddChat, modalRef}) => {
                             {error && <p>{error}</p>}
                         </form>
 
-                    </div>
-
-                    <div>
-                        <h3>ADD MEMBERS TO CHAT</h3>
-                        <form onSubmit={(e) => handleSubmit(type,e)}>
+                        <div className="Modal-chatMembers-header">
+                            <h3>ADD MEMBERS TO CHAT</h3>
+                        </div>
+                        <form className="Modal-chatMembers-form" onSubmit={(e) => handleSubmit(type,e)}>
                             <label>Enter Username</label>
                             <input
                             onChange={handleMemberQuery}
@@ -124,7 +123,6 @@ const Modal = ({type, handleAddChat, modalRef}) => {
                                 : <p></p>}
                             </div>
                         </form>
-                    </div>
                     <a onClick={handleExit}>X</a>
                 </div>
 

@@ -25,6 +25,7 @@ const Login = ({ appSetCredentials }) => {
         password: "",
         email: ""
     })
+    const [ error, setError ] = useState("")
 
     // prop/helper functions
     const handleChange = (type, e) => {
@@ -58,12 +59,14 @@ const Login = ({ appSetCredentials }) => {
                 case "Username does not exist": {
                     console.log("username not exist")
                     appSetCredentials("invalid")
+                    setError("Username does not exist")
                     //render username and email exist
                     return
                 }
                 case "Incorrect credentials": {
                     console.log("incorrect cred")
                     appSetCredentials("invalid")
+                    setError("Incorrect password")
                     //render email exists
                     return
                 }
@@ -98,18 +101,21 @@ const Login = ({ appSetCredentials }) => {
                 case "Username and Email exist": {
                     console.log("username and email exist")
                     appSetCredentials("invalid")
+                    setError("Username and Email already exist")
                     //render username and email exist
                     return
                 }
                 case "Email exists": {
                     console.log("email exists")
                     appSetCredentials("invalid")
+                    setError("Email already exists")
                     //render email exists
                     return
                 }
                 case "Username exists": {
                     console.log("username exists")
                     appSetCredentials("invalid")
+                    setError("Username already exists")
                     //email exists
                     return
                 }
@@ -161,10 +167,12 @@ const Login = ({ appSetCredentials }) => {
                         <input type="submit" value="Login" onClick={handleLogin}></input>
                         <input type="submit" value="Create Account" onClick={handleMoveToCreate}></input>
                     </div>
+                    {error.length ? <h3 className="Login-error">{error}</h3>: null}
                 </form>
             </div>
         )
     }
+
     // rendering for create account
     else if (area === "create") {
         return (
@@ -205,7 +213,7 @@ const Login = ({ appSetCredentials }) => {
                         <input type="submit"
                         value="Return to Login" onClick={returnToLogin}></input>
                     </div>
-                    
+                    {error.length ? <h3 className="Login-error">{error}</h3>: null}
                 </form>
             </div>
         )

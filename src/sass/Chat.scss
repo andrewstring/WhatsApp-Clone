@@ -25,7 +25,10 @@
 .Chat-toolbar-sidebar-activate-icon {
     background-color: lightgrey;
     border-radius: 50%;
-    padding: .5em;
+    padding: .3em;
+}
+.Chat-toolbar-sidebar-activate-icon:hover {
+    cursor: grab;
 }
 
 .Chat-toolbar-chatinfo {
@@ -148,5 +151,18 @@
         grid-row-end: 3;
         justify-self: center;
 
+    }
+    .Chat-message-input {
+        padding: 0em .2em;
+    }
+    .Chat-message-input input {
+        width: 90%;
+    }
+    .Chat-message {
+        padding: 0em .2em;
+        font-size: .6rem;
+    }
+    .Chat-icon {
+        padding: 0em .2em;
     }
 }
