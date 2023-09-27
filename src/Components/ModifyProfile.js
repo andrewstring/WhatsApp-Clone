@@ -5,12 +5,26 @@ import "../css/ModifyProfile.css"
 // component import
 import FileUpload from './FileUpload'
 
+// library import
+import axios from "axios"
+
+// library setup
+axios.defaults.baseURL = "http://localhost:3005"
+
 const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
     const [ profileInput, setProfileInput ] = useState(profile)
 
     if (type === "chat") {
-        console.log("PROFILE")
-        console.log(profile)
+        const getAccountById = (id) => {
+            try {
+                const account = axios.post("/account/get", {
+                    id: id
+                })
+                return account
+            } catch (e) {
+                console.log(e)
+            }
+        }
         return (
             <div className="ModifyProfile-outer">
                 <div
@@ -29,7 +43,8 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         value="Picture"></FileUpload>
                         <label>Members</label>
                         {profileInput.members.map(member => {
-                            return <p>{member}</p>
+                            const account = getAccountById(member)
+                            return <p>{account.username}</p>
                         })}
 
                     </form>
@@ -38,8 +53,6 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
         )
     }
     if (type === "account") {
-        console.log("PROFILE")
-        console.log(profile)
         return (
             <div className="ModifyProfile-outer">
                 <div
