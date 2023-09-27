@@ -79,7 +79,7 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
         setChatSearchQuery(messageQuery)
     }
     const handleScroll = () => {
-        if(chatViewRef.current.scrollTop + chatViewRef.current.clientHeight >= chatViewRef.current.scrollHeight) {
+        if(chatViewRef.current.scrollTop + chatViewRef.current.clientHeight >= chatViewRef.current.scrollHeight-5) {
             console.log("jkljkljk")
             atBottom.current = true
         } else {

@@ -2,7 +2,8 @@
   width: 30%;
   background-color: #0f48a1;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+}
 
 .Conversations-toolbar {
   display: flex;
@@ -11,45 +12,52 @@
   align-items: center;
   flex-direction: row;
   background-color: #1b218e;
-  padding: .8em 1.4em; }
+  padding: 0.8em 1.4em;
+}
 
 .Conversations-icon {
   color: gray;
   font-size: 1.5rem !important;
-  padding: .1em .2em; }
+  padding: 0.1em 0.2em;
+}
 
 .Conversations-search {
   display: flex;
   background-color: #b8b9cf;
   border-radius: 10px;
   flex-direction: row;
-  padding: .8em 1.4em;
-  margin: 10px 10px; }
+  padding: 0.8em 1.4em;
+  margin: 10px 10px;
+}
 
 .Conversations-search:focus-within, .Conversations-search:active {
-  outline: solid white .3em; }
+  outline: solid white 0.3em;
+}
 
 .Conversations-search-input {
   flex-grow: 1;
   border: none;
-  background-color: #b8b9cf; }
+  background-color: #b8b9cf;
+}
 
 .Conversations-search-input:focus {
-  outline-width: 0; }
+  outline-width: 0;
+}
 
 .Conversations-list {
   flex-grow: 1;
   flex-direction: column;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+}
 
 .Conversations-list-add {
-  padding: 1rem 1rem 2rem 1rem; }
+  padding: 1rem 1rem 2rem 1rem;
+  cursor: grab;
+}
 
 .Conversations-list-add:hover {
-  background-color: red; }
-  @media (hover: none) {
-    .Conversations-list-add:hover {background-color: inherit;}
-  }
+  background-color: red;
+}
 
 @media only screen and (max-width: 1000px) {
   .Conversations {
@@ -58,10 +66,12 @@
     opacity: 0;
     width: 65%;
     min-width: 280px;
-    z-index: -1; }
-
+    z-index: -1;
+  }
   .Conversations.expanded {
     z-index: 1;
-    opacity: 1; } }
+    opacity: 1;
+  }
+}
 
 /*# sourceMappingURL=Conversations.css.map */

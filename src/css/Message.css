@@ -1,27 +1,34 @@
 .Message {
   margin: 2em 0em;
-  padding: .5em;
+  padding: 0.5em;
   background-color: white;
   border-radius: 10px;
-  width: 30%; }
+  width: 30%;
+}
 
 .Message-sent {
   margin-right: 0px;
   margin-left: auto;
-  background-color: green; }
+  background-color: green;
+}
 
 .Message .Message-name {
-  margin: .2em 0; }
+  margin: 0.2em 0;
+}
 
 .Message .Message-content {
   overflow-wrap: break-word;
-  margin: .5em 0 .1em 0; }
+  margin: 0.5em 0 0.1em 0;
+}
 
 .Message .Message-time {
-  color: grey; }
+  color: grey;
+}
 
 @media only screen and (max-width: 1000px) {
   .Message {
-    width: 45%; } }
+    width: 45%;
+  }
+}
 
 /*# sourceMappingURL=Message.css.map */

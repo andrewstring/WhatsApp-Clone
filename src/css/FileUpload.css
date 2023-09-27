@@ -2,12 +2,15 @@
   margin: 1em;
   padding: 1em;
   border: solid white 3px;
-  border-radius: 30px; }
+  border-radius: 30px;
+}
 
 .FileUpload, .FileUpload *:hover {
-  cursor: grab; }
+  cursor: grab;
+}
 
-.FileUpload input[type="file"] {
-  display: none; }
+.FileUpload input[type=file] {
+  display: none;
+}
 
 /*# sourceMappingURL=FileUpload.css.map */

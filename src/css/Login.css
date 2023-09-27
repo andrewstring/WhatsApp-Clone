@@ -2,48 +2,59 @@
   height: 100%;
   display: grid;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+}
 
 .Login {
   padding: 2em;
-  background-color: #291b6a;
+  background-color: rgb(41, 27, 106);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  color: white; }
+  color: white;
+}
 
 .Login h1 {
   margin-bottom: 1em;
-  padding-bottom: .2em;
-  border-bottom: solid white 2px; }
+  padding-bottom: 0.2em;
+  border-bottom: solid white 2px;
+}
 
 .Login label {
-  margin-bottom: .4em; }
+  margin-bottom: 0.4em;
+}
 
 .Login input {
-  margin-bottom: 1em; }
+  margin-bottom: 1em;
+}
 
-.Login input[type="text"], .Login input[type="password"] {
+.Login input[type=text], .Login input[type=password] {
   text-align: center;
-  padding: .3em .1em;
+  padding: 0.3em 0.1em;
   background-color: white;
-  border: none;
-  border-radius: 3px; }
-
-.Login input[type="submit"] {
-  font-size: .9em;
-  padding: .3em .3em;
   border: none;
   border-radius: 3px;
-  background-color: lightgrey; }
+}
 
-.Login input[type="submit"]:hover {
+.Login input[type=submit] {
+  font-size: 0.9em;
+  padding: 0.3em 0.3em;
+  margin: 0.8em 0.8em;
+  background-color: rgb(16, 26, 52);
+  border: none;
+  border-radius: 3px;
+  background-color: lightgrey;
+}
+
+.Login input[type=submit]:hover {
   background-color: white;
-  cursor: grab; }
+  cursor: grab;
+}
 
 .Login-buttons {
   display: flex;
   flex-direction: row;
-  justify-content: space-between; }
+  justify-content: space-between;
+}
 
 /*# sourceMappingURL=Login.css.map */

@@ -228,10 +228,12 @@ function App() {
       <CredentialsContext.Provider value={credentials}>
         {modifyChatProfile && <ModifyProfile
         type="chat"
+        profile={currentChatRoom}
         modifyProfileRef={modifyChatProfileRef}
         ></ModifyProfile>}
         {modifyAccount && <ModifyProfile 
         type="account"
+        profile={credentials}
         modifyProfileRef={modifyAccountRef}></ModifyProfile>}
         {addingChat && <Modal
         modalRef={addChatModalRef}

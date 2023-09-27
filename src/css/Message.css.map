@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "AAEA,QAAS;EACL,MAAM,EAAE,OAAO;EACf,OAAO,EAAE,IAAI;EACb,gBAAgB,EAAE,KAAK;EACvB,aAAa,EAAE,IAAI;EACnB,KAAK,EAAE,GAAG;;AAGd,aAAc;EACV,YAAY,EAAE,GAAG;EACjB,WAAW,EAAE,IAAI;EACjB,gBAAgB,EAAE,KAAK;;AAG3B,sBAAuB;EACnB,MAAM,EAAE,MAAM;;AAGlB,yBAA0B;EACtB,aAAa,EAAE,UAAU;EACzB,MAAM,EAAE,aAAa;;AAGzB,sBAAuB;EACnB,KAAK,EAAE,IAAI;;AAGf,0CAA4C;EACxC,QAAS;IACL,KAAK,EAAE,GAAG",
-"sources": ["../sass/Message.scss"],
-"names": [],
-"file": "Message.css"
-}
+{"version":3,"sourceRoot":"","sources":["../sass/Message.scss"],"names":[],"mappings":"AAEA;EACI;EACA;EACA;EACA;EACA;;;AAGJ;EACI;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;;;AAGJ;EACI;;;AAGJ;EACI;IACI","file":"Message.css"}

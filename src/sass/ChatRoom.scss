@@ -6,6 +6,7 @@
     flex-direction: row;
     justify-content: space-around;
     border-top: solid darkblue 1px;
+    cursor: grab;
 }
 .ChatRoom:hover {
     background-color: gray;
