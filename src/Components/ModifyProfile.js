@@ -16,33 +16,26 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
     const [ members, setMembers ] = useState([])
 
     // helper functions
-    const getAccountById = async (id) => {
-        try {
-            const account = (await axios.post("/account/get", {
-                id: id
-            })).data.account
-            console.log("ACCOUNT RETRIEVAL")
-            console.log(account)
-            return account
-        } catch (e) {
-            console.log(e)
-        }
+    const getAccountsByIds = async (ids) => {
+        return Promise.all(ids.map(async (id) => {
+            return (await axios.post("/account/get", { id: id })).data.account
+        }))
     }
 
     // useEffects
     useEffect(() => {
-        if(profileInput.members) {
-            setMembers([
-                ...(profileInput.members.map(async member => {
-                    return await getAccountById(member)
-                }))
-            ])
+        if (profileInput.members) {
+            try {
+                getAccountsByIds(profileInput.members)
+                .then((result) => setMembers(result))
+                .catch((e) => console.log(e))
+            } catch (e) {
+                console.log(e)
+            }
         }
-    }, [])
+    }, [profileInput])
 
     if (type === "chat") {
-        console.log("MEMBERS")
-        console.log(members)
         
         return (
             <div className="ModifyProfile-outer">
@@ -61,9 +54,12 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         type="picture"
                         value="Picture"></FileUpload>
                         <label>Members</label>
-                        {members.length && members.map(member => {
-                            return <p>{member.username}</p>
-                        })}
+                        {members.map(member => (
+                        <div className="ModifyProfile-member">
+                            <p>{member.username}</p>
+                            <button className="ModifyProfile-member-remove">X</button>
+                        </div>
+                        ))}
 
                     </form>
                 </div>
