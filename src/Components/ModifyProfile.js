@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import "../css/ModifyProfile.css"
 
@@ -15,27 +15,35 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
     const [ profileInput, setProfileInput ] = useState(profile)
     const [ members, setMembers ] = useState([])
 
+    // helper functions
+    const getAccountById = async (id) => {
+        try {
+            const account = (await axios.post("/account/get", {
+                id: id
+            })).data.account
+            console.log("ACCOUNT RETRIEVAL")
+            console.log(account)
+            return account
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    // useEffects
     useEffect(() => {
         if(profileInput.members) {
             setMembers([
-                ...()
+                ...(profileInput.members.map(async member => {
+                    return await getAccountById(member)
+                }))
             ])
         }
     }, [])
 
     if (type === "chat") {
-        const getAccountById = async (id) => {
-            try {
-                const account = await axios.post("/account/get", {
-                    id: id
-                })
-                console.log("ACCOUNT")
-                console.log(account)
-                return account
-            } catch (e) {
-                console.log(e)
-            }
-        }
+        console.log("MEMBERS")
+        console.log(members)
+        
         return (
             <div className="ModifyProfile-outer">
                 <div
@@ -53,11 +61,8 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         type="picture"
                         value="Picture"></FileUpload>
                         <label>Members</label>
-                        {profileInput.members.map(async member => {
-                            const account = await getAccountById(member)
-                            console.log("ACCOUNTT")
-                            console.log(account.data.account.username)
-                            return <p>{account.data.account.username}</p>
+                        {members.length && members.map(member => {
+                            return <p>{member.username}</p>
                         })}
 
                     </form>
