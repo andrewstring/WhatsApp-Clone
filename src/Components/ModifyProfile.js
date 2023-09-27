@@ -13,13 +13,24 @@ axios.defaults.baseURL = "http://localhost:3005"
 
 const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
     const [ profileInput, setProfileInput ] = useState(profile)
+    const [ members, setMembers ] = useState([])
+
+    useEffect(() => {
+        if(profileInput.members) {
+            setMembers([
+                ...()
+            ])
+        }
+    }, [])
 
     if (type === "chat") {
-        const getAccountById = (id) => {
+        const getAccountById = async (id) => {
             try {
-                const account = axios.post("/account/get", {
+                const account = await axios.post("/account/get", {
                     id: id
                 })
+                console.log("ACCOUNT")
+                console.log(account)
                 return account
             } catch (e) {
                 console.log(e)
@@ -42,9 +53,11 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         type="picture"
                         value="Picture"></FileUpload>
                         <label>Members</label>
-                        {profileInput.members.map(member => {
-                            const account = getAccountById(member)
-                            return <p>{account.username}</p>
+                        {profileInput.members.map(async member => {
+                            const account = await getAccountById(member)
+                            console.log("ACCOUNTT")
+                            console.log(account.data.account.username)
+                            return <p>{account.data.account.username}</p>
                         })}
 
                     </form>
@@ -81,11 +94,10 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         placeholder="Modify Password"
                         value={profileInput.password}
                         type="password"></input>
-                        <label>Chat Picture</label>
+                        <label>Profile Picture</label>
                         <FileUpload
                         type="picture"
                         value="Picture"></FileUpload>
-                        <label>Members</label>
                     </form>
                 </div>
             </div>
