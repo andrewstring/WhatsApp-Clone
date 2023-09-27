@@ -1,4 +1,13 @@
 .FileUpload {
-  margin: 1em; }
+  margin: 1em;
+  padding: 1em;
+  border: solid white 3px;
+  border-radius: 30px; }
+
+.FileUpload, .FileUpload *:hover {
+  cursor: grab; }
+
+.FileUpload input[type="file"] {
+  display: none; }
 
 /*# sourceMappingURL=FileUpload.css.map */

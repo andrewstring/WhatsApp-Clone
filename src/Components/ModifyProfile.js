@@ -19,7 +19,9 @@ const ModifyProfile = ({ type, modifyProfileRef }) => {
                         placeholder="Enter Chat Name"
                         type="text"></input>
                         <label>Chat Picture</label>
-                        <FileUpload value="Picture"></FileUpload>
+                        <FileUpload 
+                        type="picture"
+                        value="Picture"></FileUpload>
                         <label>Members</label>
                     </form>
                 </div>
@@ -39,7 +41,9 @@ const ModifyProfile = ({ type, modifyProfileRef }) => {
                         placeholder="Enter Chat Name"
                         type="text"></input>
                         <label>Chat Picture</label>
-                        <FileUpload value="Picture"></FileUpload>
+                        <FileUpload
+                        type="picture"
+                        value="Picture"></FileUpload>
                         <label>Members</label>
                     </form>
                 </div>

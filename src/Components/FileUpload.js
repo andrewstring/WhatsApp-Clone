@@ -1,13 +1,54 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import "../css/FileUpload.css"
 
-const FileUpload = ({value}) => {
+const FileUpload = ({type, value}) => {
+
+    const [ file, setFile ] = useState()
+    const [ acceptedFileTypes, setAcceptedFileTypes ] = useState([])
+    const [ acceptedMime, setAcceptedMime ] = useState("")
+    const [ fileTypeLabel, setFileTypeLabel ] = useState("")
+
+    const accept = (type) => {
+        switch(type) {
+            case "picture": {
+                setAcceptedFileTypes([
+                    "image/png",
+                    "image/jpeg"
+                ])
+                setFileTypeLabel("Accepted file types: PNG, JPEG")
+                setAcceptedMime("/image/*")
+                return
+            }
+            default: return
+        }
+    }
+
+    useEffect(() => {
+        accept(type)
+    }, [])
+
+    const handleFile = (e) => {
+        e.preventDefault()
+        if (e.target.files[0] && acceptedFileTypes.includes(e.target.files[0].type)) {
+            setFile(e.target.files[0])
+        } else {
+            alert("File type not accepted")
+        }
+    }
+
     return (
         <div className="FileUpload">
-            <input
-            placeholder={value} 
-            type="file"></input>
+            <label for="fileUpload">
+                <input
+                id="fileUpload"
+                placeholder={value} 
+                accept={acceptedMime}
+                onChange={handleFile}
+                type="file"></input>
+                {fileTypeLabel}
+
+            </label>
         </div>
     )
 }

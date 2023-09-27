@@ -170,23 +170,27 @@ function App() {
           if(change.ns.coll === "chatrooms") {
             console.log("CHANGEEE")
             console.log(change)
-            if(change.operationType === "insert") {
+            if (change.operationType === "insert") {
               if (!currentChatRoom) {
                 setCurrentChatRoom(change.fullDocument)
               }
               setChatRooms((chatRooms) => [change.fullDocument, ...chatRooms])
             } else if (change.operationType === "update") {
-              setChatRooms((chatRooms) => {
-                const newChatRooms = chatRooms.filter((chatRoom) => {
-                  return change.fullDocument._id.toString() !== chatRoom._id.toString()
-                })
-                return [change.fullDocument, ...newChatRooms]
-              })
+              (change.fullDocument.members.forEach((member) => {
+                if (member.toString() === credentials._id) {
+                  setChatRooms((chatRooms) => {
+                    const newChatRooms = chatRooms.filter((chatRoom) => {
+                      return change.fullDocument._id.toString() !== chatRoom._id.toString()
+                    })
+                    return [change.fullDocument, ...newChatRooms]
+                  })
+                }
+              }))
+              }
             }
           }
         }
       }
-    }
     if (credentials != "invalid") {
       monitorChatRooms()
     }
