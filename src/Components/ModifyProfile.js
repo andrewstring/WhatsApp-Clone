@@ -60,6 +60,7 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                             <button className="ModifyProfile-member-remove">X</button>
                         </div>
                         ))}
+                        <input type="submit"></input>
 
                     </form>
                 </div>
@@ -99,6 +100,7 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         <FileUpload
                         type="picture"
                         value="Picture"></FileUpload>
+                        <input type="submit"></input>
                     </form>
                 </div>
             </div>

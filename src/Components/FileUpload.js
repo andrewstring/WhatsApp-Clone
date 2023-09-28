@@ -31,7 +31,7 @@ const FileUpload = ({type, value}) => {
     const handleFile = (e) => {
         e.preventDefault()
         if (e.target.files[0] && acceptedFileTypes.includes(e.target.files[0].type)) {
-            setFile(e.target.files[0])
+            setFile(URL.createObjectURL(e.target.files[0]))
         } else {
             alert("File type not accepted")
         }
@@ -47,8 +47,8 @@ const FileUpload = ({type, value}) => {
                 onChange={handleFile}
                 type="file"></input>
                 {fileTypeLabel}
-
             </label>
+            {file && <img className="FileUpload-image" src={file}></img>}
         </div>
     )
 }
