@@ -41,7 +41,7 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
             <div className="ModifyProfile-outer">
                 <div
                 ref={modifyProfileRef}
-                className="ModifyProfile">
+                className="ModifyProfile scrollbar-hidden">
                     <h1>Modify Chat</h1>
                     <form>
                         <label>Chat Name</label>
@@ -72,7 +72,7 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
             <div className="ModifyProfile-outer">
                 <div
                 ref={modifyProfileRef}
-                className="ModifyProfile">
+                className="ModifyProfile scrollbar-hidden">
                     <h1>Modify Account</h1>
                     <form>
                         <label>Modify First Name</label>

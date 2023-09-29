@@ -6,6 +6,8 @@
     z-index: 1;
 }
 .ModifyProfile {
+    max-height: 50vh;
+    overflow-y: scroll;
     position: absolute;
     text-align: center;
     z-index: 1;

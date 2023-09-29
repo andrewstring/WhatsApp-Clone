@@ -1,7 +1,7 @@
 export const getDate = (dateProp) => {
     const today = new Date()
     const date = new Date(dateProp)
-    if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getFullYear() == date.getFullYear()) {
+    if (today.getDate() === date.getDate() && today.getMonth() === date.getMonth() && today.getFullYear() === date.getFullYear()) {
         return "Today"
     }
     const month = date.getMonth() > 9 ? date.getMonth() : `0${date.getMonth()}`
@@ -14,7 +14,7 @@ export const getTime = (dateProp) => {
     const today = new Date()
     const date = new Date(dateProp)
     let dateHolder = ""
-    if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getFullYear() == date.getFullYear()) {
+    if (today.getDate() === date.getDate() && today.getMonth() === date.getMonth() && today.getFullYear() === date.getFullYear()) {
         dateHolder = "Today"
     }
     const month = date.getMonth() > 9 ? date.getMonth() : `0${date.getMonth()}`
