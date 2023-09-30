@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react'
 
 import "../css/FileUpload.css"
 
-const FileUpload = ({type, value}) => {
+const FileUpload = ({type, value, file, handleSetFile}) => {
 
-    const [ file, setFile ] = useState()
     const [ acceptedFileTypes, setAcceptedFileTypes ] = useState([])
     const [ acceptedMime, setAcceptedMime ] = useState("")
     const [ fileTypeLabel, setFileTypeLabel ] = useState("")
@@ -31,7 +30,8 @@ const FileUpload = ({type, value}) => {
     const handleFile = (e) => {
         e.preventDefault()
         if (e.target.files[0] && acceptedFileTypes.includes(e.target.files[0].type)) {
-            setFile(URL.createObjectURL(e.target.files[0]))
+            handleSetFile(e.target.files[0])
+            
         } else {
             alert("File type not accepted")
         }
@@ -48,7 +48,7 @@ const FileUpload = ({type, value}) => {
                 type="file"></input>
                 {fileTypeLabel}
             </label>
-            {file && <img className="FileUpload-image" src={file}></img>}
+            {file && <img className="FileUpload-image" src={URL.createObjectURL(file)}></img>}
         </div>
     )
 }

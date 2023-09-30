@@ -13,13 +13,49 @@ axios.defaults.baseURL = "http://localhost:3005"
 
 const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
     const [ profileInput, setProfileInput ] = useState(profile)
+    const [ file, setFile ] = useState()
     const [ members, setMembers ] = useState([])
 
     // helper functions
+    const handleSetFile = (newFile) => {
+        setFile(newFile)
+    }
     const getAccountsByIds = async (ids) => {
         return Promise.all(ids.map(async (id) => {
             return (await axios.post("/account/get", { id: id })).data.account
         }))
+    }
+    const handleSubmit = (e, type) => {
+        e.preventDefault()
+        const form = new FormData()
+        switch(type) {
+            case "chat": {
+                form.append("id", profile._id)
+                form.append("name", profileInput.name)
+                form.append("picture", file)
+                axios.put("/chatroom/update/", form)
+                return 
+            }
+            case "account": {
+
+                return 
+            }
+            return
+        }
+    }
+    const handleChange = (e, field) => {
+        e.preventDefault()
+        switch (field) {
+            case "name": {
+                setProfileInput((profileInput) => {
+                    return {
+                        ...profileInput,
+                        name: e.target.value
+                    }
+                })
+                return
+            }
+        }
     }
 
     // useEffects
@@ -43,14 +79,19 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                 ref={modifyProfileRef}
                 className="ModifyProfile scrollbar-hidden">
                     <h1>Modify Chat</h1>
-                    <form>
+                    <form
+                    onSubmit={(e) => handleSubmit(e, "chat")}
+                    >
                         <label>Chat Name</label>
                         <input
                         placeholder="Enter Chat Name"
                         value={profileInput.name}
+                        onChange={(e) => handleChange(e,"name")}
                         type="text"></input>
                         <label>Chat Picture</label>
-                        <FileUpload 
+                        <FileUpload
+                        file={file}
+                        handleSetFile={handleSetFile}
                         type="picture"
                         value="Picture"></FileUpload>
                         <label>Members</label>
@@ -74,7 +115,9 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                 ref={modifyProfileRef}
                 className="ModifyProfile scrollbar-hidden">
                     <h1>Modify Account</h1>
-                    <form>
+                    <form
+                    onSubmit={(e) => handleSubmit(e, "account")}
+                    >
                         <label>Modify First Name</label>
                         <input
                         placeholder="Enter First Name"
@@ -98,6 +141,8 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         type="password"></input>
                         <label>Profile Picture</label>
                         <FileUpload
+                        file={file}
+                        handleSetFile={handleSetFile}
                         type="picture"
                         value="Picture"></FileUpload>
                         <input type="submit"></input>
