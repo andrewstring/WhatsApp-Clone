@@ -25,7 +25,7 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
             return (await axios.post("/account/get", { id: id })).data.account
         }))
     }
-    const handleSubmit = (e, type) => {
+    const handleSubmit = async (e, type) => {
         e.preventDefault()
         const form = new FormData()
         switch(type) {
@@ -33,7 +33,9 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                 form.append("id", profile._id)
                 form.append("name", profileInput.name)
                 form.append("picture", file)
-                axios.put("/chatroom/update/", form)
+                const result = await axios.put("/chatroom/update/", form)
+                console.log("CHATA")
+                console.log(result)
                 return 
             }
             case "account": {
@@ -90,6 +92,7 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         type="text"></input>
                         <label>Chat Picture</label>
                         <FileUpload
+                        maxSize={15e6}
                         file={file}
                         handleSetFile={handleSetFile}
                         type="picture"
@@ -141,6 +144,7 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                         type="password"></input>
                         <label>Profile Picture</label>
                         <FileUpload
+                        maxSize={15e6}
                         file={file}
                         handleSetFile={handleSetFile}
                         type="picture"
