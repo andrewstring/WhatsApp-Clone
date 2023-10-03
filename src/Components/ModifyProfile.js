@@ -34,8 +34,6 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
                 form.append("name", profileInput.name)
                 form.append("picture", file)
                 const result = await axios.put("/chatroom/update/", form)
-                console.log("CHATA")
-                console.log(result)
                 return 
             }
             case "account": {
