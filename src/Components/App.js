@@ -171,6 +171,8 @@ function App() {
     const messagesFetch = async () => {
       try {
         const messagesResponse = await axios.get(`/message/getFromChatRoom/${currentChatRoom._id}`)
+        console.log("MESSAGE RESPONSE")
+        console.log(messagesResponse)
         setMessages(() => [...messagesResponse.data])
       } catch (e) {
         console.log("ERROR with Axios")

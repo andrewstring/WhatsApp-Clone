@@ -27,6 +27,11 @@
     color: grey;
 }
 
+.Message-attachment {
+    height: 10em;
+    width: auto;
+}
+
 @media only screen and (max-width: $medium) {
     .Message {
         width: 45%;
