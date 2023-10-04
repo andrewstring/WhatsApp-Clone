@@ -18,7 +18,7 @@ axios.defaults.baseURL = "http://localhost:3005"
 
 const Message = ({ message }) => {
 
-    const notFound = <h1>NOT FOUND</h1>
+    const notFound = <div className="Message-attachment not-found"><h2>Attachment Not Found</h2></div>
 
     const [ attachment, setAttachment ] = useState(
         message.attachment

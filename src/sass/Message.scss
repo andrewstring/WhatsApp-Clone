@@ -1,6 +1,8 @@
 @import "breakpoints";
 
 .Message {
+    display: flex;
+    flex-direction: column;
     margin: 2em 0em;
     padding: .5em;
     background-color: white;
@@ -28,8 +30,26 @@
 }
 
 .Message-attachment {
-    height: 10em;
-    width: auto;
+    width: 90%;
+    height: auto;
+    max-height: 10em;
+    border-radius: 10px;
+    border: solid white 2px;
+    margin: auto;
+    align-self: center;
+    justify-self: center
+}
+.not-found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5em;
+    width: 50%;
+    background-color: rgb(13, 13, 37);
+    color: white;
+}
+.not-found h2 {
+    text-align: center;
 }
 
 @media only screen and (max-width: $medium) {
