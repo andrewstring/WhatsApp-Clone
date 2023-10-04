@@ -32,7 +32,7 @@ const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
             case "chat": {
                 form.append("id", profile._id)
                 form.append("name", profileInput.name)
-                form.append("picture", file)
+                form.append("picture", file, `${profile._id}.jpeg`)
                 const result = await axios.put("/chatroom/update/", form)
                 return 
             }

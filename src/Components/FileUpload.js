@@ -15,8 +15,8 @@ const FileUpload = ({type, value, file, handleSetFile, maxSize}) => {
                     "image/png",
                     "image/jpeg"
                 ])
-                setFileTypeLabel("Accepted file types: PNG, JPEG")
-                setAcceptedMime("/image/*")
+                setFileTypeLabel("Accepted file types: JPEG")
+                setAcceptedMime("/image/jpeg")
                 return
             }
             default: return

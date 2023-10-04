@@ -27,7 +27,7 @@ import { CredentialsContext } from '../Contexts/CredentialsContext'
 import SpeechRec from './SpeechRec'
 
 
-const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModifyChatProfile }) => {
+const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModifyChatProfile, handleAttachmentModal }) => {
 
     // state initialization
     const [ input, setInput ] = useState("")
@@ -53,7 +53,7 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
     const handleSpeechRec = () => {
         setSpeechRec((speechRec) => !speechRec)
     }
-    
+
     const handleEmojiSelection = () => {
         setEmojiSelection((emojiSelection) => !emojiSelection)
     }
@@ -188,7 +188,9 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
                     <SearchIcon
                     onClick={handleChatSearch}
                     className="Chat-icon clickable"></SearchIcon>
-                    <AttachFileIcon className="Chat-icon clickable"></AttachFileIcon>
+                    <AttachFileIcon
+                    onClick={handleAttachmentModal}
+                    className="Chat-icon clickable"></AttachFileIcon>
                     <MoreVertIcon 
                     onClick={handleChatToolbarPopup}
                     className="Chat-icon clickable"></MoreVertIcon>

@@ -10,6 +10,7 @@ import Conversations from './Conversations';
 import Chat from "./Chat";
 import ModifyProfile from './ModifyProfile'
 import Modal from "./Modal";
+import AttachmentModal from "./AttachmentModal";
 
 // helper function import
 import { handleClickOutsideRef } from "../util/nav";
@@ -41,12 +42,15 @@ function App() {
   const [ modifyChatProfile, setModifyChatProfile ] = useState(false)
   const [ modifyAccount, setModifyAccount ] = useState(false)
   const [ addingChat, setAddingChat ] = useState(false)
+  const [ attachmentModal, setAttachmentModal ] = useState(false)
+  const [ attachment, setAttachment ] = useState(null)
 
   // ref initialization
   const chatRoomMonitoring = useRef(false)
   const addChatModalRef = useRef(null)
   const modifyChatProfileRef = useRef(null)
   const modifyAccountRef = useRef(null)
+  const attachmentModalRef = useRef(null)
 
   // prop/helper functions
   const handleModifyChatProfile = () => {
@@ -58,6 +62,12 @@ function App() {
   const handleConversationsExpand = () => {
     console.log("EXPAND")
     setConversationsExpanded((conversationsExpanded) => !conversationsExpanded)
+  }
+  const handleAttachmentModal = () => {
+    setAttachmentModal((attachmentModal) => !attachmentModal)
+  }
+  const handleAttachment = (attachment) => {
+    setAttachment(attachment)
   }
   const appSetCredentials = (cred) => {
     setCredentials(cred)
@@ -91,6 +101,11 @@ function App() {
       handleModifyAccount()
     })
   }
+  const handleClickOutsideAttachmentModal = (e) => {
+    handleClickOutsideRef(attachmentModalRef, e, () => {
+      handleAttachmentModal()
+    })
+  }
 
   // useEffects
   useEffect(() => {
@@ -107,11 +122,13 @@ function App() {
     document.addEventListener("mousedown", handleClickOutsideAddChatModal)
     document.addEventListener("mousedown", handleClickOutsideModifyChatProfile)
     document.addEventListener("mousedown", handleClickOutsideModifyAccount)
+    document.addEventListener("mousedown", handleClickOutsideAttachmentModal)
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideAddChatModal)
       document.removeEventListener("mousedown", handleClickOutsideModifyChatProfile)
       document.removeEventListener("mousedown", handleClickOutsideModifyAccount)
+      document.removeEventListener("mousedown", handleClickOutsideAttachmentModal)
     }
   }, [])
 
@@ -239,6 +256,11 @@ function App() {
         modalRef={addChatModalRef}
         type="addChat"
         handleAddChat={handleAddChat}></Modal>}
+        {attachmentModal && <AttachmentModal
+        attachmentModalRef={attachmentModalRef}
+        attachment={attachment}
+        handleAttachment={handleAttachment}
+        ></AttachmentModal>}
         <div className="App-container">
           <Conversations chatRooms={chatRooms}
           handleAddChat={handleAddChat}
@@ -251,7 +273,10 @@ function App() {
           messages={messages}
           currentChatRoom={currentChatRoom}
           handleConversationsExpand={handleConversationsExpand}
-          handleModifyChatProfile={handleModifyChatProfile}></Chat>}
+          handleModifyChatProfile={handleModifyChatProfile}
+          handleAttachmentModal={handleAttachmentModal}
+          ></Chat>}
+          
         </div>
       </CredentialsContext.Provider>
       </MongodbContext.Provider>

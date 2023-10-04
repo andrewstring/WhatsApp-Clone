@@ -139,7 +139,7 @@ const Modal = ({type, handleAddChat, modalRef}) => {
             
         )
     }
-    if (type === "attachment") {
+    if (type === "attachmentModal") {
         return (
             <h1>Attachment</h1>
         )
