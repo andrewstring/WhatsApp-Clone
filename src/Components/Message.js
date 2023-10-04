@@ -17,6 +17,9 @@ import axios from 'axios'
 axios.defaults.baseURL = "http://localhost:3005"
 
 const Message = ({ message }) => {
+
+    const notFound = <h1>NOT FOUND</h1>
+
     const [ attachment, setAttachment ] = useState(
         message.attachment
         ? <img className="Message-attachment"></img>
@@ -31,9 +34,19 @@ const Message = ({ message }) => {
     useEffect(() => {
         const retrieveImage = async (id) => {
             if (message.attachment) {
-                console.log("ATTACHMENT RESPONSE")
-                const attachmentResponse = await axios.get(`/message/getimage/${message._id}`)
-                console.log(attachmentResponse)
+                try {
+                    const attachmentResponse = await axios.get(`/message/getimage/${message._id}`, {
+                        responseType: "arraybuffer"
+                    })
+                    const image = new Blob([attachmentResponse.data])
+                    setAttachment(
+                        <img src={URL.createObjectURL(image)} className="Message-attachment"></img>
+                    )
+                } catch (e) {
+                    setAttachment(notFound)
+                }
+                
+                
             }
         }
         retrieveImage()
