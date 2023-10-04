@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import "../css/FileUpload.css"
 
-const FileUpload = ({type, value, file, handleSetFile, maxSize}) => {
+const FileUpload = ({type, value, file, handleSetFile, maxSize, handleChange}) => {
 
     const [ acceptedFileTypes, setAcceptedFileTypes ] = useState([])
     const [ acceptedMime, setAcceptedMime ] = useState("")
@@ -34,6 +34,9 @@ const FileUpload = ({type, value, file, handleSetFile, maxSize}) => {
                 alert("File size too large")
             } else {
                 handleSetFile(e.target.files[0])
+                if (handleChange) {
+                    handleChange()
+                }
             }
         } else {
             alert("File type not accepted")

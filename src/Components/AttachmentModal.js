@@ -3,9 +3,13 @@ import "../css/AttachmentModal.css"
 // component imports
 import FileUpload from "./FileUpload"
 
-const AttachmentModal = ({attachmentModalRef, attachment, handleAttachment}) => {
+const AttachmentModal = ({attachmentModalRef, attachment, handleAttachment, handleAttachmentModal}) => {
     const handleSubmit = (e) => {
         e.preventDefault()
+    }
+
+    const handleChange = () => {
+        handleAttachmentModal()
     }
 
     return (
@@ -20,6 +24,7 @@ const AttachmentModal = ({attachmentModalRef, attachment, handleAttachment}) => 
                     maxSize={15e6}
                     file={attachment}
                     handleSetFile={handleAttachment}
+                    handleChange={handleChange}
                     type="picture"
                     value="picture"
                     ></FileUpload>

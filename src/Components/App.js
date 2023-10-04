@@ -69,11 +69,18 @@ function App() {
   const handleAttachment = (attachment) => {
     setAttachment(attachment)
   }
+  const handleClearAttachment = (e) => {
+    if (e) {
+      e.preventDefault()
+    }
+    setAttachment(null)
+  }
   const appSetCredentials = (cred) => {
     setCredentials(cred)
   }
   const updateChatRoom = (id) => {
     return () => {
+      handleClearAttachment()
       setCurrentChatRoom(id)
     }
   }
@@ -267,6 +274,7 @@ function App() {
         attachmentModalRef={attachmentModalRef}
         attachment={attachment}
         handleAttachment={handleAttachment}
+        handleAttachmentModal={handleAttachmentModal}
         ></AttachmentModal>}
         <div className="App-container">
           <Conversations chatRooms={chatRooms}
@@ -278,6 +286,7 @@ function App() {
           handleModifyAccount={handleModifyAccount}></Conversations>
           {chatRooms && <Chat
           attachment={attachment}
+          handleClearAttachment={handleClearAttachment}
           messages={messages}
           currentChatRoom={currentChatRoom}
           handleConversationsExpand={handleConversationsExpand}

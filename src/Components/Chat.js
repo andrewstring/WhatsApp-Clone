@@ -27,7 +27,7 @@ import { CredentialsContext } from '../Contexts/CredentialsContext'
 import SpeechRec from './SpeechRec'
 
 
-const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModifyChatProfile, handleAttachmentModal, attachment }) => {
+const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModifyChatProfile, handleAttachmentModal, attachment, handleClearAttachment }) => {
 
     // state initialization
     const [ input, setInput ] = useState("")
@@ -90,19 +90,28 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
-            axios.post("/message/new", {
+            const res = await axios.post("/message/new", {
                 chatRoomId: currentChatRoom._id,
                 messageContent: {
                     content: input,
                     sender: credentials._id,
                     received: true,
-                }
+                },
+                attachment: Boolean(attachment)
             })
+            if (attachment) {
+                const form = new FormData()
+                form.append("attachment", attachment, `${res.data.id}.jpeg`)
+                await axios.post("/message/newimage", form)
+            }
         } catch (e) {
             console.log("ERROR with Axios")
             console.log(e.response.data)
             console.log(e.response.status)
         }
+        console.log("GOT")
+        handleClearAttachment()
+        console.log("GOT")
         setInput("")
     }
     const handleChange = (event) => {
@@ -243,9 +252,13 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
                 <div className="Chat-message-mic">
                     <MicIcon className="Chat-icon" onClick={handleSpeechRec}></MicIcon>
                 </div>
-                
+                {attachment &&
+                    <div className="Chat-attachment">
+                        <img src={URL.createObjectURL(attachment)}></img>
+                        <button onClick={handleClearAttachment}>X</button>
+                    </div>
+                }        
             </div>
-            {attachment && <div className="Chat-attachment">JKJKLJKL</div>}
         </div>
     )
 }

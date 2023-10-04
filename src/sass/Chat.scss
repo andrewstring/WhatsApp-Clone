@@ -116,6 +116,20 @@
     background-color: #b8b9cf;
 }
 
+.Chat-attachment {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    border-radius: 10px;
+    background-color: rgb(32, 55, 91);
+}
+.Chat-attachment img {
+    height: 10rem;
+    max-height: 200px;
+    width: auto;
+    padding: 1.5rem;
+}
+
 @media only screen and (max-width: $medium) {
     .Chat {
         width: 100%;
