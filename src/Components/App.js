@@ -237,6 +237,13 @@ function App() {
     }
   }, [currentChatRoom._id])
 
+
+  
+  // DEBUG
+  console.log("ATTACHMENT")
+  console.log(attachment)
+
+
   // rendering
   if (credentials != "invalid" && mongodb) {
     return (
@@ -270,6 +277,7 @@ function App() {
           handleConversationsExpand={handleConversationsExpand}
           handleModifyAccount={handleModifyAccount}></Conversations>
           {chatRooms && <Chat
+          attachment={attachment}
           messages={messages}
           currentChatRoom={currentChatRoom}
           handleConversationsExpand={handleConversationsExpand}

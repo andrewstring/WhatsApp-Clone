@@ -27,7 +27,7 @@ import { CredentialsContext } from '../Contexts/CredentialsContext'
 import SpeechRec from './SpeechRec'
 
 
-const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModifyChatProfile, handleAttachmentModal }) => {
+const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModifyChatProfile, handleAttachmentModal, attachment }) => {
 
     // state initialization
     const [ input, setInput ] = useState("")
@@ -245,6 +245,7 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
                 </div>
                 
             </div>
+            {attachment && <div className="Chat-attachment">JKJKLJKL</div>}
         </div>
     )
 }
