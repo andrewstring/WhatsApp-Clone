@@ -9,8 +9,8 @@ import FileUpload from './FileUpload'
 import axios from "axios"
 
 // library setup
-// axios.defaults.baseURL = "http://localhost:3005"
-axios.defaults.baseURL = "https://whatsapp-clone-backend-608e90b922c2.herokuapp.com"
+axios.defaults.baseURL = "http://localhost:3005"
+// axios.defaults.baseURL = "https://whatsapp-clone-backend-608e90b922c2.herokuapp.com"
 
 const ModifyProfile = ({ type, profile, modifyProfileRef }) => {
     const [ profileInput, setProfileInput ] = useState(profile)
