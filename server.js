@@ -1,6 +1,6 @@
 const express = require("express")
 
-port = 3900
+port = process.env.PORT || 3900
 const app = express()
 
 app.use(express.static("build"))
