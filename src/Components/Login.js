@@ -9,7 +9,8 @@ import axios from 'axios'
 import { MongodbContext } from '../Contexts/MongodbContext'
 
 // library setup
-axios.defaults.baseURL = "http://localhost:3005"
+// axios.defaults.baseURL = "http://localhost:3005"
+axios.defaults.baseURL = "https://whatsapp-clone-backend-608e90b922c2.herokuapp.com"
 
 
 const Login = ({ appSetCredentials }) => {

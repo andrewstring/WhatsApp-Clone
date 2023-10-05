@@ -14,7 +14,8 @@ import { CredentialsContext } from '../Contexts/CredentialsContext'
 import axios from 'axios'
 
 // axios setup
-axios.defaults.baseURL = "http://localhost:3005"
+// axios.defaults.baseURL = "http://localhost:3005"
+axios.defaults.baseURL = "https://whatsapp-clone-backend-608e90b922c2.herokuapp.com"
 
 const Message = ({ message }) => {
 
