@@ -144,11 +144,17 @@ const Chat = ({ currentChatRoom, messages, handleConversationsExpand, handleModi
         document.addEventListener("mousedown", handleClickOutsideChatAvatarPopup)
         document.addEventListener("mousedown", handleClickOutsideChatToolbarPopup)
         document.addEventListener("mousedown", handleClickOutsideEmojiSelection)
+        document.addEventListener("keydown", handleClickOutsideChatAvatarPopup)
+        document.addEventListener("keydown", handleClickOutsideChatToolbarPopup)
+        document.addEventListener("keydown", handleClickOutsideEmojiSelection)
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutsideChatAvatarPopup)
             document.removeEventListener("mousedown", handleClickOutsideChatToolbarPopup)
             document.removeEventListener("mousedown", handleClickOutsideEmojiSelection)
+            document.removeEventListener("keydown", handleClickOutsideChatAvatarPopup)
+            document.removeEventListener("keydown", handleClickOutsideChatToolbarPopup)
+            document.removeEventListener("keydown", handleClickOutsideEmojiSelection)
         }
     })
     const handleModifyChatRoom = () => {

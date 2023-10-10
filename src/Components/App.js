@@ -130,12 +130,20 @@ function App() {
     document.addEventListener("mousedown", handleClickOutsideModifyChatProfile)
     document.addEventListener("mousedown", handleClickOutsideModifyAccount)
     document.addEventListener("mousedown", handleClickOutsideAttachmentModal)
+    document.addEventListener("keydown", handleClickOutsideAddChatModal)
+    document.addEventListener("keydown", handleClickOutsideModifyChatProfile)
+    document.addEventListener("keydown", handleClickOutsideModifyAccount)
+    document.addEventListener("keydown", handleClickOutsideAttachmentModal)
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideAddChatModal)
       document.removeEventListener("mousedown", handleClickOutsideModifyChatProfile)
       document.removeEventListener("mousedown", handleClickOutsideModifyAccount)
       document.removeEventListener("mousedown", handleClickOutsideAttachmentModal)
+      document.removeEventListener("keydown", handleClickOutsideAddChatModal)
+      document.removeEventListener("keydown", handleClickOutsideModifyChatProfile)
+      document.removeEventListener("keydown", handleClickOutsideModifyAccount)
+      document.removeEventListener("keydown", handleClickOutsideAttachmentModal)
     }
   }, [])
 

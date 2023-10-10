@@ -59,10 +59,14 @@ const Conversations = ({ chatRooms, updateChatRoom, currentChatRoom, expanded, h
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutsideAvatarPopup)
         document.addEventListener("mousedown", handleClickOutsideExpandedConversations)
+        document.addEventListener("keydown", handleClickOutsideAvatarPopup)
+        document.addEventListener("keydown", handleClickOutsideExpandedConversations)
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutsideAvatarPopup)
             document.removeEventListener("mousedown", handleClickOutsideExpandedConversations)
+            document.removeEventListener("keydown", handleClickOutsideAvatarPopup)
+            document.removeEventListener("keydown", handleClickOutsideExpandedConversations)
         }
     })
 
